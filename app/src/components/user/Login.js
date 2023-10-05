@@ -57,6 +57,7 @@ export default function Login() {
 
     // log in fc
     const submit = () => {
+        console.log(data)
         setDisable(true)
         setAlert({
             alert: false,
