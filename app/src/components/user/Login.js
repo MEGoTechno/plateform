@@ -57,12 +57,13 @@ export default function Login() {
 
     // log in fc
     const submit = () => {
-        console.log(data)
         setDisable(true)
         setAlert({
             alert: false,
         })
+        console.log(data)
         sendData(data).then((res) => {
+            console.log(res)
             if (res.data) {
                 setAlert({
                     alert: false,
@@ -77,6 +78,7 @@ export default function Login() {
                 setDisable(false)
             }
         }).catch(error => {
+            console.log(error)
             setAlert({
                 alert: "error",
                 message: "something went wrong" + error
