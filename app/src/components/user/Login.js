@@ -76,6 +76,7 @@ export default function Login() {
                 setDisable(false)
             }
         }).catch(error => {
+            console.log("error, try again")
             setAlert({
                 alert: "error",
                 message: "something went wrong" + error
