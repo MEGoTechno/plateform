@@ -61,9 +61,7 @@ export default function Login() {
         setAlert({
             alert: false,
         })
-        console.log(data)
         sendData(data).then((res) => {
-            console.log(res)
             if (res.data) {
                 setAlert({
                     alert: false,
@@ -78,7 +76,6 @@ export default function Login() {
                 setDisable(false)
             }
         }).catch(error => {
-            console.log(error)
             setAlert({
                 alert: "error",
                 message: "something went wrong" + error
