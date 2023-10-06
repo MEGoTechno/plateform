@@ -43,8 +43,9 @@ export default function Login() {
     })
     const handleData = (input) => {
         const { id, value } = input
+        const trimed = value.trim()
         setData({
-            ...data, [id]: value
+            ...data, [id]: trimed
         })
     }
 
@@ -87,7 +88,7 @@ export default function Login() {
 
 
     return (
-        <Box display="flex" justifyContent="center" mt={"50px"} >
+        <Box display="flex" justifyContent="center" mt={"50px"} zIndex="1">
             <Grid >
                 <Paper elevation={10} style={paperStyle} >
                     <Grid align="center">
@@ -110,6 +111,6 @@ export default function Login() {
                     )}
                 </Paper>
             </Grid>
-        </Box>
+        </Box >
     )
 }
