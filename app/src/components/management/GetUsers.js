@@ -20,18 +20,26 @@ export default function GetUsers() {
     }, {
         field: "userName",
         headerName: lang.users.userName,
+        width: 150
     }, {
         field: "name",
         headerName: lang.users.name,
+        width: 150
+
     }, {
         field: "email",
         headerName: lang.users.email,
+        width: 150
+
     }, {
         field: "phone",
         headerName: lang.users.phone,
+        width: 150
+
     }, {
         field: "isAdmin",
         headerName: lang.users.role,
+
     }, {
         field: "grade",
         headerName: lang.users.grade,
