@@ -10,7 +10,7 @@ export default function Layout() {
     const navigate = useNavigate()
     const [isOpenedSideBar, setSideBar] = useState(false)
     const isNonMobile = useMediaQuery('(min-width:600px)');
-    const { user } =  useSelector(s => s.global)
+    const { user } = useSelector(s => s.global)
     useEffect(() => {
         if (!user) {
             navigate("/login")

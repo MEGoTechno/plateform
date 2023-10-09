@@ -1,26 +1,25 @@
 const examSchema = {
-    id: { type: String }, // grade + unit + lesson + part
-    name: { type: String },
+    gradeId: { type: String }, // grade + unit + lesson + part
+    gradeName: { type: String },
     units: [{
-        id: { type: String }, // grade + unit
-        name: { type: String },
+        unitId: { type: String }, // grade + unit
+        unitName: { type: String },
         lessons: [{
-            id: { type: String }, // grade + unit + lesson
-            name: { type: String },
+            lessonId: { type: String }, // grade + unit + lesson
+            lessonName: { type: String },
             parts: [{
-                id: { type: String }, // grade + unit + lesson + part
-                name: { type: String },
+                partId: { type: String }, // grade + unit + lesson + part
+                partName: { type: String },
                 description: { type: String },
                 questions: [{
-                    id: { type: String }, // grade + unit + lesson + part + question
-                    title: { type: String },
+                    questionId: { type: String }, // grade + unit + lesson + part + question
+                    questionTitle: { type: String },
                     hints: { type: String },
-                    rtOption: { type: String },
                     rtOptionId: { type: String },
                     options: [{
-                        id: { type: String }, // grade + unit + lesson + part + question + option
-                        points: { type: String },
-                        title: { type: String },
+                        optionId: { type: String }, // grade + unit + lesson + part + question + option
+                        points: { type: Number, default: 1 },
+                        OptionTitle: { type: String },
                     }]
                 }]
             }]
