@@ -33,10 +33,10 @@ app.use(cors())
 app.use(morgan('tiny'))
 
 
-app.post("/upload", upload.fields([{name: "image"}]), (req, res) => {
-    const { file } = req
-    res.json({ message: "done" })
-})
+// app.post("/upload", upload.fields([{name: "image"}]), (req, res) => {
+//     const { file } = req
+//     res.json({ message: "done" })
+// })
 
 // routes
 app.use("/client", userRouter)
