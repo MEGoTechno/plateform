@@ -6,7 +6,7 @@ const SECRETJWT = process.env.SECRETJWT
 
 const generateToken = ({id})=> {
     const data = jwt.sign({ userId: id }, SECRETJWT, {
-        expiresIn: "5d"
+        expiresIn: "30d"
     });
     let token = "Bearer " + data
     return token

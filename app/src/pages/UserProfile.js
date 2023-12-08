@@ -5,23 +5,22 @@ import Header from '../components/tools/Header'
 import { Avatar, Box, Divider, Paper, Typography, useTheme } from '@mui/material'
 import { useSelector } from 'react-redux'
 
-export default function UserProfile() {
+export default function UserProfile({ user }) {
     const theme = useTheme()
     const location = useLocation()
     const { data: users, isSuccess, } = useGetUsersQuery()
-    const {lang} = useSelector(s => s.global)
-    let user
+    const { lang } = useSelector(s => s.global)
     const userId = location.pathname.split("/")[2]
-    if (users) {
+    if (users && !user) {
         user = users.filter(obj => obj._id === userId)[0]
     }
     if (user) {
         return (
             <Box>
-                <Header title= {lang.links.UserProfile} sx={{
+                <Header title={lang.links.UserProfile} sx={{
                     mt: 2
                 }} />
-                <Divider />
+
                 <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -37,17 +36,23 @@ export default function UserProfile() {
                         justifyContent: 'center',
                         flexDirection: "column"
                     }}>
-                        <Box>
+                        <Box sx={{ display: "flex" }}>
                             <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
                                 {user.name}
                             </Typography>
+                            <Typography color={user.isActive ? "blue" : "error"} ml={1}>
+                                {user.isActive ? "(active)" : "(not active)"}
+                            </Typography>
                         </Box>
                         <Box>
-                            <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
-                                opacity: ".7"
+                            <Box variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
+                                opacity: ".7", display: "flex",
                             }}>
-                                {user.isAdmin ? "admin" : "طالب"}
-                            </Typography>
+                                <Box>
+                                    {user.role}
+                                </Box>
+
+                            </Box>
                         </Box>
                     </Box>
                 </Box>

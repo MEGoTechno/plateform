@@ -1,13 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit"
 import globalSlice from "./globalSlice"
 import { apiSlice } from "./apiSlice"
+import examSlice from "./examSlice"
+import usersSlice from "./usersSlice"
+import contentSlice from "./contentSlice"
 // import productsSlice from "./productsSlice"
 
 export const store = configureStore({
     reducer: {
         global: globalSlice,
-        [apiSlice.reducerPath]: apiSlice.reducer,
-        user: localStorage.getItem("user") || "not User"
+        exam: examSlice,
+        usersSettings: usersSlice,
+        content: contentSlice,
+        [apiSlice.reducerPath]: apiSlice.reducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(apiSlice.middleware)

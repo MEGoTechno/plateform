@@ -5,20 +5,23 @@ import { Box, useMediaQuery } from '@mui/material'
 import SideBar from '../components/header/SideBar'
 import Navbar from '../components/header/Navbar'
 import { useSelector } from 'react-redux'
+import GlobalMsg from '../components/tools/GlobalMsg'
+import useAuth from '../middleware/useAuth'
 
 export default function Layout() {
+    const [authorize] = useAuth()
     const navigate = useNavigate()
     const [isOpenedSideBar, setSideBar] = useState(false)
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const { user } = useSelector(s => s.global)
-    useEffect(() => {
-        if (!user) {
-            navigate("/login")
-        }
-        isNonMobile ? setSideBar(true) : setSideBar(false)
-    }, [isNonMobile, navigate, user])
-    const sideBarWidth = "250px"
 
+    useEffect(() => {
+        isNonMobile ? setSideBar(true) : setSideBar(false)
+        authorize()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isNonMobile, navigate, user])
+
+    const sideBarWidth = "250px"
     return (
         <Box width="100%" height="100%">
             {user ? (
@@ -40,6 +43,7 @@ export default function Layout() {
             ) : (
                 <Outlet />
             )}
+            <GlobalMsg />
         </Box>
     )
 } 

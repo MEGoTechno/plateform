@@ -19,15 +19,15 @@ const isUser = asyncHandler(async (req, res, next) => {
         if (user) {
             req.user = user
         } else {
-            res.status(401).json({isUser: false})
             mongoose.disconnect()
-            throw new Error("not authed or data is wrong")
+            res.status(401)
+            throw new Error("Not authed")
         }
         next()
     } else {
-        res.status(401).json({isUser: false})
         mongoose.disconnect()
-        throw new Error("not authed")
+        res.status(401)
+        throw new Error("Not authed")
     }
 })
 
@@ -57,13 +57,13 @@ const isAdmin = asyncHandler(async (req, res, next) => {
         const { userId } = jwt.verify(req.headers.authorization.split(" ")[1], SECRETJWT)
         await mongoose.connect(DB_URI)
 
-        const user = await UserModel.findById(userId)
-        if (user && user.isAdmin) {
-            req.user = user
+        const admin = await UserModel.findById(userId)
+        if (admin && admin.isAdmin) {
+            req.admin = admin
         } else {
             res.status(401)
             mongoose.disconnect()
-            throw new Error("not authed")
+            throw new Error("Not authed")
         }
         next()
     } else {

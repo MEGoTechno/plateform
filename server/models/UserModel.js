@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     phone: { type: String },
     familyPhone: { type: String },
-    grade: { type: String },
+    grade: { type: Object },
+    isActive: { type: Boolean, default: true },
+    role: { type: String, default: "student" },
     examsPassed: [{
         id: { type: String }, // grade + unit + lesson + part + question
         partName: { type: String },

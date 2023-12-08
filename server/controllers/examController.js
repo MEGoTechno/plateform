@@ -17,13 +17,12 @@ const getExams = asyncHandler(async (req, res) => {
         exams = await ExamModel.find({})
 
     } else if (req.user.grade) {
-        const grade = req.user.grade
-        console.log(grade)
-        exams = await ExamModel.find({ gradeId: grade }) // by grade
+        const gradeId = req.user.grade.gradeId
+        exams = await ExamModel.find({ gradeId: gradeId }) // by gradeId
 
     } else {
         mongoose.disconnect()
-        res.status(400)
+        res.status(401)
         throw new Error("Not authed")
     }
 
@@ -41,9 +40,16 @@ const getExams = asyncHandler(async (req, res) => {
 const createExam = asyncHandler(async (req, res) => {
     await mongoose.connect(DB_URI)
     const exam = req.body
-    const createdExam = await ExamModel.create(exam)
-    await mongoose.disconnect()
-    res.status(200).json(createdExam)
+    const foundExam = await ExamModel.find({ partId: exam.partId })
+    if (foundExam[0]) {
+        mongoose.disconnect()
+        res.status(400)
+        throw new Error("there is exam has same id")
+    } else {
+        const createdExam = await ExamModel.create(exam)
+        await mongoose.disconnect()
+        res.status(200).json({ message: "exam has been created successfully" })
+    }
 })
 
 // update exam
@@ -59,8 +65,8 @@ const updateExam = asyncHandler(async (req, res) => {
 const deleteExam = asyncHandler(async (req, res) => {
     const exam = req.body
     await mongoose.connect(DB_URI)
-    await ExamModel.deleteOne({ partId: exam.id })
+    await ExamModel.deleteOne({ partId: exam.partId })
     mongoose.disconnect()
-    res.json({ message: "done" })
+    res.status(200).json({ message: "exam has been deleted" })
 })
 module.exports = { getExams, createExam, updateExam, deleteExam }

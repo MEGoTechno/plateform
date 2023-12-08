@@ -7,8 +7,15 @@ const notFound = ((req, res, next) => {
 
 const errorrHandler = ((err, req, res, next) => {
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode
-    res.status(statusCode)
-    res.json({ message: err.message })
+    if (err.message === "jwt expired" || err.message === "Not authed") {
+        res.status(statusCode)
+        res.json({ message: err.message, isKick: true })
+        return;
+    } 
+
+        res.status(statusCode)
+        res.json({ message: err.message })
+    
 })
 
-module.exports = {notFound, errorrHandler}
+module.exports = { notFound, errorrHandler }

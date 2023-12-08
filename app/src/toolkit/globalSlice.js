@@ -3,7 +3,6 @@ import { getCookie, removeCookie, setCookie } from "../hooks/cookies";
 import { lang } from "../components/tools/lang";
 
 
-
 const getMode = () => {
     let mode = localStorage.getItem("mode")
     if (mode) {
@@ -19,11 +18,12 @@ const getMode = () => {
     return mode
 }
 
-
 const initialState = {
-    mode: getMode(), 
+    mode: getMode(),
     user: getCookie("u") ? getCookie("u") : null,
-    lang: lang.ar
+    lang: lang.ar,
+    grades: getCookie("s") ? getCookie("s") : null,
+    globalMsg: null
 }
 
 const globalSlice = createSlice({
@@ -44,8 +44,26 @@ const globalSlice = createSlice({
             state.user = null
             return state
         },
+        setGrades: (state, action) => {
+            const { grades } = state
+            if (grades) {
+                state.grades = [...grades, action.payload]
+            } else {
+                state.grades = action.payload
+            }
+            setCookie("s", state.grades)
+            return state
+        },
+        setGlobalMsg: (state, action) => {
+            if (!action.payload) {
+                state.globalMsg = null
+                return state
+            }
+            state.globalMsg = { message: action.payload.message, severity: action.payload.severity }// isTrue , msg
+            return state;
+        },
     }
 })
 
-export const { setMode, setUser , logout} = globalSlice.actions
+export const { setMode, setUser, logout, setGrades, setGlobalMsg } = globalSlice.actions
 export default globalSlice.reducer

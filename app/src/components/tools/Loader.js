@@ -4,6 +4,6 @@ import React from 'react'
 export default function Loader() {
     return (
 
-        <CircularProgress />
+        <CircularProgress sx={{width: "10px"}}/>
     )
 }
