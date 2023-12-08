@@ -21,7 +21,7 @@ const UserModel = require("./models/UserModel")
 const ExamModel = require("./models/examModel")
 const SettingsModel = require("./models/SettingsModel")
 const router = require("./routes/userRoutes")
-const UploadRouter = require("./firebase/uploadFirebase")
+// const UploadRouter = require("./firebase/uploadFirebase")
 
 // config
 dotenv.config()
