@@ -7,18 +7,26 @@ import useLazyGetData from '../../hooks/useLazyGetData'
 import LoaderSkeleton from "../../components/tools/LoaderSkeleton"
 import { setLectures } from '../../toolkit/contentSlice'
 import { Alert } from '@mui/material'
+import useGetGrades from '../../hooks/useGetGrades'
 
 export default function ManageContentPage() {
 
 
   const dispatch = useDispatch()
-  const { global: { grades }, content: { lectures } } = useSelector(s => s)
+  const [getGrades, grades] = useGetGrades()
+  const { content: { lectures } } = useSelector(s => s)
   const [error, setError] = useState(null)
+
   const [getData, { isLoading, }] = useLazyGetLecturesQuery()
   const [getLectures] = useLazyGetData(getData)
 
   const trigger = async () => {
     try {
+
+      if (!grades) {
+        await getGrades()
+      }
+
       const res = await getLectures()
       dispatch(setLectures(res))
     } catch (error) {
@@ -36,6 +44,10 @@ export default function ManageContentPage() {
 
   if (!lectures) {
     return <LoaderSkeleton />
+  }
+
+  if(!grades){
+    return <>add new grade plz</>
   }
 
   if (error) {

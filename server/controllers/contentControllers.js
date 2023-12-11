@@ -33,14 +33,13 @@ const createLecture = asyncHandler(async (req, res) => {
 const getLectures = asyncHandler(async (req, res) => {
 
     await mongoose.connect(DB_URI)
+    const gradeId = req.user?.grade?.gradeId
     let lectures
     if (req.user.isAdmin) {
         lectures = await ContentModel.find({})
 
-    } else if (req.user.grade) {
-        const gradeId = req.user.grade.gradeId
+    } else if (gradeId) {
         lectures = await ContentModel.find({ gradeId: gradeId }) // by grade
-
     } else {
         mongoose.disconnect()
         res.status(401)

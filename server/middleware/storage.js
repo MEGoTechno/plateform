@@ -4,7 +4,7 @@ const fs = require("fs")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const admin = req.admin
+        const admin = req.user
         const isExist = fs.existsSync("./public/" + admin.userName)
 
         if (!isExist && admin.userName) {

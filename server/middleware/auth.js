@@ -63,7 +63,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
         } else {
             res.status(401)
             mongoose.disconnect()
-            throw new Error("Not authed")
+            throw new Error("Not authed ,")
         }
         next()
     } else {
@@ -73,4 +73,30 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     }
 })
 
-module.exports = { isUser, isAdmin }
+const isAccessed = asyncHandler(async (req, res, next) => {
+    if (req.headers.authorization) {
+        const { userId } = jwt.verify(req.headers.authorization.split(" ")[1], SECRETJWT)
+        await mongoose.connect(DB_URI)
+
+        const user = await UserModel.findById(userId)
+        if (user) {
+            if (user.role === 'subAdmin' || user.role === "admin") {
+                req.user = user
+            } else {
+                res.status(401)
+                mongoose.disconnect()
+                throw new Error("you do not have permission")
+            }
+        } else {
+            res.status(401)
+            mongoose.disconnect()
+            throw new Error("404, not found user")
+        }
+        next()
+    } else {
+        res.status(401)
+        mongoose.disconnect()
+        throw new Error("Not authed")
+    }
+})
+module.exports = { isUser, isAdmin, isAccessed }

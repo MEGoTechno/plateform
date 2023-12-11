@@ -49,7 +49,7 @@ export default function UserProfile({ user }) {
                                 opacity: ".7", display: "flex",
                             }}>
                                 <Box>
-                                    {user.role}
+                                    {user.role} 
                                 </Box>
 
                             </Box>

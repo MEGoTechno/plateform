@@ -41,7 +41,7 @@ function a11yProps(index) {
 
 export default function TabsControlled({ value, setValue, items, by }) {
     const theme = useTheme()
-
+    
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -54,8 +54,7 @@ export default function TabsControlled({ value, setValue, items, by }) {
     const tabStyle = {
         fontSize: "12px",
         fontWeight: 600,
-        color: theme.palette.secondary[400],
-        width: "calc(100% / 3)", // take care of it
+        width: `calc(100% / ${items.length})`, // take care of it
     }
     return (
         <AppBar position="static" sx={{ bgcolor: theme.palette.background.alt, boxShadow: "none", width: "100%" }} >

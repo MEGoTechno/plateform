@@ -7,9 +7,11 @@ import Navbar from '../components/header/Navbar'
 import { useSelector } from 'react-redux'
 import GlobalMsg from '../components/tools/GlobalMsg'
 import useAuth from '../middleware/useAuth'
+import LoginPage from './client/LoginPage'
+import NotFound from '../components/tools/NotFound'
 
 export default function Layout() {
-    const [authorize] = useAuth()
+    const [authorize, isAccessed] = useAuth()
     const navigate = useNavigate()
     const [isOpenedSideBar, setSideBar] = useState(false)
     const isNonMobile = useMediaQuery('(min-width:600px)');
@@ -22,6 +24,7 @@ export default function Layout() {
     }, [isNonMobile, navigate, user])
 
     const sideBarWidth = "250px"
+
     return (
         <Box width="100%" height="100%">
             {user ? (
@@ -35,13 +38,13 @@ export default function Layout() {
                         }}>
                         <Navbar setSideBar={setSideBar} isOpenedSideBar={isOpenedSideBar} />
                         <Box sx={{ p: "0 32px" }}>
-                            <Outlet />
+                            {isAccessed ? <Outlet /> : <NotFound />}
                         </Box>
                     </Box>
                 </>
 
             ) : (
-                <Outlet />
+                <LoginPage />
             )}
             <GlobalMsg />
         </Box>

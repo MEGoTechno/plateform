@@ -8,22 +8,26 @@ import { useGetExamsQuery, useLazyGetExamsQuery } from '../../toolkit/apiSlice';
 import LoaderSkeleton from '../tools/LoaderSkeleton';
 import { addExamToCreated, getCreatedExams } from '../../toolkit/examSlice';
 import { setCookie } from '../../hooks/cookies';
+import useGetGrades from '../../hooks/useGetGrades';
 
 
 export default function ManageExams() {
 
     const dispatch = useDispatch()
-    const { grades } = useSelector(s => s.global)
+    const [getGrades, grades] = useGetGrades()
     const { createdExams } = useSelector(s => s.exam)
     const [value, setValue] = React.useState(0);
     let exams = createdExams
 
     const [trigger, { data: EXAMSDB, isSuccess, isLoading, isError, error }] = useLazyGetExamsQuery()
 
-    
+
     const handleGetData = async () => {
         try {
-           const result = await trigger()
+            if (!grades) {
+                await getGrades()
+            }
+            const result = await trigger()
             console.log(result.data)
             if (result.data) {
                 dispatch(getCreatedExams(result.data))

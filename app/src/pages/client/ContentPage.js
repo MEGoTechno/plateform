@@ -6,16 +6,26 @@ import { useLazyGetLecturesQuery } from '../../toolkit/apiSlice'
 import useLazyGetData from '../../hooks/useLazyGetData'
 import LoaderSkeleton from '../../components/tools/LoaderSkeleton'
 import { setLectures } from '../../toolkit/contentSlice'
+import useGetGrades from '../../hooks/useGetGrades'
+import { Box, Stack } from '@mui/material'
+import Header from '../../components/tools/Header'
 
 export default function ContentPage() {
-  const { user, grades } = useSelector(s => s.global)
+  const { user } = useSelector(s => s.global)
+  const [getGrades, grades] = useGetGrades()
+
   const { lectures } = useSelector(s => s.content)
   const dispatch = useDispatch()
 
   const [getData, { isLoading }] = useLazyGetLecturesQuery()
   const [getLectures] = useLazyGetData(getData)
 
-  const trigger = async()=> {
+  const trigger = async () => {
+
+    if (!grades && user.role !== 'student') {
+      await getGrades()
+    }
+
     const lectures = await getLectures()
     dispatch(setLectures(lectures))
   }
@@ -31,16 +41,21 @@ export default function ContentPage() {
     return <LoaderSkeleton />
   }
 
-  if(!lectures || lectures?.length === 0){
+  if (!lectures || lectures?.length === 0) {
     return <>no lectures </>
   }
   if (user.isAdmin) {
-    return <AllContent lectures={lectures} grades={grades} />
+    return (
+      <Stack mt="20px">
+        <AllContent lectures={lectures} grades={grades} />
+      </Stack>
+    )
   }
 
   return (
-    <div>
+    <Stack>
+      <Header title="lecture" />
       <Content lectures={lectures} />
-    </div>
+    </Stack>
   )
 }

@@ -59,36 +59,36 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                 </Typography>
                             </Box> */}
 
+                            <Box sx={{
+                                ml: "-20px",
+                                display: 'flex',
+                                justifyContent: "space-between"
+                            }}>
+                                <Avatar alt={user.name} src="/static/images/avatar/1.jpg" sx={{
+                                    mr: 2,
+                                    height: "60px",
+                                    width: "60px",
+                                    bgcolor: theme.palette.secondary[400]
+                                }} />
                                 <Box sx={{
-                                    ml: "-20px",
                                     display: 'flex',
-                                    justifyContent: "space-between"
+                                    justifyContent: 'center',
+                                    flexDirection: "column"
                                 }}>
-                                    <Avatar alt={user.name} src="/static/images/avatar/1.jpg" sx={{
-                                        mr: 2,
-                                        height: "60px",
-                                        width: "60px",
-                                        bgcolor: theme.palette.secondary[400]
-                                    }} />
-                                    <Box sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        flexDirection: "column"
-                                    }}>
-                                        <Box>
-                                            <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
-                                                {user.name}
-                                            </Typography>
-                                        </Box>
-                                        <Box>
-                                            <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
-                                                opacity: ".7"
-                                            }}>
-                                                {user.isAdmin ? "admin" : "student"}
-                                            </Typography>
-                                        </Box>
+                                    <Box>
+                                        <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
+                                            {user.name}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
+                                            opacity: ".7"
+                                        }}>
+                                            {user.role}
+                                        </Typography>
                                     </Box>
                                 </Box>
+                            </Box>
                             {!isNonMobile && (
                                 <IconButton onClick={() => setSideBar(!isOpenedSideBar)}>
                                     <ClearIcon />
@@ -98,7 +98,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                     </Box>
                     <List>
                         {navLinks.map((link, i) => {
-                            if (!link.icon && user.isAdmin) {
+                            if (!link.icon && user.role !== "student") {
                                 return (
                                     <Box key={i} sx={{ display: "flex", justifyContent: "center", }}>
                                         <Typography variant='h6' sx={{ mt: "2.25rem", mb: "1rem", opacity: ".8" }}>
@@ -108,7 +108,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                 )
                             }
 
-                            if (link.isAdmin && user.isAdmin) {
+                            if (link.isAdmin && user.role !== "student") {
                                 return (
                                     <ListItem key={i} sx={{ p: "0 10px" }}>
                                         <ListItemButton onClick={() => {
@@ -200,7 +200,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                         "&:hover": {
                             bgcolor: theme.palette.error.dark,
                         }
-                    }} onClick={() => { dispatch(logout()) }}>
+                    }} onClick={() => dispatch(logout())}>
                         <LogoutIcon />    {lang.links.logOut}
                     </Button>
                 </Box>

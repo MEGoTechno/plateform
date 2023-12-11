@@ -12,14 +12,13 @@ const DB_URI = process.env.MONGO_URI
 // get exams accroding to grade (g1)
 const getExams = asyncHandler(async (req, res) => {
     await mongoose.connect(DB_URI)
+    const gradeId = req.user?.grade?.gradeId
     let exams
     if (req.user.isAdmin) {
         exams = await ExamModel.find({})
 
-    } else if (req.user.grade) {
-        const gradeId = req.user.grade.gradeId
+    } else if (gradeId) {
         exams = await ExamModel.find({ gradeId: gradeId }) // by gradeId
-
     } else {
         mongoose.disconnect()
         res.status(401)

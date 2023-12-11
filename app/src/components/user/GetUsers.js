@@ -42,7 +42,9 @@ export default function GetUsers({ users }) {
     }, {
         field: "isActive",
         headerName: "is active",
-
+    }, {
+        field: "role",
+        headerName: "role",
     }, {
         field: "grade",
         headerName: lang.users.grade,

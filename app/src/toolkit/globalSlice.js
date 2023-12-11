@@ -41,7 +41,10 @@ const globalSlice = createSlice({
         },
         logout: (state, action) => {
             removeCookie("u")
+            removeCookie("h")
+            removeCookie("s")
             state.user = null
+            state.grades = null
             return state
         },
         setGrades: (state, action) => {
