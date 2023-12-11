@@ -40,7 +40,7 @@ export default function ManageExams() {
     }
     // console.log(EXAMSDB)
     useEffect(() => {
-        if (exams.length === 0) {
+        if (exams?.length === 0 || !exams) {
             handleGetData()
         }
     }, [exams])

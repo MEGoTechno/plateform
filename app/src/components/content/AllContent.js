@@ -7,9 +7,9 @@ import { Box } from '@mui/material'
 export default function AllContent({ grades, lectures }) {
     const [value, setValue] = useState(0)
     const gradedLectures = getSameValue(lectures, "gradeId", grades[value].gradeId) // get lectures same grade 
-    
+
     return (
-        <Box>
+        <Box >
             <TabsControlled value={value} setValue={setValue} items={grades} by="gradeName" />
             {grades && grades.map((grade, i) => {
                 return (

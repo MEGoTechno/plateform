@@ -46,7 +46,7 @@ export default function CreateExam({ exam }) {
 
     const editExam = () => {
         dispatch(editExamAction(exam))
-        navigate("/management/add-exam")
+        navigate("/management/exams/add-exam")
     }
 
     const removeExam = () => {

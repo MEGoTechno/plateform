@@ -63,8 +63,8 @@ function App() {
               <Route path='/management/content' element={<ManageContentPage />} />
               <Route path='/management/content/edit' element={<EditName />} />
               <Route path='/management/content/unit' element={<ManageLessons />} />
-              <Route path='/management/content/:unitId/:lessonId/:partId' element={<VidPage />} />
-              <Route path='/management/add-exam' element={<AddExam />} />
+              <Route path='/content/:unitId/:lessonId/:partId' element={<VidPage />} />
+              <Route path='/management/exams/add-exam' element={<AddExam />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

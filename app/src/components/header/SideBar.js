@@ -27,8 +27,15 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
     const { pathname } = useLocation()
     const [activeLink, setActiveLink] = useState()
 
-    useEffect(() => {
-        setActiveLink(pathname)
+    useEffect(() => { 
+        if (pathname) {
+            const link = pathname.split("/")
+            if (link[1] === "management") {
+                setActiveLink(`/${link[1]}/${link[2]}`)
+            } else {
+                setActiveLink(`/${link[1]}`)
+            }
+        }
     }, [pathname])
 
     return (

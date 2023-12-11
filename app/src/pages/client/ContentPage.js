@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Content from '../../components/content/ShowUnits'
+import ShowUnits from '../../components/content/ShowUnits'
 import { useDispatch, useSelector } from 'react-redux'
 import AllContent from '../../components/content/AllContent'
 import { useLazyGetLecturesQuery } from '../../toolkit/apiSlice'
@@ -55,7 +55,7 @@ export default function ContentPage() {
   return (
     <Stack>
       <Header title="lecture" />
-      <Content lectures={lectures} />
+      <ShowUnits lectures={lectures} />
     </Stack>
   )
 }

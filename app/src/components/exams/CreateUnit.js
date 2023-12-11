@@ -26,7 +26,7 @@ export default function CreateUnit({ grade, units, exams }) {
         }))
         const partId = lessonId + `p${i}`
         dispatch(editExamSettings({ gradeId, gradeName, unitId, unitName, lessonId, lessonName, partId }))
-        navigate("/management/add-exam")
+        navigate("/management/exams/add-exam")
     }
     const handleAddExamLesson = ({ gradeId, gradeName, unitId, unitName }) => {
         let i = 1
@@ -39,7 +39,7 @@ export default function CreateUnit({ grade, units, exams }) {
         const partId = lessonId + `p1`
         dispatch(resetExamState())
         dispatch(editExamSettings({ gradeId, gradeName, unitId, unitName, lessonId, partId }))
-        navigate("/management/add-exam")
+        navigate("/management/exams/add-exam")
     }
 
     const handleAddExamUnit = (units) => {
@@ -52,7 +52,7 @@ export default function CreateUnit({ grade, units, exams }) {
         console.log({ gradeId, gradeName, unitId, lessonId, partId })
         dispatch(resetExamState())
         dispatch(editExamSettings({ gradeId, gradeName, unitId, lessonId, partId }))
-        navigate("/management/add-exam")
+        navigate("/management/exams/add-exam")
     }
 
     let getLessons = []

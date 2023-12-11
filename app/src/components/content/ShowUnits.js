@@ -6,7 +6,6 @@ import { buttonStyle } from "../styles/buttonsStyles"
 import ShowLectures from './ShowLessons'
 
 export default function ShowUnits({ grade, lectures }) {
-
    const navigate = useNavigate()
 
    const units = getUnique(lectures, "unitId") //units list
@@ -15,7 +14,7 @@ export default function ShowUnits({ grade, lectures }) {
 
       const lectuersByUnit = getSameValue(lectures, "unitId", unitId) // lectures has same unit
       const lessons = getUnique(lectuersByUnit, "lessonId") // unique lesson
-      
+
       navigate(`/content/${unitId}`, { state: { lectures: lectuersByUnit, lessons, grade } })
    }
 

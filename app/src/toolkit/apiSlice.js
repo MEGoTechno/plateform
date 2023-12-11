@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCookie } from '../hooks/cookies'
 
+// https://mradel-biology.onrender.com
+
 export const apiSlice = createApi({
     reducerPath: "api", //from state
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://mradel.onrender.com",
+        baseUrl: "https://mradel-biology.onrender.com",
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers
@@ -134,7 +136,7 @@ export const apiSlice = createApi({
         }),
     })
 })
-export const { 
+export const {
     useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useInActivateUserMutation, useUpdateUserMutation, useMakeAdminMutation,
     useLazyGetSettingsQuery, usePostSettingsMutation, useUpdateSettingsMutation, useDeleteSettingsMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery,

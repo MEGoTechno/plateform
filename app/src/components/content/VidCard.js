@@ -12,7 +12,7 @@ export default function VidCard({ lecture, lessonLectures }) {
     const navigate = useNavigate()
 
     const goVid = () => {
-        navigate(`/management/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
+        navigate(`/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
     }
     console.log(lecture)
     return (
