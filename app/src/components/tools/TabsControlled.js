@@ -41,7 +41,7 @@ function a11yProps(index) {
 
 export default function TabsControlled({ value, setValue, items, by }) {
     const theme = useTheme()
-    
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -62,6 +62,9 @@ export default function TabsControlled({ value, setValue, items, by }) {
                 value={value}
                 onChange={handleChange}
                 aria-label="tabs"
+                variant="scrollable"
+                scrollButtons
+                allowScrollButtonsMobile
                 textColor="secondary"
                 indicatorColor="secondary" sx={tabsStyle}>
                 {items && items.map((item, i) => {
