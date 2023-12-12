@@ -7,16 +7,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { buttonStyle } from '../styles/buttonsStyles';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
 
 export default function VidCard({ lecture, lessonLectures }) {
     const navigate = useNavigate()
+    const theme = useTheme()
 
     const goVid = () => {
         navigate(`/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
     }
-    console.log(lecture)
     return (
-        <Card sx={{ width: 280 }}>
+        <Card sx={{ bgcolor: theme.palette.background.alt }}>
             <CardMedia
                 sx={{ height: 140 }}
                 image={`http://localhost:5050/${lecture.thumbnail}`}
@@ -35,7 +36,6 @@ export default function VidCard({ lecture, lessonLectures }) {
                 <Button sx={buttonStyle} size="small" onClick={() => {
                     goVid()
                 }}>Watch</Button>
-                {/* <Button sx={buttonStyle} size="small">Learn More</Button> */}
             </CardActions>
         </Card>
     );

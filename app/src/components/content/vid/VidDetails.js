@@ -1,23 +1,23 @@
-import { Card, CardContent, Typography } from '@mui/material'
+import { Card, CardContent, Typography, useTheme } from '@mui/material'
 import React from 'react'
 
-export default function VidDetails({lecture}) {
+export default function VidDetails({ lecture }) {
+    const theme = useTheme()
+
     return (
-        <Card sx={{ minWidth: 275, direction: "right" }}>
+        <Card sx={{ minWidth: 275, direction: "right", backgroundColor: theme.palette.background.alt }}>
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Word of the Day
+                   lecture Name
                 </Typography>
                 <Typography variant="h5" component="div">
                     {lecture.partName}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    adjective
+                    description
                 </Typography>
                 <Typography variant="body2">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
+                    {lecture.description}
                 </Typography>
             </CardContent>
         </Card>

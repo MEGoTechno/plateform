@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCookie } from '../hooks/cookies'
-
 // https://mradel-biology.onrender.com
+
 
 export const apiSlice = createApi({
     reducerPath: "api", //from state
@@ -136,7 +136,7 @@ export const apiSlice = createApi({
         }),
     })
 })
-export const {
+export const { 
     useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useInActivateUserMutation, useUpdateUserMutation, useMakeAdminMutation,
     useLazyGetSettingsQuery, usePostSettingsMutation, useUpdateSettingsMutation, useDeleteSettingsMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery,

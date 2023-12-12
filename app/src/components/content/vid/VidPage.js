@@ -1,32 +1,38 @@
-import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, Grid, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import Video from './Video'
 import VidDetails from './VidDetails'
 import { useLocation } from 'react-router-dom'
 import VidCard from '../VidCard'
+import NotFound from '../../tools/NotFound'
 
 export default function VidPage() {
-
+    const theme = useTheme()
     const { state } = useLocation()
     const { lecture, lessonLectures } = state
-    
+
+    if (!state) {
+        return <NotFound />
+    }
+
     return (
-        <Box>
+        <Box sx={{ m: "20px 0" }}>
             <Box>
                 <Video lecture={lecture} />
             </Box>
-            <Box>
+            <Box m={"6px 0"} >
                 <VidDetails lecture={lecture} />
             </Box>
-            <Box sx={{
-                display: "flex", flexDirection: { xs: "column", sm: "row" }, justifyContent: "center", alignItems: "center", gap: 2, flexWrap: "wrap"
-            }}>
+
+            <Grid container spacing={2} justifyContent={"center"}>
                 {lessonLectures && lessonLectures.map((lessonLecture, i) => (
-                    lessonLecture.id !== lecture.id && (
-                        <VidCard key={i} lecture={lessonLecture} lessonLectures={lessonLectures} />
+                    lessonLecture.partId !== lecture.partId && (
+                        <Grid key={i} item md={6} xs={12}>
+                            <VidCard key={i} lecture={lessonLecture} lessonLectures={lessonLectures} />
+                        </Grid>
                     )
                 ))}
-            </Box>
-        </Box>
+            </Grid>
+        </Box >
     )
 }

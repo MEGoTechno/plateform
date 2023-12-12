@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, useTheme } from '@mui/material'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../tools/commonFC'
@@ -7,7 +7,7 @@ import ShowLectures from './ShowLessons'
 
 export default function ShowUnits({ grade, lectures }) {
    const navigate = useNavigate()
-
+   const theme = useTheme()
    const units = getUnique(lectures, "unitId") //units list
 
    const goUnit = (unitId) => {
