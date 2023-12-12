@@ -37,7 +37,7 @@ export default function EditLecture() {
         }, {
             name: "unitId",
             label: "...",
-            value: lecture.UnitId,
+            value: lecture.unitId,
             hidden: true,
             disabled: true,
         }, {

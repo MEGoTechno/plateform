@@ -17,9 +17,11 @@ export default function UserProfile({ user }) {
     if (user) {
         return (
             <Box>
-                <Header title={lang.links.UserProfile} sx={{
-                    mt: 2
-                }} />
+                {location.pathname !== '/management/user' && (
+                    <Header title={lang.links.UserProfile} sx={{
+                        mt: 2
+                    }} />
+                )}
 
                 <Box sx={{
                     display: 'flex',
@@ -49,7 +51,7 @@ export default function UserProfile({ user }) {
                                 opacity: ".7", display: "flex",
                             }}>
                                 <Box>
-                                    {user.role} 
+                                    {user.role}
                                 </Box>
 
                             </Box>

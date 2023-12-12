@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../toolkit/globalSlice';
 import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { buttonStyle } from '../styles/buttonsStyles';
 
 export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, sideBarWidth }) {
 
@@ -27,7 +28,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
     const { pathname } = useLocation()
     const [activeLink, setActiveLink] = useState()
 
-    useEffect(() => { 
+    useEffect(() => {
         if (pathname) {
             const link = pathname.split("/")
             if (link[1] === "management") {
@@ -125,14 +126,14 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                             sx={{
                                                 backgroundColor:
                                                     activeLink === link.to
-                                                        ? theme.palette.secondary[300]
+                                                        ? theme.palette.secondary[400]
                                                         : "transparent",
                                                 color:
                                                     activeLink === link.to
-                                                        ? theme.palette.primary[600]
+                                                        ? theme.palette.primary[500]
                                                         : theme.palette.secondary[100],
                                                 "&:hover": {
-                                                    backgroundColor: theme.palette.secondary[300],
+                                                    backgroundColor: theme.palette.secondary[500],
                                                     color: theme.palette.primary[600],
                                                 }
                                             }}
@@ -169,14 +170,14 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                         sx={{
                                             backgroundColor:
                                                 activeLink === link.to
-                                                    ? theme.palette.secondary[300]
+                                                    ? theme.palette.secondary[400]
                                                     : "transparent",
                                             color:
                                                 activeLink === link.to
-                                                    ? theme.palette.primary[600]
+                                                    ? theme.palette.primary[500]
                                                     : theme.palette.secondary[100],
                                             "&:hover": {
-                                                backgroundColor: theme.palette.secondary[300],
+                                                backgroundColor: theme.palette.secondary[500],
                                                 color: theme.palette.primary[600],
                                             }
                                         }}

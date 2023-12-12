@@ -16,7 +16,7 @@ export const navLinks = [
     }, {
         name: lang.ar.links.users, icon: <PersonOutlineOutlinedIcon />, to: "/management/users", isAdmin: true
     }, {
-        name: "manage user", icon: <PersonAddAltIcon />, to: "/management/users/show", isAdmin: true
+        name: "manage user", icon: <PersonAddAltIcon />, to: "/management/user", isAdmin: true
     }, {
         name: lang.ar.links.management, icon: null, isAdmin: true
     }, {

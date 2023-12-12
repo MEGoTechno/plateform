@@ -28,7 +28,7 @@ import EditName from './components/content/manage/actions/EditName';
 import ManageLessons from './components/content/manage/ManageLessons';
 import CreateLecture from './components/content/manage/actions/CreateLecture';
 import EditLecture from './components/content/manage/actions/EditLecture';
-import ManageGetUser from './pages/admin/ManageGetUser';
+import ManageGetUserPage from './pages/admin/ManageGetUserPage';
 
 
 
@@ -43,9 +43,9 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path='/' element={<HomeProfile />} />
-              <Route path='/management/users/show' element={<ManageGetUser />} />
               <Route path='/management/users' element={<UsersPage />} />
-              <Route path='/management/add-user' element={<AddUserPage />} />
+              <Route path='/management/user' element={<ManageGetUserPage />} />
+              <Route path='/management/user/add-user' element={<AddUserPage />} />
               <Route path='/users/:id' element={<UserProfile />} />
               <Route path='/exams' element={<ExamPage />} />
               <Route path='/content' element={<ContentPage />} />

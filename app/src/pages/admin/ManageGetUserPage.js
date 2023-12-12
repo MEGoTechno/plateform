@@ -5,11 +5,18 @@ import useLazyGetData from '../../hooks/useLazyGetData'
 import { useLazyGetUsersQuery } from '../../toolkit/apiSlice'
 import { setUsers } from '../../toolkit/usersSlice'
 import LoaderSkeleton from '../../components/tools/LoaderSkeleton'
+import { Box, Button } from '@mui/material'
+import Header from '../../components/tools/Header'
+import { useNavigate } from 'react-router-dom'
+import { buttonStyle } from '../../components/styles/buttonsStyles'
+import MakeTitle from '../../components/tools/MakeTitle'
+import ManageGetUser from '../../components/user/ManageGetUser'
 
-export default function ManageGetUser() {
+export default function ManageGetUSerPage() {
     const { users } = useSelector(s => s.usersSettings)
     const dispatch = useDispatch()
-    
+    const navigate = useNavigate()
+
     const [getData, { isLoading }] = useLazyGetUsersQuery()
     const [getUsers] = useLazyGetData(getData)
 
@@ -30,16 +37,20 @@ export default function ManageGetUser() {
     }, [])
 
 
-    if (isLoading) {
+    if (isLoading && !users) {
         return <LoaderSkeleton />
     }
+
+    if (!users || users?.length === 0) {
+        return <>add user</>
+    }
+
     return (
-        <div>
-            {users?.length !== 0 ? (
-                <GetUser users={users} />
-            ) : (
-                "no users found"
+        <Box>
+            <Header title={"manage user"} />
+            {users?.length !== 0 && (
+                <ManageGetUser users={users} />
             )}
-        </div>
+        </Box>
     )
 }

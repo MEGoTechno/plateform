@@ -5,7 +5,7 @@ export default function Header({ title }) {
     const theme = useTheme()
     const { lang } = useSelector(s => s.global)
     return (
-        <Box display="flex" flexDirection="column" m="20px 0" sx={{ direction: lang.direction }} >
+        <Box display="flex" flexDirection="column" m="10px 0" sx={{ direction: lang.direction }} >
             <Typography variant="h2" fontWeight="bold" sx={{
                 color: theme.palette.secondary.main, mb: 2,
             }}>
@@ -14,7 +14,7 @@ export default function Header({ title }) {
             <Typography variant="h6" m='5px'>
                 {lang.exams.subtitle}
             </Typography>
-            <Divider />
+            <Divider sx={{borderWidth: "10px", borderRadius: "6px"}}/>
         </Box>
     )
 }

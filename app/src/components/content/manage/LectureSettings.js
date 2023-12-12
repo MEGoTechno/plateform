@@ -25,6 +25,7 @@ export default function LectureSettings({ lecture, editLecture }) {
     const [settings, setSettings] = React.useState({
         isLoading: false
     })
+    
     const [isShowModal, setShowModal] = React.useState(false)
     const [deleteData] = useRemoveLectureMutation()
     const [deleteLecture] = usePostData(deleteData, settings, setSettings)
@@ -64,6 +65,7 @@ export default function LectureSettings({ lecture, editLecture }) {
             </CardContent>
 
             <CardActions disableSpacing>
+
                 <IconButton aria-label="add to favorites" color='warning' onClick={() => editLecture(lecture)}>
                     <EditIcon />
                 </IconButton>

@@ -7,7 +7,7 @@ import ManageUser from './actions/ManageUser'
 import { useSelector } from 'react-redux'
 
 
-export default function GetUser({users}) {
+export default function GetUser({ users }) {
 
 
     const [user, setUser] = useState()
@@ -35,10 +35,12 @@ export default function GetUser({users}) {
                     fullWidth
                     onChange={(e) => { setUserName(e.target.value) }}
                 />
-                <Button color='success' onClick={getUser}>search</Button>
+                <Box sx={{display: "flex", justifyContent: "center", m: "5px 0"}}>
+                    <Button color='success' onClick={getUser}>search</Button>
+                </Box>
             </Stack>
             <Divider />
-            {error && <Alert severity='error'>put true user</Alert>}
+            {error && <Alert severity='error'>No user found !</Alert>}
             {user && <ManageUser user={user} setUser={setUser} />}
         </Box>
     )
