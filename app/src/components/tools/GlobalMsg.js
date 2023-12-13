@@ -4,10 +4,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGlobalMsg } from '../../toolkit/globalSlice';
-import { Alert } from '@mui/material';
+import { Alert, Box, useTheme } from '@mui/material';
 
 export default function GlobalMsg() {
     const globalMsg = useSelector(s => s.global.globalMsg)
+    const theme = useTheme()
+
     const dispatch = useDispatch()
     const handleClose = (event) => {
         dispatch(setGlobalMsg(null))
@@ -25,10 +27,9 @@ export default function GlobalMsg() {
             </IconButton>
         </React.Fragment>
     );
-    
-    return (
-        <div>
 
+    return (
+        <Box>
             <Snackbar open={globalMsg && true}
                 autoHideDuration={4000}
                 onClose={handleClose}>
@@ -36,6 +37,6 @@ export default function GlobalMsg() {
                     {globalMsg?.message}
                 </Alert>
             </Snackbar>
-        </div>
+        </Box>
     );
 }

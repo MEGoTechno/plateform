@@ -1,7 +1,7 @@
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-export default function Header({ title }) {
+export default function Header({ title, description }) {
     const theme = useTheme()
     const { lang } = useSelector(s => s.global)
     return (
@@ -12,7 +12,7 @@ export default function Header({ title }) {
                 {title}
             </Typography>
             <Typography variant="h6" m='5px'>
-                {lang.exams.subtitle}
+                {description && description}
             </Typography>
             <Divider sx={{borderWidth: "10px", borderRadius: "6px"}}/>
         </Box>

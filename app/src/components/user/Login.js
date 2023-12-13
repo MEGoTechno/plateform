@@ -6,7 +6,7 @@ export default function Login({ lang }) {
 
     const inputs = [{
         name: "userName",
-        label: "user name"
+        label: "user name",
     },
     {
         name: "password",

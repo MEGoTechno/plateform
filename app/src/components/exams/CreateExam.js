@@ -102,7 +102,8 @@ export default function CreateExam({ exam }) {
             <Divider color={theme.palette.primary[300]} />
             <Box sx={{
                 display: 'flex',
-                flexDirection: "row"
+                flexDirection: "row",
+                gap: 2
             }}>
                 <Button onClick={() => { editExam() }} sx={buttonStyle}>edit</Button>
                 <Button onClick={() => removeExam()}

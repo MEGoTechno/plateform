@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import TabsControlled, { CustomTabPanel } from '../tools/TabsControlled';
 import CreateUnit from './CreateUnit';
 import { getUnique } from '../tools/commonFC';
@@ -9,10 +9,13 @@ import LoaderSkeleton from '../tools/LoaderSkeleton';
 import { addExamToCreated, getCreatedExams } from '../../toolkit/examSlice';
 import { setCookie } from '../../hooks/cookies';
 import useGetGrades from '../../hooks/useGetGrades';
+import Header from '../tools/Header';
+import { buttonStyle } from '../styles/buttonsStyles';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ManageExams() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [getGrades, grades] = useGetGrades()
     const { createdExams } = useSelector(s => s.exam)
@@ -28,7 +31,6 @@ export default function ManageExams() {
                 await getGrades()
             }
             const result = await trigger()
-            console.log(result.data)
             if (result.data) {
                 dispatch(getCreatedExams(result.data))
                 console.log("sent")
@@ -40,10 +42,24 @@ export default function ManageExams() {
     }
     // console.log(EXAMSDB)
     useEffect(() => {
-        if (exams?.length === 0 || !exams) {
+        if (!exams || !grades) {
             handleGetData()
         }
     }, [exams])
+
+    if (!exams || !grades) {
+        return <LoaderSkeleton />
+    }
+
+    if (grades?.length === 0) {
+        return <Box>
+            <Header title={"Manage Exams"} />
+            <Alert severity='error'>add grade plz</Alert>
+            <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+        </Box>
+    }
+
+
 
 
     let getUnits = []

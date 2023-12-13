@@ -54,9 +54,9 @@ export default function ExamForm({ exam }) {
 
     const buttonStyle = {
         fontWeight: 600,
-        margin: "10px 0", color: theme.palette.primary[500], bgcolor: theme.palette.secondary[400],
+        margin: "10px 0", color: theme.palette.primary[500], bgcolor: theme.palette.success.main,
         "&:hover": {
-            bgcolor: theme.palette.secondary[500]
+            bgcolor: theme.palette.success.light
         }
     }
     const inputs = [{ // for exam settings
@@ -150,31 +150,34 @@ export default function ExamForm({ exam }) {
     const submit = () => {
         // set load ...
         setLoading(true)
-        const newExam = { ...modifiedexam, questions: questions }
-        sendData(newExam).then((res) => {
-            console.log(res)
-            if (res.data) {
-                setLoading(false)
-                console.log("done")
-                dispatch(addExamToCreated(newExam))
-                dispatch(resetExamState())
-                navigate("/management/exams")
-            } else {
-                // not sent
-                setLoading(false)
-                setAlert({
-                    state: "error",
-                    message: res.error.data.message
-                })
-            }
-        }).catch((err) => {
-            // proplem
+        setTimeout(() => {
             setLoading(false)
-            setAlert({
-                state: "error",
-                message: err.message
-            })
-        })
+        }, [3000])
+        // const newExam = { ...modifiedexam, questions: questions }
+        // sendData(newExam).then((res) => {
+        //     console.log(res)
+        //     if (res.data) {
+        //         setLoading(false)
+        //         console.log("done")
+        //         dispatch(addExamToCreated(newExam))
+        //         dispatch(resetExamState())
+        //         navigate("/management/exams")
+        //     } else {
+        //         // not sent
+        //         setLoading(false)
+        //         setAlert({
+        //             state: "error",
+        //             message: res.error.data.message
+        //         })
+        //     }
+        // }).catch((err) => {
+        //     // proplem
+        //     setLoading(false)
+        //     setAlert({
+        //         state: "error",
+        //         message: err.message
+        //     })
+        // })
     }
     return (
         <Box>

@@ -11,6 +11,7 @@ const DB_URI = process.env.MONGO_URI
 
 // get exams accroding to grade (g1)
 const getExams = asyncHandler(async (req, res) => {
+
     await mongoose.connect(DB_URI)
     const gradeId = req.user?.grade?.gradeId
     let exams

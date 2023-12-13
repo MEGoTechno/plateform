@@ -103,6 +103,13 @@ export const apiSlice = createApi({
                 body: data
             }),
         }),
+        updateExam: builder.mutation({
+            query: data => ({
+                url: '/exams/update',
+                method: 'POST',
+                body: data
+            }),
+        }),
         removeExam: builder.mutation({
             query: data => ({
                 url: '/exams/delete',
@@ -136,9 +143,9 @@ export const apiSlice = createApi({
         }),
     })
 })
-export const { 
+export const {
     useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useInActivateUserMutation, useUpdateUserMutation, useMakeAdminMutation,
     useLazyGetSettingsQuery, usePostSettingsMutation, useUpdateSettingsMutation, useDeleteSettingsMutation,
-    usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery,
+    usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation,
     usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation
 } = apiSlice

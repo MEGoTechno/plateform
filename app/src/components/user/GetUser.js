@@ -15,6 +15,7 @@ export default function GetUser({ users }) {
     const [error, setError] = useState(false)
 
     const getUser = () => {
+
         const filtered = users.filter((user) => user.userName === userName.trim())
         const [user] = filtered
         if (!user) {
@@ -33,6 +34,7 @@ export default function GetUser({ users }) {
                     label="user name"
                     placeholder='only userName allowed'
                     fullWidth
+                    color='warning'
                     onChange={(e) => { setUserName(e.target.value) }}
                 />
                 <Box sx={{display: "flex", justifyContent: "center", m: "5px 0"}}>

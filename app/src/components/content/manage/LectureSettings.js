@@ -16,16 +16,17 @@ import { useTheme } from '@mui/material';
 import usePostData from '../../../hooks/usePostData';
 import { useDispatch } from 'react-redux';
 import { setLectures } from '../../../toolkit/contentSlice';
+import Loader from "../../tools/Loader"
 
 export default function LectureSettings({ lecture, editLecture }) {
     const theme = useTheme()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    
+
     const [settings, setSettings] = React.useState({
         isLoading: false
     })
-    
+
     const [isShowModal, setShowModal] = React.useState(false)
     const [deleteData] = useRemoveLectureMutation()
     const [deleteLecture] = usePostData(deleteData, settings, setSettings)
@@ -34,19 +35,20 @@ export default function LectureSettings({ lecture, editLecture }) {
         setShowModal(true)
     }
 
-    const trigger = async() => {
+    const trigger = async () => {
         setShowModal(false)
+        setSettings({ isLoading: true })
         await deleteLecture(lecture)
         dispatch(setLectures(null))
         navigate("/management/content")
     }
-    
+
     return (
-        <Card sx={{ maxWidth: 259,bgcolor:  theme.palette.background.alt}}>
+        <Card sx={{ bgcolor: theme.palette.background.alt }}>
             <CardMedia
                 component="img"
-                height="194"
-                image={`http://localhost:5050/${lecture.thumbnail}`}
+                height={140}
+                image={`/images/download.jpg`}
                 alt="no images"
             />
             <CardContent>
@@ -57,7 +59,7 @@ export default function LectureSettings({ lecture, editLecture }) {
                     {lecture.partName}
                 </Typography>
                 <Typography sx={{ mt: 1.5, mb: 1.5 }} color="text.secondary">
-                    Descitption
+                    Description
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {lecture.description}
@@ -66,12 +68,21 @@ export default function LectureSettings({ lecture, editLecture }) {
 
             <CardActions disableSpacing>
 
-                <IconButton aria-label="add to favorites" color='warning' onClick={() => editLecture(lecture)}>
-                    <EditIcon />
-                </IconButton>
-                <IconButton aria-label="share" color='error' onClick={openModal}>
-                    <DeleteIcon />
-                </IconButton>
+
+                {settings.isLoading ? (
+                    <Loader />
+                ) : (
+                    <>
+                        <IconButton aria-label="add to favorites" color='warning' onClick={() => editLecture(lecture)}>
+                            <EditIcon />
+                        </IconButton>
+
+                        <IconButton aria-label="share" color='error' onClick={openModal}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </>
+                )}
+
             </CardActions>
             <ModalControlled
                 title={"r u sure to delete"}

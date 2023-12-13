@@ -16,6 +16,8 @@ export default function VidCard({ lecture, lessonLectures }) {
     const goVid = () => {
         navigate(`/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
     }
+
+    console.log(lecture)
     return (
         <Card sx={{ bgcolor: theme.palette.background.alt }}>
             <CardMedia
@@ -29,7 +31,7 @@ export default function VidCard({ lecture, lessonLectures }) {
                     {lecture.partName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {lecture.description}
+                    {lecture.description} 
                 </Typography>
             </CardContent>
             <CardActions>

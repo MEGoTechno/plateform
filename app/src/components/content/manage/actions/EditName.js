@@ -6,6 +6,7 @@ import usePostData from '../../../../hooks/usePostData'
 import * as Yup from "yup"
 import { useDispatch } from 'react-redux'
 import { setLectures } from '../../../../toolkit/contentSlice'
+import { Box } from '@mui/material'
 
 export default function EditName() {
     const location = useLocation()
@@ -52,9 +53,9 @@ export default function EditName() {
     }
 
     return (
-        <div>
+        <Box sx={{mt: "20px"}}>
             <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={trigger} />
-        </div>
+        </Box>
     )
 }
 

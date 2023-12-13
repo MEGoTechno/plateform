@@ -7,7 +7,6 @@ import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 
 
 export default function ManageGetUser({ users }) {
-    console.log(users)
 
     return (
         <Box>

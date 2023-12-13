@@ -17,10 +17,12 @@ import { logout } from '../../toolkit/globalSlice';
 import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { buttonStyle } from '../styles/buttonsStyles';
+import ModalControlled from '../tools/ModalControlled';
 
 export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, sideBarWidth }) {
 
     const theme = useTheme()
+    const [isShowModal, setShowModal] = useState(false)
     const { user } = useSelector(state => state.global)
     const { lang } = useSelector(s => s.global)
     const navigate = useNavigate()
@@ -38,6 +40,11 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
             }
         }
     }, [pathname])
+
+    const userLogout = () => {
+        dispatch(logout())
+        setShowModal(false)
+    }
 
     return (
         <Box component="nav" sx={{ transition: ".3s all ease" }}>
@@ -203,16 +210,23 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                     <Button sx={{
                         width: '100%',
                         m: '0 5px 15px 5px',
-                        color: "inherit",
-                        bgcolor: theme.palette.error.dark,
+                        color: theme.palette.text.primary,
+                        bgcolor: theme.palette.error.main,
                         "&:hover": {
-                            bgcolor: theme.palette.error.dark,
+                            bgcolor: theme.palette.error.light,
                         }
-                    }} onClick={() => dispatch(logout())}>
+                    }} onClick={() => setShowModal(true)}>
                         <LogoutIcon />    {lang.links.logOut}
                     </Button>
                 </Box>
             </Drawer >
+
+            <ModalControlled
+                title={"r u sure to logout ?"}
+                description={"dsd"}
+                action={userLogout}
+                isShowModal={isShowModal}
+                close={() => setShowModal(false)} />
         </Box >
     );
 }

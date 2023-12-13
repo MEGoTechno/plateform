@@ -7,8 +7,10 @@ import useLazyGetData from '../../hooks/useLazyGetData'
 import LoaderSkeleton from '../../components/tools/LoaderSkeleton'
 import { setLectures } from '../../toolkit/contentSlice'
 import useGetGrades from '../../hooks/useGetGrades'
-import { Box, Stack } from '@mui/material'
+import { Alert, Box, Button, Stack } from '@mui/material'
 import Header from '../../components/tools/Header'
+import { buttonStyle } from '../../components/styles/buttonsStyles'
+import { useNavigate } from 'react-router-dom'
 
 export default function ContentPage() {
   const { user } = useSelector(s => s.global)
@@ -16,6 +18,7 @@ export default function ContentPage() {
 
   const { lectures } = useSelector(s => s.content)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [getData, { isLoading }] = useLazyGetLecturesQuery()
   const [getLectures] = useLazyGetData(getData)
@@ -31,7 +34,7 @@ export default function ContentPage() {
   }
 
   useEffect(() => {
-    if (!lectures) {
+    if (!lectures || !grades) {
       trigger()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,6 +42,15 @@ export default function ContentPage() {
 
   if (isLoading) {
     return <LoaderSkeleton />
+  }
+
+
+  if (grades?.length === 0) {
+    return <Box>
+      <Header title={"content"} />
+      <Alert severity='error'>add grade plz</Alert>
+      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+    </Box>
   }
 
   if (!lectures || lectures?.length === 0) {

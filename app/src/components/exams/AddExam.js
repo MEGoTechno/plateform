@@ -4,6 +4,7 @@ import FormControlled from '../tools/FormControlled'
 import ExamForm from './ExamForm'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import Header from '../tools/Header'
 
 export default function AddExam() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function AddExam() {
 
     return (
         <Box>
+            <Header title={"add exam"} />
             {/* <FormControlled inputs={inputs} data={{}} onSubmit={submit} loading={loading} /> */}
             {exam.gradeId && <ExamForm exam={exam} />}
 

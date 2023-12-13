@@ -4,6 +4,8 @@ import ContentForm from './ContentForm'
 import usePostData from '../../../../hooks/usePostData'
 import * as Yup from "yup"
 import { useUpdateLectureMutation } from '../../../../toolkit/apiSlice'
+import { Box } from '@mui/material'
+import Header from "../../../tools/Header"
 
 export default function EditLecture() {
     const location = useLocation()
@@ -76,17 +78,20 @@ export default function EditLecture() {
 
     const [trigger] = usePostData(sendData, formOptions, setFormOptions)
 
-    const sumbitData = () => {
+    const sumbitData = async () => {
         setFormOptions({
             ...formOptions, isLoading: true, isShowModal: false
         })
-
-        trigger()
+        
+        const res = await trigger()
+        console.log(res)
+        
     }
 
     return (
-        <div>
+        <Box >
+            <Header title={"edit Lecture"} description= {`${lecture.gradeName} > ${lecture.lessonName}`} />
             <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={sumbitData} />
-        </div>
+        </Box>
     )
 }

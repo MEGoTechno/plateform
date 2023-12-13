@@ -6,11 +6,14 @@ import { useLazyGetLecturesQuery } from '../../toolkit/apiSlice'
 import useLazyGetData from '../../hooks/useLazyGetData'
 import LoaderSkeleton from "../../components/tools/LoaderSkeleton"
 import { setLectures } from '../../toolkit/contentSlice'
-import { Alert } from '@mui/material'
+import { Alert, Box, Button } from '@mui/material'
 import useGetGrades from '../../hooks/useGetGrades'
+import Header from '../../components/tools/Header'
+import { buttonStyle } from '../../components/styles/buttonsStyles'
+import { useNavigate } from 'react-router-dom'
 
 export default function ManageContentPage() {
-
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
   const [getGrades, grades] = useGetGrades()
@@ -22,7 +25,6 @@ export default function ManageContentPage() {
 
   const trigger = async () => {
     try {
-
       if (!grades) {
         await getGrades()
       }
@@ -36,18 +38,30 @@ export default function ManageContentPage() {
   }
 
   useEffect(() => {
-    if (!lectures) {
+    if (!lectures || !grades) {
       trigger()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!lectures) {
+  if (!lectures || !grades) {
     return <LoaderSkeleton />
   }
 
-  if(!grades){
-    return <>add new grade plz</>
+  if (grades?.length === 0) {
+    return <Box>
+      <Header title={"content"} />
+      <Alert severity='error'>add grade plz</Alert>
+      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+    </Box>
+  }
+
+  if(!lectures || lectures?.length === 0){
+    <Box>
+      <Header title={"content"} />
+      <Alert severity='error'>add lecture plz</Alert>
+      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+    </Box>
   }
 
   if (error) {
@@ -56,8 +70,9 @@ export default function ManageContentPage() {
   }
 
   return (
-    <div>
+    <Box>
+      <Header title={"content"} />
       <ManageContent grades={grades} lectures={lectures} />
-    </div>
+    </Box>
   )
 }

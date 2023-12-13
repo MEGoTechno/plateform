@@ -6,6 +6,8 @@ import * as Yup from "yup"
 import ContentForm from "./ContentForm"
 import { useDispatch } from "react-redux"
 import { setLectures } from "../../../../toolkit/contentSlice"
+import Header from "../../../tools/Header"
+import { Box } from "@mui/material"
 
 export default function CreateLecture() {
   const navigate = useNavigate()
@@ -93,8 +95,9 @@ export default function CreateLecture() {
 
 
   return (
-    <div>
+    <Box>
+      <Header title={"create Lecture"} description={`${gradeName && gradeName} > ${lessonName ? lessonName : "new lesson"}`} />
       <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={trigger} />
-    </div>
+    </Box>
   )
 }

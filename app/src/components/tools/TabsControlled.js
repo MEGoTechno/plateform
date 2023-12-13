@@ -63,7 +63,7 @@ export default function TabsControlled({ value, setValue, items, by }) {
                 onChange={handleChange}
                 aria-label="tabs"
                 variant="scrollable"
-                scrollButtons
+                scrollButtons="auto"
                 allowScrollButtonsMobile
                 textColor="secondary"
                 indicatorColor="secondary" sx={tabsStyle}>

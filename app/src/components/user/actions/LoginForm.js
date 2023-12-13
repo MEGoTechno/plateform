@@ -19,6 +19,9 @@ export default function LoginForm({ inputs }) {
 
     // for get values and pass to modal
     const trigger = async (values, props) => {
+        setFormOptions({
+           ...formOptions, isLoading: true
+        })
         const res = await sendLogin(values)
         dispatch(setUser(res))
     }

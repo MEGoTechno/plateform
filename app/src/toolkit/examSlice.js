@@ -17,7 +17,7 @@ const initialState = {
         time: "",
         questions: []
     },
-    createdExams: []
+    createdExams: null
 }
 
 const examSlice = createSlice({
@@ -84,7 +84,6 @@ const examSlice = createSlice({
             return state
         },
         getCreatedExams: (state, action) => {
-            console.log(action.payload)
             state.createdExams = action.payload
             setCookie("h", action.payload)
             return state

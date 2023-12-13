@@ -49,7 +49,6 @@ export default function CreateUnit({ grade, units, exams }) {
         const unitId = grade.gradeId + `u${i}`
         const lessonId = unitId + `l1`
         const partId = lessonId + `p1`
-        console.log({ gradeId, gradeName, unitId, lessonId, partId })
         dispatch(resetExamState())
         dispatch(editExamSettings({ gradeId, gradeName, unitId, lessonId, partId }))
         navigate("/management/exams/add-exam")
@@ -74,7 +73,7 @@ export default function CreateUnit({ grade, units, exams }) {
             {units && units.map((unit, i) => {
                 return (
                     <Accordion key={i} sx={{
-                        mb: 5, mt: 1,
+                        mb: 5, mt: 1,bgcolor: theme.palette.background.alt
                     }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -97,7 +96,7 @@ export default function CreateUnit({ grade, units, exams }) {
                                             </FlexInBetween>
                                             <Divider color={theme.palette.primary[300]} />
                                             <Box>
-                                                <Box key={i} sx={{ display: "flex", justifyContent: "space-between", flexDirection: "row", flexWrap: "wrap" }}>
+                                                <Box key={i} sx={{ display: "flex", justifyContent: "center", flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
                                                     {exams && exams.map((exam, i) => {
                                                         return (
                                                             exam.lessonId === lesson.lessonId && (

@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import MakeInput from './MakeInput'
 import { Form, Formik, useFormik } from 'formik'
 import * as Yup from "yup"
-import { Alert, Box } from '@mui/material'
+import { Alert, Box, Button } from '@mui/material'
+import Loader from "../../tools/Loader"
+import { sendSuccess } from '../../styles/buttonsStyles'
 
 export default function MakeForm({ inputs, onSubmit, formOptions }) {
     const data = {}
@@ -27,9 +29,12 @@ export default function MakeForm({ inputs, onSubmit, formOptions }) {
                         {inputs && inputs.map((input, i) => (
                             <MakeInput key={i} input={input} props={props} />
                         ))}
-                        <button type='submit' >
-                            {formOptions?.isLoading ? "sending ..." : "submit"}
-                        </button>
+                        
+                        <Button
+                            sx={sendSuccess}
+                            type='submit' >
+                            {formOptions?.isLoading ? <Loader /> : "submit"}
+                        </Button>
                     </Form>
                 )}
             </Formik>

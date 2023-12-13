@@ -44,6 +44,9 @@ export default function MakeInput({ input, props }) {
     return (
         <Field
             as={TextField}
+            sx={{
+                m: "8px"
+            }}
             name={input.name}
             type={input.type ? input.type : "text"}
             label={input.label}

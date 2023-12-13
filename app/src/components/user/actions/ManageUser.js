@@ -76,9 +76,8 @@ export default function ManageUser({ user, setUser }) {
 
             <Grid container spacing={2}
                 sx={{
-                    backgroundColor: theme.palette.background.alt, m: "5px 0", p: "5px 5px 10px",
+                    backgroundColor: theme.palette.background.alt, m: "5px 0", p: "5px 15px 10px 5px",
                     borderRadius: "5px",
-                    justifyContent: "center",
                 }}>
 
                 <Grid item xs={12} width={"100%"}>

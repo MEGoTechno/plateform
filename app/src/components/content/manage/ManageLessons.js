@@ -1,4 +1,4 @@
-import { Box, Button, Chip, Divider, Stack, Typography } from '@mui/material'
+import { Box, Button, Chip, Divider, Grid, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../../tools/commonFC'
@@ -6,6 +6,7 @@ import Header from '../../tools/Header'
 import { buttonStyle } from '../../styles/buttonsStyles'
 import LessonSettings from './LessonSettings'
 import LectureSettings from './LectureSettings'
+import MakeTitle from "../../tools/MakeTitle"
 
 export default function ManageLessons() {
 
@@ -76,16 +77,23 @@ export default function ManageLessons() {
     }
 
     return (
-        <Box>
+        <Box sx={{ mt: "20px" }}>
             <Divider>
-                <Box sx={{ m: "20px 0", display: "flex", justifyContent: "center" }}>
-                    <Stack direction="row" spacing={2}>
-                        {lessons && lessons.map((lesson, i) => (
-                            <Chip key={i} label={lesson.lessonName} variant={i === value ? "filled" : "outlined"} color='success' onClick={() => handleLessonLectures(lesson, i)} />
-                        ))}
-                        <Chip label="add lesson" variant="outlined" color='success' onClick={createLesson} />
-                    </Stack>
-                </Box>
+                <Grid container spacing={2}>
+                    {lessons && lessons.map((lesson, i) => (
+                        <Grid key={i} item md={4} sm={6} xs={6} width={{ md: 500, sm: 350, xs: 250 }}>
+                            <Chip
+                                key={i} sx={{ width: "100%" }}
+                                label={lesson.lessonName}
+                                variant={i === value ? "filled" : "outlined"}
+                                color='success'
+                                onClick={() => handleLessonLectures(lesson, i)} />
+                        </Grid>
+                    ))}
+                    <Grid item md={4} sm={6} xs={6} width={{ md: 500, sm: 350, xs: 250 }}>
+                        <Chip sx={{ width: "100%" }} label="add lesson" variant="outlined" color='warning' onClick={createLesson} />
+                    </Grid>
+                </Grid>
             </Divider>
 
 
@@ -95,7 +103,7 @@ export default function ManageLessons() {
             </Box>
 
             <Stack direction="column" spacing={2}>
-                <Typography variant='h3' textAlign={"center"}>lectures</Typography>
+                <MakeTitle title="mange videos" />
 
                 <Box sx={{
                     display: "flex", flexDirection: { xs: "column", sm: "row" }, justifyContent: "center", alignItems: "center", gap: 2, flexWrap: "wrap"
