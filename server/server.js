@@ -8,7 +8,7 @@ const app = express()
 const multer = require("multer")
 const fs = require("fs")
 const upload = require("./middleware/storage")
-
+const cloudinary = require("cloudinary").v2
 
 // get fc routes
 const userRouter = require("./routes/userRoutes")
@@ -44,6 +44,43 @@ app.use("/exams", examsRouter)
 app.use("/content", contentRouter)
 app.use("/settings", settingsRouter)
 // app.use("/fire", UploadRouter)
+
+
+cloudinary.config({
+    cloud_name: "djbmm1kfz",
+    api_key: "213788292784721",
+    api_secret: "cz8gOSaBcpvHA1jd8NempmFKtF0"
+})
+
+
+app.use("/upload", upload.single("image"), async (req, res, next) => {
+    try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "videos"
+        })
+        console.log(result)
+        res.json(result)
+    } catch (error) {
+        res.json(error)
+        console.log(error)
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // for errors 
 app.use(notFound)

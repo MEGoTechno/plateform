@@ -11,18 +11,19 @@ export default function Test() {
     { name: "userName", value: "elawadii" },
     {
       name: "image",
+      label: "image",
       type: "file"
     }]
 
   const send = (values, props) => {
-    console.log(props)
     const formData = new FormData()
+
     Object.keys(values).forEach(key => formData.append(key, values[key]))
 
+      sendFile(formData).then((res, s) => {
+        console.log(res)
+      })
 
-    sendFile(formData).then((res, s) => {
-      console.log(res)
-    })
   }
 
   return (
