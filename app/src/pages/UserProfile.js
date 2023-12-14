@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 
 export default function UserProfile({ user }) {
     const theme = useTheme()
-    const navigate = useNavigate()
     const location = useLocation()
     const { data: users, isSuccess, } = useGetUsersQuery()
     const { lang } = useSelector(s => s.global)
@@ -66,9 +65,6 @@ export default function UserProfile({ user }) {
                 }}>
                     <Typography>page is underconstruction !</Typography>
                 </Paper>
-
-                <button onClick={() => navigate("/test")}> go test</button>
-
             </Box>
         )
     } else {
