@@ -54,12 +54,14 @@ cloudinary.config({
 
 
 app.use("/upload", upload.single("image"), async (req, res, next) => {
+    console.log("start sending")
     try {
         const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: "videos"
+            folder: "notVid",
+            resource_type: "auto"
         })
-        console.log(result)
-        res.json(result)
+        console.log(result.secure_url)
+        res.json(result.secure_url)
     } catch (error) {
         res.json(error)
         console.log(error)
