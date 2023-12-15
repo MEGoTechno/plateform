@@ -38,7 +38,6 @@ export default function Layout() {
                             transition: ".3s all ease"
                         }}>
                         <Navbar setSideBar={setSideBar} isOpenedSideBar={isOpenedSideBar} />
-                            <button onClick={() => navigate("/test")}> go test</button>
                         <Box sx={{ p: "0 32px" }}>
                             {isAccessed ? <Outlet /> : <NotFound />}
                         </Box>

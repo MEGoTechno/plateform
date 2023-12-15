@@ -113,6 +113,10 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                     </Box>
                     <List>
                         {navLinks.map((link, i) => {
+                            if(link.isAdmin && user.role === "subAdmin"){
+                                return false
+                            }
+
                             if (!link.icon && user.role !== "student") {
                                 return (
                                     <Box key={i} sx={{ display: "flex", justifyContent: "center", }}>
@@ -123,7 +127,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                 )
                             }
 
-                            if (link.isAdmin && user.role !== "student") {
+                            if (link.isSubAdmin && user.role !== "student") {
                                 return (
                                     <ListItem key={i} sx={{ p: "0 10px" }}>
                                         <ListItemButton onClick={() => {
@@ -161,7 +165,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                 )
                             }
 
-                            if (!link.icon || link.isAdmin) {
+                            if (!link.icon || link.isSubAdmin) {
                                 return (
                                     <React.Fragment key={i}>
                                     </React.Fragment>

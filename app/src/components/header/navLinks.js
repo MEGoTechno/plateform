@@ -12,18 +12,18 @@ export const navLinks = [
     }, {
         name: lang.ar.links.study, icon: <SchoolOutlinedIcon />, to: "/content"
     }, {
-        name: lang.ar.links.usersInfo, icon: null
+        name: lang.ar.links.usersInfo, icon: null, isAdmin: true
     }, {
-        name: lang.ar.links.users, icon: <PersonOutlineOutlinedIcon />, to: "/management/users", isAdmin: true
+        name: lang.ar.links.users, icon: <PersonOutlineOutlinedIcon />, to: "/management/users", isSubAdmin: true, isAdmin: true
     }, {
-        name: "manage user", icon: <PersonAddAltIcon />, to: "/management/user", isAdmin: true
+        name: "manage user", icon: <PersonAddAltIcon />, to: "/management/user", isSubAdmin: true, isAdmin: true
     }, {
-        name: lang.ar.links.management, icon: null, isAdmin: true
+        name: lang.ar.links.management, icon: null, isSubAdmin: true
     }, {
-        name: lang.ar.links.manageExams, icon: <ManageSearchSharpIcon />, to: "/management/exams", isAdmin: true
+        name: lang.ar.links.manageExams, icon: <ManageSearchSharpIcon />, to: "/management/exams", isSubAdmin: true
     }, {
-        name: "add videos", icon: <SourceIcon />, to: "/management/content", isAdmin: true
+        name: "add videos", icon: <SourceIcon />, to: "/management/content", isSubAdmin: true
     }, {
-        name: lang.ar.links.manageContent, icon: <SourceIcon />, to: "/management/years", isAdmin: true
+        name: lang.ar.links.manageContent, icon: <SourceIcon />, to: "/management/years", isSubAdmin: true
     }
 ]

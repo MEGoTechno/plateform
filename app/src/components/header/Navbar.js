@@ -1,6 +1,6 @@
 import React from 'react'
 import { FlexInBetween } from '../tools/FlexInBetween'
-import { AppBar, Badge, IconButton, Toolbar, Tooltip, Typography, useTheme } from '@mui/material'
+import { AppBar, Avatar, Badge, IconButton, Toolbar, Tooltip, Typography, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
@@ -26,6 +26,12 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                     <IconButton onClick={() => setSideBar(!isOpenedSideBar)} sx={{ mr: 1 }}>
                         <MenuIcon />
                     </IconButton>
+                    <Avatar src="/images/logo.jpg" sx={{
+                        mr: 2,
+                        height: "30px",
+                        width: "30px",
+                        bgcolor: theme.palette.secondary[400]
+                    }} />
                     <Typography
                         variant="h5"
                         noWrap
