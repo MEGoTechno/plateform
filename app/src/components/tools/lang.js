@@ -5,15 +5,17 @@ export const lang = {
         password: "password",
         send: "submit",
         logo: "MR/Adel Biology",
+        words: {},
         links: {
             exams: "exams",
-            study: "study",
+            lectures: "lectures",
             usersInfo: "users info",
             users: "users",
-            addUser: "add user",
+            manageUsers: "mange users",
             management: "management",
             manageExams: "manage exams",
-            manageContent: "manage content",
+            manageLectures: "manage content",
+            grades: "grades",
             logOut: "logout"
         },
         exams: {
@@ -22,7 +24,8 @@ export const lang = {
             subtitle: "information about here",
             time: "time",
             nums: "nums",
-            degree: "degree"
+            degree: "degree",
+            start: "start"
         },
         users: {
             userName: "userName",
@@ -43,14 +46,15 @@ export const lang = {
         logo: "أ/ عادل الغريب فى الاحياء",
         links: {
             exams: "الاختبارات",
-            study: "الدراسه",
+            lectures: "المحاضرات",
             usersInfo: "اداره الطلاب",
             userProfile: "بيانات الطالب",
             users: "عرض الطلاب",
-            addUser: "إضافه طالب",
+            manageUsers: "اداره الطلاب",
             management: "الاداره",
             manageExams: "اداره الاختبارات",
-            manageContent: "اداره المحتوى",
+            manageLectures: "اداره المحتوى",
+            grades: 'اداره السنوات',
             logOut: "تسجيل الخروج"
         },
         exams: {

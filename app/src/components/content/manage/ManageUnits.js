@@ -7,7 +7,7 @@ export default function ManageUnits({ grade, lectures }) {
     const navigate = useNavigate()
     const units = getUnique(lectures, "unitId") //units list
     const theme = useTheme()
-
+    
     const showUnit = (unit) => {
         const unitLectures = getSameValue(lectures, "unitId", unit.unitId)
         const lessons = getUnique(unitLectures, "lessonId")

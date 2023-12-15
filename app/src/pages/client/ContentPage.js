@@ -19,8 +19,8 @@ export default function ContentPage() {
   const { lectures } = useSelector(s => s.content)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const [getData, { isLoading }] = useLazyGetLecturesQuery()
+  console.log(grades)
+  const [getData, { isLoading, error }] = useLazyGetLecturesQuery()
   const [getLectures] = useLazyGetData(getData)
 
   const trigger = async () => {
@@ -32,7 +32,6 @@ export default function ContentPage() {
     const lectures = await getLectures()
     dispatch(setLectures(lectures))
   }
-
   useEffect(() => {
     if (!lectures || !grades) {
       trigger()
@@ -46,20 +45,24 @@ export default function ContentPage() {
 
 
   if (grades?.length === 0) {
-    return <Box>
+    return <Box sx={{ direction: 'rtl' }}>
       <Header title={"content"} />
       <Alert severity='error'>add grade plz</Alert>
       <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
     </Box>
   }
 
-  if (user.isAdmin) {
+  if (user.isAdmin && lectures) {
     return (
-      <Stack mt="20px">
+      <Stack mt="20px" >
         <AllContent lectures={lectures} grades={grades} />
       </Stack>
     )
   }
+
+if(!lectures){
+  return <></>
+}
 
   return (
     <Stack>

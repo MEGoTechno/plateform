@@ -5,10 +5,10 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { AppBar, useTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 export function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
     return (
         <div
             role="tabpanel"
@@ -41,6 +41,7 @@ function a11yProps(index) {
 
 export default function TabsControlled({ value, setValue, items, by }) {
     const theme = useTheme()
+    const lang = useSelector(s =>s.global.lang)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -57,7 +58,7 @@ export default function TabsControlled({ value, setValue, items, by }) {
         width: `calc(100% / ${items.length})`, // take care of it
     }
     return (
-        <AppBar position="static" sx={{ bgcolor: theme.palette.background.alt, boxShadow: "none", width: "100%" }} >
+        <AppBar position="static" sx={{ bgcolor: theme.palette.background.alt, boxShadow: "none", width: "100%", direction: lang.direction }} >
             <Tabs
                 value={value}
                 onChange={handleChange}

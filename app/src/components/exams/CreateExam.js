@@ -116,6 +116,7 @@ export default function CreateExam({ exam, isManage }) {
                     <Button onClick={() => { editExam() }} sx={buttonStyle}>edit</Button>
                     <Button onClick={shoModal}
                         sx={buttonStyle}
+                        disabled={loading ? true : false}
                     >{loading ? <Loader /> : "remove"}</Button>
                 </Box>
             ) : (
@@ -124,7 +125,7 @@ export default function CreateExam({ exam, isManage }) {
                     flexDirection: "row",
                     gap: 2
                 }}>
-                    <Button sx={buttonStyle} disabled >start exam</Button>
+                    <Button sx={buttonStyle} disabled >{lang.exams.start}</Button>
                 </Box>
             )}
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}

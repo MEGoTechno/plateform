@@ -56,16 +56,8 @@ export default function ManageContentPage() {
     </Box>
   }
 
-  if(!lectures || lectures?.length === 0){
-    <Box>
-      <Header title={"content"} />
-      <Alert severity='error'>add lecture plz</Alert>
-      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
-    </Box>
-  }
 
   if (error) {
-    console.log(error)
     return <Alert severity='error'>connection confused</Alert>
   }
 

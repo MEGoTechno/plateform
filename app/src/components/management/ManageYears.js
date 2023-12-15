@@ -48,7 +48,6 @@ export default function ManageYears() {
         headerName: "grade",
         width: 150
     }]
-
     return (
         <Box>
             {isLoading ? ( // if loading...
