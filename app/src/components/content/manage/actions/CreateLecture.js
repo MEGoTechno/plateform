@@ -44,18 +44,21 @@ export default function CreateLecture() {
       name: "gradeName",
       label: lang.form.gradeName,
       value: gradeName || "",
-      disabled: gradeName ? true : false
+      disabled: gradeName ? true : false,
+      validation: Yup.string().required("مطلوب")
     }, {
       name: "unitId",
       label: "unitId",
       value: unitId,
       hidden: true,
-      disabled: true
+      disabled: true,
     }, {
       name: "unitName",
       label: lang.form.unitName,
       value: unitName || "",
-      disabled: unitName ? true : false
+      disabled: unitName ? true : false,
+      validation: Yup.string().required("مطلوب")
+
     }, {
       name: "lessonId",
       label: "lessonId",
@@ -66,14 +69,20 @@ export default function CreateLecture() {
       name: "lessonName",
       label: lang.form.lessonName,
       value: lessonName || "",
-      disabled: lessonName ? true : false
+      disabled: lessonName ? true : false,
+      validation: Yup.string().required("مطلوب")
+
     }, {
       name: "partName",
       label: lang.form.partName,
+      validation: Yup.string().required("مطلوب")
+
     }, {
       name: "description",
       label: lang.form.description,
-      validation: Yup.string().required("it is required")
+      validation: Yup.string().required("مطلوب")
+
+
     }, {
       name: "thumbnail",
       label: lang.form.thumbnail,

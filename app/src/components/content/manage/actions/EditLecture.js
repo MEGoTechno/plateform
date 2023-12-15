@@ -43,11 +43,13 @@ export default function EditLecture() {
             value: lecture.unitId,
             hidden: true,
             disabled: true,
+
         }, {
             name: "unitName",
             label: lang.form.unitName,
             value: lecture.unitName,
-            disabled: true
+            disabled: true,
+            validation: Yup.string().required("مطلوب")
         }, {
             name: "lessonId",
             label: "...",
@@ -59,6 +61,7 @@ export default function EditLecture() {
             label: lang.form.lessonName,
             value: lecture.lessonName,
             disabled: true,
+            validation: Yup.string().required("مطلوب")
         }, {
             name: "partId",
             label: "...",
@@ -69,11 +72,13 @@ export default function EditLecture() {
             name: "partName",
             label: lang.form.partName,
             value: lecture.partName,
+            validation: Yup.string().required("مطلوب")
 
         }, {
             name: "description",
             label: lang.form.description,
             value: lecture.description,
+            validation: Yup.string().required("مطلوب")
         }, {
             name: "thumbnail",
             label: lang.form.thumbnail,
