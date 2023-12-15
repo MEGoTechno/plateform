@@ -33,7 +33,6 @@ export default function ManageExams() {
             const result = await trigger()
             if (result.data) {
                 dispatch(getCreatedExams(result.data))
-                console.log("sent")
             }
 
         } catch (err) {

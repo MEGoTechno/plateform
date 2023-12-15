@@ -22,7 +22,6 @@ export default function EditLecture() {
         res: ""
     })
 
-
     const inputs = [
         {
             name: "gradeId",
@@ -73,6 +72,16 @@ export default function EditLecture() {
             name: "description",
             label: "description",
             value: lecture.description,
+        }, {
+            name: "thumbnail",
+            label: "edit thumbnail",
+            type: "file",
+            existedFile: lecture.thumbnail
+        }, {
+            name: "video",
+            label: "edit video",
+            type: "file",
+            existedFile: lecture.video
         }
     ]
 
@@ -82,15 +91,15 @@ export default function EditLecture() {
         setFormOptions({
             ...formOptions, isLoading: true, isShowModal: false
         })
-        
+
         const res = await trigger()
         console.log(res)
-        
+
     }
 
     return (
         <Box >
-            <Header title={"edit Lecture"} description= {`${lecture.gradeName} > ${lecture.lessonName}`} />
+            <Header title={"edit Lecture"} description={`${lecture.gradeName} > ${lecture.lessonName}`} />
             <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={sumbitData} />
         </Box>
     )

@@ -10,8 +10,22 @@ const contentSchema = mongoose.Schema({
     lessonName: { type: String },
     partName: { type: String },
     description: { type: String },
-    video: { type: String },
-    thumbnail: { type: String },
+    video: {
+        original_filename: { type: String, required: true },
+        secure_url: { type: String, required: true },
+        url: { type: String, required: true },
+        size: { type: Number, required: true },
+        resource_type: { type: String, required: true },
+        format: { type: String, required: true }
+    },
+    thumbnail: {
+        original_filename: { type: String, required: true },
+        secure_url: { type: String, required: true },
+        url: { type: String, required: true },
+        size: { type: Number, required: true },
+        resource_type: { type: String, required: true },
+        format: { type: String, required: true }
+    },
 }, {
     timestamps: true
 

@@ -1,4 +1,4 @@
-import { Box, Button, useTheme } from '@mui/material'
+import { Alert, Box, Button, useTheme } from '@mui/material'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../tools/commonFC'
@@ -18,6 +18,12 @@ export default function ShowUnits({ grade, lectures }) {
 
       navigate(`/content/${unitId}`, { state: { lectures: lectuersByUnit, lessons, grade } })
    }
+
+   if (!lectures || lectures?.length === 0) {
+      return <Alert severity='error'> add lecture plz</Alert>
+
+   }
+
 
    return (
       <Box>

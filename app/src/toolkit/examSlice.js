@@ -89,8 +89,12 @@ const examSlice = createSlice({
             return state
         },
         addExamToCreated: (state, action) => {
-            state.createdExams = [...state.createdExams, action.payload]
-            setCookie("e", [...state.createdExams, action.payload])
+            let exams = state.createdExams
+            exams = [...state.createdExams, action.payload]
+
+            state.createdExams = exams
+            console.log(action.payload)
+            // setCookie("e", [...state.createdExams, action.payload])
             return state
         }
     }

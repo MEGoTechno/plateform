@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Divider, Typography, useTheme } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Button, Divider, Typography, useTheme } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FlexInBetween } from '../tools/FlexInBetween';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,15 +6,16 @@ import CreateExam from './CreateExam';
 import React, { useEffect, useMemo, useState } from 'react';
 import { getUnique } from '../tools/commonFC';
 import { editExamSettings, resetExamState } from '../../toolkit/examSlice';
-import { useNavigate } from 'react-router-dom';
-import ButtonStyled from '../tools/ButtonStyled';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { buttonStyle, sendSuccess } from '../styles/buttonsStyles';
 
 export default function CreateUnit({ grade, units, exams }) {
     const { lang } = useSelector(s => s.global)
     const theme = useTheme()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    const location = useLocation()
+    const isManage = location.pathname.split("/")[1] === "management"
 
     const handleAddExam = ({ gradeId, gradeName, unitId, unitName, lessonId, lessonName }) => {
         let i = 1
@@ -67,13 +68,25 @@ export default function CreateUnit({ grade, units, exams }) {
 
     // units, lessons
     // last unit in g, lest lesson in unit
+    if (!units || units?.length === 0) {
+
+        return <>
+            <Alert severity='error'> add exam plz</Alert>
+            {isManage && (
+                <Button sx={sendSuccess} onClick={() => {
+                    handleAddExamUnit(units)
+                }}>add exam unit</Button>
+            )}
+        </>
+    }
+
 
     return (
         <Box>
             {units && units.map((unit, i) => {
                 return (
                     <Accordion key={i} sx={{
-                        mb: 5, mt: 1,bgcolor: theme.palette.background.alt
+                        mb: 5, mt: 1, bgcolor: theme.palette.background.alt
                     }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -100,42 +113,51 @@ export default function CreateUnit({ grade, units, exams }) {
                                                     {exams && exams.map((exam, i) => {
                                                         return (
                                                             exam.lessonId === lesson.lessonId && (
-                                                                <CreateExam key={i} exam={exam} />
+                                                                <CreateExam key={i} exam={exam} isManage={isManage} />
                                                             )
                                                         )
                                                     })}
                                                 </Box>
                                                 {/* add exam in same lesson*/}
-                                                <Box>
-                                                    <Button color="success" sx={{ width: "100%" }} onClick={() => handleAddExam({
-                                                        gradeId: lesson.gradeId,
-                                                        gradeName: lesson.gradeName,
-                                                        unitId: lesson.unitId,
-                                                        unitName: lesson.unitName,
-                                                        lessonId: lesson.lessonId,
-                                                        lessonName: lesson.lessonName
-                                                    })}>add exam</Button>
-                                                </Box>
+                                                {isManage && (
+                                                    <Box>
+                                                        <Button sx={buttonStyle} onClick={() => handleAddExam({
+                                                            gradeId: lesson.gradeId,
+                                                            gradeName: lesson.gradeName,
+                                                            unitId: lesson.unitId,
+                                                            unitName: lesson.unitName,
+                                                            lessonId: lesson.lessonId,
+                                                            lessonName: lesson.lessonName
+                                                        })}>add exam</Button>
+                                                    </Box>
+                                                )}
                                             </Box>
                                         </Box>
                                     )
                                 )
                             })}
-                            <Button onClick={() => {
-                                handleAddExamLesson({
-                                    gradeId: unit.gradeId,
-                                    gradeName: unit.gradeName,
-                                    unitId: unit.unitId,
-                                    unitName: unit.unitName
-                                })
-                            }}>add lesson exam</Button>
+                            {isManage && (
+                                <Button
+                                    sx={buttonStyle}
+                                    style={{ width: "auto" }}
+                                    onClick={() => {
+                                        handleAddExamLesson({
+                                            gradeId: unit.gradeId,
+                                            gradeName: unit.gradeName,
+                                            unitId: unit.unitId,
+                                            unitName: unit.unitName
+                                        })
+                                    }}>add lesson exam</Button>
+                            )}
                         </AccordionDetails>
                     </Accordion>
                 )
             })}
-            {<Button color='success' onClick={() => {
-                handleAddExamUnit(units)
-            }}>add exam unit</Button>}
-        </Box>
+            {isManage && (
+                <Button sx={sendSuccess} onClick={() => {
+                    handleAddExamUnit(units)
+                }}>add exam unit</Button>
+            )}
+        </Box >
     )
 }

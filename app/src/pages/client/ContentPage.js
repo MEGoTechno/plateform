@@ -53,9 +53,6 @@ export default function ContentPage() {
     </Box>
   }
 
-  if (!lectures || lectures?.length === 0) {
-    return <>no lectures </>
-  }
   if (user.isAdmin) {
     return (
       <Stack mt="20px">

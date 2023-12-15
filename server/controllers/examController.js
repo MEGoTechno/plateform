@@ -48,7 +48,7 @@ const createExam = asyncHandler(async (req, res) => {
     } else {
         const createdExam = await ExamModel.create(exam)
         await mongoose.disconnect()
-        res.status(200).json({ message: "exam has been created successfully" })
+        res.status(200).json({ message: "exam has been created successfully", value: createdExam })
     }
 })
 

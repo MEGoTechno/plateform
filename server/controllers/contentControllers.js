@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const asyncHandler = require("express-async-handler")
 const dotenv = require("dotenv")
 const ContentModel = require("../models/contentModel")
+const addToCloud = require("../middleware/cloudinary")
 
 // config
 dotenv.config()
@@ -19,12 +20,25 @@ const createLecture = asyncHandler(async (req, res) => {
         throw new Error("there is lecture has same id")
     }
     const { files } = req
-    console.log(files)
+    let results = {}
+
     for (let file in files) {
-        lecture[file] = `${files[file][0].path.split("\\")[1]}/${files[file][0].path.split("\\")[2]}`
+        console.log(files[file][0].path)
+        const result = await addToCloud(files[file][0].path, {
+            folder: "admin",
+            resource_type: "auto"
+        })
+        console.log(result)
+        if (result) {
+            const { original_filename, resource_type, secure_url, url, format, bytes } = result
+            results[file] = { original_filename, resource_type, secure_url, url, format, size: bytes }
+        }
     }
 
-    const createdLecture = await ContentModel.create(lecture)
+    //add results
+    const modifiedLecture = { ...lecture, ...results }
+    console.log(modifiedLecture)
+    const createdLecture = await ContentModel.create(modifiedLecture)
     await mongoose.disconnect()
     res.status(200).json({ message: 'lecture has been created successfully', values: createdLecture })
 })

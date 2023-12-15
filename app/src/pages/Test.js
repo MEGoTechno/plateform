@@ -5,6 +5,7 @@ import { useSendFileTestMutation } from '../toolkit/apiSlice'
 import CircularWithValueLabel from '../components/tools/UploadingProgress'
 import { CardMedia } from '@mui/material'
 import ReactPlayer from 'react-player'
+import * as Yup from "yup"
 
 export default function Test() {
   const [sendFile] = useSendFileTestMutation()
@@ -17,12 +18,26 @@ export default function Test() {
   const inputs = [
     { name: "userName", value: "elawadii" },
     {
-      name: "image",
-      label: "image",
-      type: "file"
+      name: "thumbnail",
+      label: "thumbnail",
+      type: "file",
+      validation: Yup.mixed().required('image is required').test("fileSize", "The file is too large", (value) => {
+        return value.size <= 15 * 1000000
+      })
+
+    }, {
+      name: "video",
+      label: "video",
+      type: "file",
+      validation: Yup.mixed().required('image is required').test("fileSize", "The file is too large", (value) => {
+        return value.size <= 15 * 1000000
+      }),
     }]
 
+  // original_filename secure_url url  size resource_type
   const send = (values, props) => {
+    console.log(values)
+
     const formData = new FormData()
 
     Object.keys(values).forEach(key => formData.append(key, values[key]))
@@ -38,16 +53,6 @@ export default function Test() {
   return (
     <div>
       <MakeForm inputs={inputs} onSubmit={send} formOptions={formOptions} />
-      {video && (
-        <ReactPlayer
-          url={video}
-          width="100%"
-          height="100%"
-          muted={true}
-          controls
-        />
-      )}
-
     </div>
   )
 }

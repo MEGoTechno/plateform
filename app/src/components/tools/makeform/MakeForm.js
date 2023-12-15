@@ -29,10 +29,13 @@ export default function MakeForm({ inputs, onSubmit, formOptions }) {
                         {inputs && inputs.map((input, i) => (
                             <MakeInput key={i} input={input} props={props} />
                         ))}
-                        
+
+                            
                         <Button
                             sx={sendSuccess}
-                            type='submit' >
+                            type='submit'
+                            disabled= {formOptions?.isLoading ? true: false}
+                            >
                             {formOptions?.isLoading ? <Loader /> : "submit"}
                         </Button>
                     </Form>

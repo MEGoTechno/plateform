@@ -7,7 +7,6 @@ export default function ContentForm({ inputs, formOptions, setFormOptions, trigg
 
     // for get values and pass to modal
     const handleSubmit = (values, props) => {
-        console.log(values)
         setFormOptions({
             ...formOptions, values, isShowModal: true
         })

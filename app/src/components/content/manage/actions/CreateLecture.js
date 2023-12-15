@@ -9,6 +9,7 @@ import { setLectures } from "../../../../toolkit/contentSlice"
 import Header from "../../../tools/Header"
 import { Box } from "@mui/material"
 
+
 export default function CreateLecture() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -72,14 +73,47 @@ export default function CreateLecture() {
     }, {
       name: "description",
       label: "description",
+      validation: Yup.string().required("it is required")
+    }, {
+      name: "thumbnail",
+      label: "thumbnail",
+      type: "file",
+      validation: Yup.mixed().required("you have to drop image")
+        .test({
+          message: 'Please provide a supported image typed(jpg or png)',
+          test: (file, context) => {
+            const isValid = ['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type);
+            if (!isValid) context?.createError();
+            return isValid;
+          }
+        })
+        .test({
+          message: `image too big, can't exceed ${15} mb`,
+          test: (file) => {
+            const isValid = file?.size < 15 * 1000000;
+            return isValid;
+          }
+        })
     }, {
       name: "video",
       label: "video",
       type: "file",
-    }, {
-      name: "thumbnail",
-      label: "thumbnail",
-      type: "file"
+      validation: Yup.mixed().required("you have to drop video")
+        .test({
+          message: 'Please provide a supported video typed(mp4)',
+          test: (file, context) => {
+            const isValid = ['video/mp4'].includes(file?.type);
+            if (!isValid) context?.createError();
+            return isValid;
+          }
+        })
+        .test({
+          message: `video too big, can't exceed ${15} mb`,
+          test: (file) => {
+            const isValid = file?.size < 15 * 1000000;
+            return isValid;
+          }
+        })
     },
   ]
 
@@ -87,8 +121,10 @@ export default function CreateLecture() {
   const [sendLecture] = usePostData(sendData, formOptions, setFormOptions)
 
   const trigger = async () => {
-    const newLecture = await sendLecture(formOptions.values, "multi")
-    console.log(newLecture)
+    setFormOptions({
+      ...formOptions, isLoading: true, isShowModal: false
+    })
+    await sendLecture(formOptions.values, "multi")
     dispatch(setLectures(null))
     navigate("/management/content")
   }

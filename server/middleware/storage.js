@@ -1,6 +1,5 @@
 const multer = require("multer")
-const express = require("express")
-const fs = require("fs")
+
 
 const storage = multer.diskStorage({
     filename: (req, file, cb) => {

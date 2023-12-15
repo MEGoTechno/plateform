@@ -59,6 +59,7 @@ export default function ExamForm({ exam }) {
             bgcolor: theme.palette.success.light
         }
     }
+
     const inputs = [{ // for exam settings
         label: "gradeId",
         id: "gradeId",
@@ -107,22 +108,27 @@ export default function ExamForm({ exam }) {
         label: "partName",
         id: "partName",
         name: "partName",
-        title: exam.partName ? exam.partName : undefined,
+        title: "part name",
+        value: exam.partName ? exam.partName : undefined
     }, {
         label: "description",
         id: "description",
         name: "description",
         title: exam.description ? exam.description : undefined,
+        value: exam.description ? exam.description : undefined
     }, {
         label: "degree",
         id: "degree",
         name: "degree",
         title: exam.degree ? exam.degree : undefined,
+        value: exam.degree ? exam.degree : undefined
+
     }, {
         label: "time",
         id: "time",
         name: "time",
         title: exam.time ? exam.time : undefined,
+        value: exam.time ? exam.time : undefined
     }]
     const handleExam = (input) => {
         const { id, value } = input
@@ -149,35 +155,30 @@ export default function ExamForm({ exam }) {
 
     const submit = () => {
         // set load ...
+        const newExam = { ...modifiedexam, questions: questions }
         setLoading(true)
-        setTimeout(() => {
+
+        sendData(newExam).then((res) => {
+            if (res.data) {
+                setLoading(false)
+                dispatch(resetExamState())
+                navigate("/management/exams", { replace: true })
+            } else {
+                // not sent
+                setLoading(false)
+                setAlert({
+                    state: "error",
+                    message: res.error.data.message
+                })
+            }
+        }).catch((err) => {
+            // proplem
             setLoading(false)
-        }, [3000])
-        // const newExam = { ...modifiedexam, questions: questions }
-        // sendData(newExam).then((res) => {
-        //     console.log(res)
-        //     if (res.data) {
-        //         setLoading(false)
-        //         console.log("done")
-        //         dispatch(addExamToCreated(newExam))
-        //         dispatch(resetExamState())
-        //         navigate("/management/exams")
-        //     } else {
-        //         // not sent
-        //         setLoading(false)
-        //         setAlert({
-        //             state: "error",
-        //             message: res.error.data.message
-        //         })
-        //     }
-        // }).catch((err) => {
-        //     // proplem
-        //     setLoading(false)
-        //     setAlert({
-        //         state: "error",
-        //         message: err.message
-        //     })
-        // })
+            setAlert({
+                state: "error",
+                message: err.message
+            })
+        })
     }
     return (
         <Box>
@@ -235,7 +236,7 @@ export default function ExamForm({ exam }) {
                                                 color='warning'
                                                 id={option.id}
                                                 // name={option.value ? option.value : option.name}
-                                                label={"option " + o}
+                                                label={"option " + (o + 1)}
                                                 variant={option.varient ? option.variant : "outlined"}
                                                 style={inputStyle}
                                                 fullWidth
@@ -274,7 +275,7 @@ export default function ExamForm({ exam }) {
 
             </Box>
             <hr />
-            <Button type='submit' fullWidth sx={buttonStyle} onClick={() => submit()}>
+            <Button type='submit' disabled={exam.partName || loading ? true : false} fullWidth sx={buttonStyle} onClick={() => submit()}>
                 {loading ? <Loader /> : "send"}
             </Button>
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}

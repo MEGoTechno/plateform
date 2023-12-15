@@ -12,17 +12,17 @@ import { useTheme } from '@emotion/react';
 export default function VidCard({ lecture, lessonLectures }) {
     const navigate = useNavigate()
     const theme = useTheme()
-// `http://localhost:5050/${lecture.thumbnail}`
+    // `http://localhost:5050/${lecture.thumbnail}`
     const goVid = () => {
         navigate(`/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
     }
+    const thumbnail = lecture?.thumbnail?.url ? lecture?.thumbnail?.url : '/'
 
-    console.log(lecture)
     return (
         <Card sx={{ bgcolor: theme.palette.background.alt }}>
             <CardMedia
                 sx={{ height: 140 }}
-                image={`/images/download.jpg`}
+                image={thumbnail}
                 title="green iguana"
                 alt="add picture"
             />
@@ -31,7 +31,7 @@ export default function VidCard({ lecture, lessonLectures }) {
                     {lecture.partName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {lecture.description} 
+                    {lecture.description}
                 </Typography>
             </CardContent>
             <CardActions>

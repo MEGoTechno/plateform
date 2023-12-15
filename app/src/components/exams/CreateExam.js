@@ -4,17 +4,22 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlexInBetween } from '../tools/FlexInBetween'
 import { useNavigate } from 'react-router-dom'
-import { editExamAction } from '../../toolkit/examSlice'
+import { editExamAction, resetExamState } from '../../toolkit/examSlice'
 import { useRemoveExamMutation } from '../../toolkit/apiSlice'
 import Loader from '../tools/Loader'
+import ModalControlled from '../tools/ModalControlled'
 
-export default function CreateExam({ exam }) {
+export default function CreateExam({ exam, isManage }) {
     const theme = useTheme()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [removeExamAction] = useRemoveExamMutation()
     const { lang } = useSelector(s => s.global)
+    const [settings, setSettings] = useState({
+        isShowModal: false,
+        title: "",
 
+    })
 
     const [loading, setLoading] = useState(false)
     // alert if errors for add year
@@ -48,16 +53,18 @@ export default function CreateExam({ exam }) {
         dispatch(editExamAction(exam))
         navigate("/management/exams/add-exam")
     }
+    const shoModal = () => {
+        setSettings({
+            ...settings, isShowModal: true, title: "r u sure to delete"
+        })
+    }
 
     const removeExam = () => {
         setLoading(true)
         removeExamAction(exam).then((res) => {
             if (res.data) {
                 setLoading(false)
-                setAlert({
-                    state: "success",
-                    message: res.data.message
-                })
+                dispatch(resetExamState())
             } else {
                 setLoading(false)
                 setAlert({
@@ -100,18 +107,33 @@ export default function CreateExam({ exam }) {
                 </FlexInBetween>
             </Box>
             <Divider color={theme.palette.primary[300]} />
-            <Box sx={{
-                display: 'flex',
-                flexDirection: "row",
-                gap: 2
-            }}>
-                <Button onClick={() => { editExam() }} sx={buttonStyle}>edit</Button>
-                <Button onClick={() => removeExam()}
-                    sx={buttonStyle}
-                >{loading ? <Loader /> : "remove"}</Button>
-            </Box>
+            {isManage ? (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: "row",
+                    gap: 2
+                }}>
+                    <Button onClick={() => { editExam() }} sx={buttonStyle}>edit</Button>
+                    <Button onClick={shoModal}
+                        sx={buttonStyle}
+                    >{loading ? <Loader /> : "remove"}</Button>
+                </Box>
+            ) : (
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: "row",
+                    gap: 2
+                }}>
+                    <Button sx={buttonStyle} disabled >start exam</Button>
+                </Box>
+            )}
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}
 
+            <ModalControlled
+                title={settings.title}
+                action={removeExam}
+                isShowModal={settings.isShowModal}
+                close={() => setSettings(false)} />
         </Box>
     )
 }
