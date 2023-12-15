@@ -113,11 +113,11 @@ export default function CreateExam({ exam, isManage }) {
                     flexDirection: "row",
                     gap: 2
                 }}>
-                    <Button onClick={() => { editExam() }} sx={buttonStyle}>edit</Button>
+                    <Button onClick={() => { editExam() }} sx={buttonStyle}>{lang.exams.editExam}</Button>
                     <Button onClick={shoModal}
                         sx={buttonStyle}
                         disabled={loading ? true : false}
-                    >{loading ? <Loader /> : "remove"}</Button>
+                    >{loading ? <Loader /> : lang.exams.removeExam}</Button>
                 </Box>
             ) : (
                 <Box sx={{

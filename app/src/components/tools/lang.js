@@ -25,7 +25,13 @@ export const lang = {
             time: "time",
             nums: "nums",
             degree: "degree",
-            start: "start"
+            start: "start",
+            addExam: "add new exam",
+            addUnitExam: "add unit exam",
+            addLessonExam: "add lesson exam",
+            removeExam: "exam",
+            editExam: "edit exam"
+
         },
         users: {
             userName: "userName",
@@ -64,7 +70,12 @@ export const lang = {
             time: "الوقت",
             nums: "عدد الاسئله",
             degree: "الدرجه",
-            start: "ابدا الاختبار"
+            start: "ابدا الاختبار",
+            addExam: "اضافه اختبار",
+            addUnitExam: "اضافه وحده",
+            addLessonExam: "اضافه درس",
+            removeExam: "ازاله",
+            editExam: "تعديل"
         },
         users: {
             userName: "اسم المستخدم",

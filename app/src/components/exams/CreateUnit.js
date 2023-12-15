@@ -75,7 +75,7 @@ export default function CreateUnit({ grade, units, exams }) {
             {isManage && (
                 <Button sx={sendSuccess} onClick={() => {
                     handleAddExamUnit(units)
-                }}>add exam unit</Button>
+                }}>{lang.exams.addUnitExam}</Button>
             )}
         </>
     }
@@ -86,7 +86,7 @@ export default function CreateUnit({ grade, units, exams }) {
             {units && units.map((unit, i) => {
                 return (
                     <Accordion key={i} sx={{
-                        mb: 5, mt: 1, bgcolor: theme.palette.background.alt
+                        mb: 5, mt: 1, bgcolor: theme.palette.background.alt, direction: lang.direction
                     }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -128,7 +128,7 @@ export default function CreateUnit({ grade, units, exams }) {
                                                             unitName: lesson.unitName,
                                                             lessonId: lesson.lessonId,
                                                             lessonName: lesson.lessonName
-                                                        })}>add exam</Button>
+                                                        })}>{lang.exams.addExam}</Button>
                                                     </Box>
                                                 )}
                                             </Box>
@@ -147,7 +147,7 @@ export default function CreateUnit({ grade, units, exams }) {
                                             unitId: unit.unitId,
                                             unitName: unit.unitName
                                         })
-                                    }}>add lesson exam</Button>
+                                    }}>{lang.exams.addLessonExam}</Button>
                             )}
                         </AccordionDetails>
                     </Accordion>
@@ -156,7 +156,7 @@ export default function CreateUnit({ grade, units, exams }) {
             {isManage && (
                 <Button sx={sendSuccess} onClick={() => {
                     handleAddExamUnit(units)
-                }}>add exam unit</Button>
+                }}>{lang.exams.addUnitExam}</Button>
             )}
         </Box >
     )
