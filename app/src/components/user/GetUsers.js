@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useGetUsersQuery } from "../../toolkit/apiSlice"
 import { useTheme } from "@emotion/react"
-import { Box, Button, Typography } from "@mui/material"
+import { Avatar, Box, Button, Typography } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid"
 import { useSelector } from "react-redux"
 import LoaderSkeleton from "../tools/LoaderSkeleton"
@@ -15,7 +15,14 @@ export default function GetUsers({ users }) {
 
     const columns = [{
         field: "_id",
-        headerName: "id",
+        headerName: "صوره",
+        renderCell: (params) => {
+            return (
+                <Avatar sx={{ bgcolor: theme.palette.secondary[500]}}>
+                    {params.row.userName ? params.row.userName[0].toUpperCase() : false}
+                </Avatar>
+            )
+        }
     }, {
         field: "userName",
         headerName: lang.users.userName,
@@ -41,16 +48,30 @@ export default function GetUsers({ users }) {
 
     }, {
         field: "isActive",
-        headerName: "is active",
+        headerName: lang.users.isActive,
+        renderCell: (params) => {
+            return (
+                <Typography sx={{ fontSize: "11px" }}>
+                    {params.row.isActive ? lang.users.isActive : false}
+                </Typography>
+            )
+        }
     }, {
         field: "role",
-        headerName: "role",
+        headerName: lang.users.role,
+        renderCell: (params) => {
+            return (
+                <Typography sx={{ fontSize: "11px" }}>
+                    {params.row.role ? params.row.role : false}
+                </Typography>
+            )
+        }
     }, {
         field: "grade",
         headerName: lang.users.grade,
         renderCell: (params) => {
             return (
-                <Typography>
+                <Typography sx={{ fontSize: "11px" }}>
                     {params.row.isAdmin ? "admin" : params.row.grade.gradeName}
                 </Typography>
             )
@@ -70,7 +91,6 @@ export default function GetUsers({ users }) {
                     }}>
                         {lang.users.showProfile}
                     </Button>
-                    <Button color="warning">edit</Button>
                 </Box>
             )
         }

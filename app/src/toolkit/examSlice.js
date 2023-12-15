@@ -93,7 +93,6 @@ const examSlice = createSlice({
             exams = [...state.createdExams, action.payload]
 
             state.createdExams = exams
-            console.log(action.payload)
             // setCookie("e", [...state.createdExams, action.payload])
             return state
         }

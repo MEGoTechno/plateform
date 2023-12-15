@@ -13,6 +13,8 @@ export default function ExamForm({ exam }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [modifiedexam, setExam] = useState(exam)
+
+    const { lang } = useSelector(s => s.global)
     const [sendData] = usePostNewExamMutation()
     const [loading, setLoading] = useState(false)
     // alert if errors for add year
@@ -84,47 +86,47 @@ export default function ExamForm({ exam }) {
         hidden: true
 
     }, {
-        label: "gradeName",
+        label: lang.form.gradeName,
         id: "gradeName",
         name: "grade",
         title: exam.gradeName ? exam.gradeName : undefined,
         disabled: true,
         value: exam.gradeName
     }, {
-        label: "unitName",
+        label: lang.form.unitName,
         id: "unitName",
         name: "unitName",
         title: exam.unitName ? exam.unitName : undefined,
         disabled: exam.unitName ? true : false,
         value: exam.unitName ? exam.unitName : undefined
     }, {
-        label: "lessonName",
+        label: lang.form.lessonName,
         id: "lessonName",
         name: "lessonName",
         title: exam.lessonName ? exam.lessonName : undefined,
         disabled: exam.lessonName ? true : false,
         value: exam.lessonName ? exam.lessonName : undefined
     }, {
-        label: "partName",
+        label: lang.form.partName,
         id: "partName",
         name: "partName",
         title: "part name",
         value: exam.partName ? exam.partName : undefined
     }, {
-        label: "description",
+        label: lang.form.description,
         id: "description",
         name: "description",
         title: exam.description ? exam.description : undefined,
         value: exam.description ? exam.description : undefined
     }, {
-        label: "degree",
+        label: lang.form.degree,
         id: "degree",
         name: "degree",
         title: exam.degree ? exam.degree : undefined,
         value: exam.degree ? exam.degree : undefined
 
     }, {
-        label: "time",
+        label: lang.form.time,
         id: "time",
         name: "time",
         title: exam.time ? exam.time : undefined,
@@ -181,7 +183,7 @@ export default function ExamForm({ exam }) {
         })
     }
     return (
-        <Box>
+        <Box sx={{ direction: lang.direction }}>
             {/* header of exam */}
             <Box>
                 {/* for seetings */}
@@ -216,7 +218,7 @@ export default function ExamForm({ exam }) {
                                     color='warning'
                                     id={question.id}
                                     // name={question.value ? question.value : question.name}
-                                    label={`q ${q + 1}`}
+                                    label={`${lang.form.question} ${q + 1}`}
                                     variant={question.varient ? question.variant : "outlined"}
                                     placeholder={question.title && question.title}
                                     style={inputStyle}
@@ -236,7 +238,7 @@ export default function ExamForm({ exam }) {
                                                 color='warning'
                                                 id={option.id}
                                                 // name={option.value ? option.value : option.name}
-                                                label={"option " + (o + 1)}
+                                                label={`${lang.form.option} ` + (o + 1)}
                                                 variant={option.varient ? option.variant : "outlined"}
                                                 style={inputStyle}
                                                 fullWidth
@@ -256,27 +258,33 @@ export default function ExamForm({ exam }) {
                                                     color='success'
                                                     sx={{ position: "absolute", right: "10px", top: "25%", bgcolor: "green", color: "white" }}
                                                     onClick={() => chooseRtQuestion({ i: q, value: option.id })}>
-                                                    right
+                                                    {lang.form.rtOption}
                                                 </Button>
-
                                             )}
                                         </Box>
                                     )
                                 })}
-                                <Button color='error' onClick={() => removeQuestion()}>delete</Button>
                             </Box>
                         )
-                    })
+                    }
+
+                    )
                 ) : (
                     // <ButtonStyled title="add question" action={addQuestion} />
                     "empty questions"
                 )}
-                <ButtonStyled title="add question" action={addQuestion} />
+                {questions.length !== 0 && (
+                    <Box>
+                        <Button color='error' onClick={() => removeQuestion()}>{lang.form.removeQuestion}</Button>
+                    </Box>
+                )}
+
+                <ButtonStyled title={lang.form.addQuestion} action={addQuestion} />
 
             </Box>
             <hr />
             <Button type='submit' disabled={exam.partName || loading ? true : false} fullWidth sx={buttonStyle} onClick={() => submit()}>
-                {loading ? <Loader /> : "send"}
+                {loading ? <Loader /> : lang.send}
             </Button>
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}
         </Box >

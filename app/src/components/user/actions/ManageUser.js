@@ -7,7 +7,7 @@ import UserProfile from '../../../pages/UserProfile';
 import ModalControlled from '../../tools/ModalControlled';
 import usePostData from '../../../hooks/usePostData';
 import { useDeleteUserMutation, useUpdateUserMutation } from '../../../toolkit/apiSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { delteUser, updateUser } from '../../../toolkit/usersSlice';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
@@ -21,7 +21,7 @@ export default function ManageUser({ user, setUser }) {
     const dispatch = useDispatch()
     const theme = useTheme()
     const [isShow, setShow] = useState(true)
-
+    const {lang} = useSelector(s => s.global)
 
     const [settings, setSettings] = useState({
         isShowModal: false,
@@ -66,7 +66,7 @@ export default function ManageUser({ user, setUser }) {
 
         } catch (error) {
             setSettings({
-                isDone: true, isError: true, doneMessage: "connection confused"
+                isDone: true, isError: true, doneMessage: lang.errors.connection
             })
         }
     }
@@ -114,8 +114,8 @@ export default function ManageUser({ user, setUser }) {
                                     }
 
                                 }}
-                                onClick={() => showModal(null, { _id: user._id, userName: user.userName, password: true }, "r u sure to reset userPassword", "if you clicked ok, u will not be able to back")}>
-                                reset  user password <RestartAltIcon />
+                                onClick={() => showModal(null, { _id: user._id, userName: user.userName, password: true }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
+                                {lang.users.resetPassword} <RestartAltIcon />
                             </Button>
                         </Grid>
 
@@ -131,8 +131,8 @@ export default function ManageUser({ user, setUser }) {
                                             bgcolor: theme.palette.error.dark
                                         }
                                     }}
-                                    onClick={() => showModal(null, { _id: user._id, userName: user.userName, isActive: user.isActive ? false : true }, "r u sure to inActivate", "if you clicked ok, u will not be able to back")}>
-                                    {user.isActive ? "inactive this user" : "activate"}
+                                    onClick={() => showModal(null, { _id: user._id, userName: user.userName, isActive: user.isActive ? false : true }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
+                                    {user.isActive ? lang.users.inActivate : lang.users.activate}
                                 </Button>
                             )}
                         </Grid>
@@ -149,8 +149,8 @@ export default function ManageUser({ user, setUser }) {
                                             bgcolor: theme.palette.success.dark
                                         }
                                     }}
-                                    onClick={() => showModal(null, { _id: user._id, userName: user.userName, role: user.role === "subAdmin" ? "student" : "subAdmin" }, "r u sure to make him admin", "if you clicked ok, u will not be able to back")}>
-                                    {user.role === "student" ? "make subAdmin" : "make student"}  <SupervisorAccountIcon />
+                                    onClick={() => showModal(null, { _id: user._id, userName: user.userName, role: user.role === "subAdmin" ? "student" : "subAdmin" }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
+                                    {user.role === "student" ? lang.users.makeSubAdmin: lang.users.makeStudent}  <SupervisorAccountIcon />
                                 </Button>
                             )}
                         </Grid>
@@ -167,8 +167,8 @@ export default function ManageUser({ user, setUser }) {
                                             bgcolor: theme.palette.error.dark
                                         }
                                     }}
-                                    onClick={() => showModal("delete", user, "r u sure to delete this user", "if you clicked ok, u will not be able to back")}>
-                                    delete user <DeleteIcon />
+                                    onClick={() => showModal("delete", user, lang.modal.delete, "if you clicked ok, u will not be able to back")}>
+                                    {lang.users.removeUser} <DeleteIcon />
                                 </Button>
                             )}
                         </Grid>

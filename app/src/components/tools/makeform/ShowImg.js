@@ -6,7 +6,7 @@ export default function ShowImg({ file }) {
     const theme = useTheme()
 
     return (
-        <Card sx={{ maxWidth: 345, backgroundColor: theme.palette.background.alt }}>
+        <Card sx={{ maxWidth: 345, backgroundColor: theme.palette.background.alt, direction: "ltr" }}>
             <CardMedia
                 component={"img"}
                 sx={{ height: 140 }}

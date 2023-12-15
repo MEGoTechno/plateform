@@ -2,12 +2,14 @@ import { Box, Button, Card, CardHeader, Divider, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../../tools/commonFC'
+import { useSelector } from 'react-redux'
 
 export default function ManageUnits({ grade, lectures }) {
     const navigate = useNavigate()
     const units = getUnique(lectures, "unitId") //units list
     const theme = useTheme()
-    
+        const {lang} = useSelector(s => s.global)
+
     const showUnit = (unit) => {
         const unitLectures = getSameValue(lectures, "unitId", unit.unitId)
         const lessons = getUnique(unitLectures, "lessonId")
@@ -52,7 +54,7 @@ export default function ManageUnits({ grade, lectures }) {
                                             }
                                         }}
                                         onClick={() => editUnit(unit)}>
-                                        edit
+                                        {lang.content.editUnit}
                                     </Button>
                                     <Button
                                         sx={{
@@ -65,7 +67,7 @@ export default function ManageUnits({ grade, lectures }) {
                                             }
                                         }}
                                         onClick={() => showUnit(unit)}>
-                                        show
+                                        {lang.content.show}
                                     </Button>
                                 </Box>
                             }
@@ -86,7 +88,7 @@ export default function ManageUnits({ grade, lectures }) {
                         bgcolor: theme.palette.success.light
                     }
                 }}
-                onClick={createUnit}>add unit</Button>
+                onClick={createUnit}>{lang.content.addUnit}</Button>
         </Box>
     )
 }

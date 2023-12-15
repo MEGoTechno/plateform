@@ -14,12 +14,13 @@ import ModalControlled from '../../tools/ModalControlled';
 import { useNavigate } from "react-router-dom"
 import { useTheme } from '@mui/material';
 import usePostData from '../../../hooks/usePostData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLectures } from '../../../toolkit/contentSlice';
 import Loader from "../../tools/Loader"
 
 export default function LectureSettings({ lecture, editLecture }) {
     const theme = useTheme()
+    const {lang} = useSelector(s => s.global)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -53,13 +54,13 @@ export default function LectureSettings({ lecture, editLecture }) {
             />
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    title of lecture
+                    {lang.content.lectureName}
                 </Typography>
                 <Typography variant="h5" component="div">
                     {lecture.partName}
                 </Typography>
                 <Typography sx={{ mt: 1.5, mb: 1.5 }} color="text.secondary">
-                    Description
+                    {lang.content.Description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {lecture.description}
@@ -85,8 +86,8 @@ export default function LectureSettings({ lecture, editLecture }) {
 
             </CardActions>
             <ModalControlled
-                title={"r u sure to delete"}
-                description={"it will be deleted permanently"}
+                title={lang.modal.delete}
+                description={""}
                 action={trigger}
                 isShowModal={isShowModal}
                 close={() => setShowModal(false)} />

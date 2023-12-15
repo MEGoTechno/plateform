@@ -18,6 +18,8 @@ export default function ManageContentPage() {
   const dispatch = useDispatch()
   const [getGrades, grades] = useGetGrades()
   const { content: { lectures } } = useSelector(s => s)
+  const {lang} = useSelector(s => s.global)
+
   const [error, setError] = useState(null)
 
   const [getData, { isLoading, }] = useLazyGetLecturesQuery()
@@ -51,19 +53,19 @@ export default function ManageContentPage() {
   if (grades?.length === 0) {
     return <Box>
       <Header title={"content"} />
-      <Alert severity='error'>add grade plz</Alert>
-      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+      <Alert severity='error'>{lang.errors.addGrade}</Alert>
+      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>{lang.errors.goGradePage}</Button>
     </Box>
   }
 
 
   if (error) {
-    return <Alert severity='error'>connection confused</Alert>
+    return <Alert severity='error'>{lang.errors.connection}</Alert>
   }
 
   return (
     <Box>
-      <Header title={"content"} />
+      <Header title={lang.links.content} />
       <ManageContent grades={grades} lectures={lectures} />
     </Box>
   )

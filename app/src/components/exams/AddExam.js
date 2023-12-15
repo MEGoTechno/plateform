@@ -9,9 +9,8 @@ import Header from '../tools/Header'
 export default function AddExam() {
     const navigate = useNavigate()
     const { exam } = useSelector(s => s.exam)
-    // const exam = useMemo(() => {
-    //     return { ...examSettings, questions: questions }
-    // }, [examSettings, questions])
+    const { lang } = useSelector(s => s.global)
+
     useEffect(() => {
         if (!exam.gradeId) {
             navigate("/management/exams")
@@ -20,7 +19,7 @@ export default function AddExam() {
 
     return (
         <Box>
-            <Header title={"add exam"} />
+            <Header title={lang.exams.addExam} />
             {/* <FormControlled inputs={inputs} data={{}} onSubmit={submit} loading={loading} /> */}
             {exam.gradeId && <ExamForm exam={exam} />}
 

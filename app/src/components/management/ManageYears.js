@@ -11,7 +11,7 @@ import { useLazyGetSettingsQuery } from '../../toolkit/apiSlice'
 export default function ManageYears() {
     // get grades and store it
     const dispatch = useDispatch()
-    const { grades } = useSelector(s => s.global) // null
+    const { grades, lang } = useSelector(s => s.global) // null
     const [trigger, { data: gradesFromDB, isSuccess, isLoading }] = useLazyGetSettingsQuery()
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function ManageYears() {
 
     const column = [{
         field: "gradeName",
-        headerName: "grade",
+        headerName: lang.grades.gradeName,
         width: 150
     }]
     return (
@@ -58,7 +58,7 @@ export default function ManageYears() {
                 <Alert severity='error'>you have to set grade</Alert>
             )}
             <Box display="flex" justifyContent="center">
-                <ButtonStyled title={!isAddYear ? "add year" : "close"} action={action} />
+                <ButtonStyled title={!isAddYear ? lang.grades.addGrade : lang.modal.cancel} action={action} />
             </Box>
             {isAddYear && <AddYear grades={grades} setAlert={setAlert} />}
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}

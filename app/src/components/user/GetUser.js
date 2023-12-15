@@ -13,6 +13,7 @@ export default function GetUser({ users }) {
     const [user, setUser] = useState()
     const [userName, setUserName] = useState("")
     const [error, setError] = useState(false)
+    const {lang} = useSelector(s => s.global)
 
     const getUser = () => {
 
@@ -31,18 +32,18 @@ export default function GetUser({ users }) {
             <Stack direction={"column"}>
 
                 <TextField
-                    label="user name"
-                    placeholder='only userName allowed'
+                    label={lang.users.userName}
+                    placeholder={lang.users.onlyUserName}
                     fullWidth
                     color='warning'
                     onChange={(e) => { setUserName(e.target.value) }}
                 />
                 <Box sx={{display: "flex", justifyContent: "center", m: "5px 0"}}>
-                    <Button color='success' onClick={getUser}>search</Button>
+                    <Button color='success' onClick={getUser}>{lang.search}</Button>
                 </Box>
             </Stack>
             <Divider />
-            {error && <Alert severity='error'>No user found !</Alert>}
+            {error && <Alert severity='error'>{lang.users.noUserName}</Alert>}
             {user && <ManageUser user={user} setUser={setUser} />}
         </Box>
     )

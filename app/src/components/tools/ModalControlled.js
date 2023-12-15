@@ -40,8 +40,8 @@ export default function ModalControlled(props) {
                     {children}
                 </Box>
                 <Box display={"flex"} justifyContent={"center"} gap={2}>
-                    <ButtonStyled title="submit" action={action} />
-                    <ButtonStyled title="cancel" severity={"error"} action={close} />
+                    <ButtonStyled title={lang.modal.submit} action={action} />
+                    <ButtonStyled title={lang.modal.cancel} severity={"error"} action={close} />
                 </Box>
             </Box>
         </Modal>

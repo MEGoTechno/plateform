@@ -6,9 +6,11 @@ import * as Yup from "yup"
 import { useUpdateLectureMutation } from '../../../../toolkit/apiSlice'
 import { Box } from '@mui/material'
 import Header from "../../../tools/Header"
+import { useSelector } from 'react-redux'
 
 export default function EditLecture() {
     const location = useLocation()
+    const {lang} = useSelector(s => s.global)
     const lecture = location.state
     const [sendData] = useUpdateLectureMutation()
 
@@ -31,7 +33,7 @@ export default function EditLecture() {
             disabled: true
         }, {
             name: "gradeName",
-            label: "grade name",
+            label: lang.form.gradeName,
             value: lecture.gradeName,
             validation: Yup.string().required("you should write the new one"),
             disabled: true
@@ -43,7 +45,7 @@ export default function EditLecture() {
             disabled: true,
         }, {
             name: "unitName",
-            label: "unit name",
+            label: lang.form.unitName,
             value: lecture.unitName,
             disabled: true
         }, {
@@ -54,7 +56,7 @@ export default function EditLecture() {
             disabled: true,
         }, {
             name: "lessonName",
-            label: "lesson name",
+            label: lang.form.lessonName,
             value: lecture.lessonName,
             disabled: true,
         }, {
@@ -65,21 +67,21 @@ export default function EditLecture() {
             disabled: true,
         }, {
             name: "partName",
-            label: "part name",
+            label: lang.form.partName,
             value: lecture.partName,
 
         }, {
             name: "description",
-            label: "description",
+            label: lang.form.description,
             value: lecture.description,
         }, {
             name: "thumbnail",
-            label: "edit thumbnail",
+            label: lang.form.thumbnail,
             type: "file",
             existedFile: lecture.thumbnail
         }, {
             name: "video",
-            label: "edit video",
+            label: lang.form.video,
             type: "file",
             existedFile: lecture.video
         }
@@ -98,8 +100,8 @@ export default function EditLecture() {
     }
 
     return (
-        <Box >
-            <Header title={"edit Lecture"} description={`${lecture.gradeName} > ${lecture.lessonName}`} />
+        <Box sx={{direction: lang.direction}}>
+            <Header title={lang.content.editLecture} description={`${lecture.gradeName} > ${lecture.lessonName} > ${lecture.partName}`} />
             <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={sumbitData} />
         </Box>
     )

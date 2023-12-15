@@ -8,12 +8,12 @@ export default function AddYear({ setAlert }) {
   const [loading, setLoading] = useState(false)
   
   const [sendData] = usePostSettingsMutation()
-  const { grades } = useSelector(s => s.global)
+  const { grades, lang } = useSelector(s => s.global)
   const dispatch = useDispatch()
 
   // for form 
   const inputs = [{
-    label: "grade name",
+    label: lang.form.gradeName,
     id: "gradeName",
     name: "gradeName",
     required: true

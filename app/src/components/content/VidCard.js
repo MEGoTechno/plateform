@@ -8,9 +8,12 @@ import Typography from '@mui/material/Typography';
 import { buttonStyle } from '../styles/buttonsStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import { useSelector } from 'react-redux';
 
 export default function VidCard({ lecture, lessonLectures }) {
     const navigate = useNavigate()
+    const {lang} = useSelector(s => s.global)
+
     const theme = useTheme()
     // `http://localhost:5050/${lecture.thumbnail}`
     const goVid = () => {
@@ -23,7 +26,7 @@ export default function VidCard({ lecture, lessonLectures }) {
             <CardMedia
                 sx={{ height: 140 }}
                 image={thumbnail}
-                title="green iguana"
+                title="image"
                 alt="add picture"
             />
             <CardContent>
@@ -37,7 +40,7 @@ export default function VidCard({ lecture, lessonLectures }) {
             <CardActions>
                 <Button sx={buttonStyle} size="small" onClick={() => {
                     goVid()
-                }}>Watch</Button>
+                }}>{lang.content.watch}</Button>
             </CardActions>
         </Card>
     );

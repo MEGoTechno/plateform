@@ -55,7 +55,7 @@ export default function CreateExam({ exam, isManage }) {
     }
     const shoModal = () => {
         setSettings({
-            ...settings, isShowModal: true, title: "r u sure to delete"
+            ...settings, isShowModal: true, title: lang.modal.delete
         })
     }
 

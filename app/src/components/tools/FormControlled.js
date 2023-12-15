@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import ModalControlled from './ModalControlled'
 import ButtonStyled from './ButtonStyled'
 import { useSelector } from 'react-redux'
+import Loader from './Loader'
 
 export default function FormControlled({ inputs, data, onSubmit, loading }) {
     const theme = useTheme()
@@ -33,12 +34,8 @@ export default function FormControlled({ inputs, data, onSubmit, loading }) {
         }
     }
 
-    // const [isOpen, setOpen] = useState(false); // for modal
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
-
     return (
-        <Box display="flex" flexDirection="column" mt={"50px"}>
+        <Box display="flex" flexDirection="column" mt={"50px"} sx={{direction: lang.direction}}>
             <Formik initialValues={data} onSubmit={onSubmit}>
                 {(props) => (
                     <Form>
@@ -57,21 +54,17 @@ export default function FormControlled({ inputs, data, onSubmit, loading }) {
                                     required={input.required ? input.required : false}
                                     type={input.type ? input.type : "text"}
                                     disabled={input.disabled ? input.disabled : false}
-                                    value={input.value && input.value} 
-                                    hidden = {input.hidden && true}
-                                    />
+                                    value={input.value && input.value}
+                                    hidden={input.hidden && true}
+                                />
                             )
                         })}
-                        <Button type='submit' fullWidth sx={buttonStyle} disabled={loading}>
-                            {loading ? "..." : "send"}
+                        <Button type='submit' disabled={loading ? true : false} fullWidth sx={buttonStyle} >
+                            {loading ? <Loader /> : lang.send}
                         </Button>
                     </Form>
                 )}
             </Formik>
-            {/* <ButtonStyled title="click" action={handleOpen} /> */}
-            {/* {alert.alert && (
-                <Alert severity='error'> {alert.message}</Alert>
-            )} */}
         </Box >
     )
 }

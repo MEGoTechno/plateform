@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 
 export default function ManageExamsPage() {
   const {lang} = useSelector(s => s.global)
-  console.log(lang)
   return (
     <Box>
       <Header title={lang.links.manageExams}/>

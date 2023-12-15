@@ -7,7 +7,7 @@ export default function ShowVid({ file }) {
 
 
     return (
-        <Card sx={{ maxWidth: 345, backgroundColor: theme.palette.background.alt }}>
+        <Card sx={{ maxWidth: 345, backgroundColor: theme.palette.background.alt, direction: "ltr" }}>
             <ReactPlayer
                 url={file.url}
                 width="100%"
@@ -20,7 +20,7 @@ export default function ShowVid({ file }) {
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe">
-                        R
+                        A
                     </Avatar>
                 }
                 title={file.original_filename}

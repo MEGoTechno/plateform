@@ -14,6 +14,8 @@ import ManageGetUser from '../../components/user/ManageGetUser'
 
 export default function ManageGetUSerPage() {
     const { users } = useSelector(s => s.usersSettings)
+    const {lang} = useSelector(s => s.global)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -47,7 +49,7 @@ export default function ManageGetUSerPage() {
 
     return (
         <Box>
-            <Header title={"manage user"} />
+            <Header title={lang.links.manageUsers} />
             {users?.length !== 0 && (
                 <ManageGetUser users={users} />
             )}

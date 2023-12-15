@@ -7,6 +7,7 @@ import { buttonStyle } from '../../styles/buttonsStyles'
 import LessonSettings from './LessonSettings'
 import LectureSettings from './LectureSettings'
 import MakeTitle from "../../tools/MakeTitle"
+import { useSelector } from 'react-redux'
 
 export default function ManageLessons() {
 
@@ -14,6 +15,7 @@ export default function ManageLessons() {
     const navigate = useNavigate()
     const [value, setValue] = useState(0)
     const [lessonLectures, setLessonLectures] = useState([])
+    const {lang} = useSelector(s => s.global)
     const { lectures, lessons, grade } = location.state
 
     const handleLessonLectures = (lesson, i) => {
@@ -91,7 +93,7 @@ export default function ManageLessons() {
                         </Grid>
                     ))}
                     <Grid item md={4} sm={6} xs={6} width={{ md: 500, sm: 350, xs: 250 }}>
-                        <Chip sx={{ width: "100%" }} label="add lesson" variant="outlined" color='warning' onClick={createLesson} />
+                        <Chip sx={{ width: "100%" }} label={lang.content.addLesson} variant="outlined" color='warning' onClick={createLesson} />
                     </Grid>
                 </Grid>
             </Divider>
@@ -103,7 +105,7 @@ export default function ManageLessons() {
             </Box>
 
             <Stack direction="column" spacing={2}>
-                <MakeTitle title="mange videos" />
+                <MakeTitle title={lang.content.manageVids} />
 
                 <Box sx={{
                     display: "flex", flexDirection: { xs: "column", sm: "row" }, justifyContent: "center", alignItems: "center", gap: 2, flexWrap: "wrap"

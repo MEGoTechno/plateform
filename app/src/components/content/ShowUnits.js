@@ -5,11 +5,13 @@ import { getSameValue, getUnique } from '../tools/commonFC'
 import { buttonStyle } from "../styles/buttonsStyles"
 import ShowLectures from './ShowLessons'
 import Header from '../tools/Header'
+import { useSelector } from 'react-redux'
 
 export default function ShowUnits({ grade, lectures }) {
    const navigate = useNavigate()
    const theme = useTheme()
    const units = getUnique(lectures, "unitId") //units list
+   const {lang} = useSelector(s => s.global)
 
    const goUnit = (unitId) => {
 
@@ -27,8 +29,7 @@ export default function ShowUnits({ grade, lectures }) {
 
    return (
       <Box>
-         <Header title={"units"} />
-
+         <Header title={lang.content.units} />
 
          <Box sx={{
             display: "flex", alignItems: "center", flexDirection: "column",

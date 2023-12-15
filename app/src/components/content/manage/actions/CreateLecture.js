@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import usePostData from "../../../../hooks/usePostData"
 import * as Yup from "yup"
 import ContentForm from "./ContentForm"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setLectures } from "../../../../toolkit/contentSlice"
 import Header from "../../../tools/Header"
 import { Box } from "@mui/material"
@@ -22,7 +22,7 @@ export default function CreateLecture() {
     values: null,
     res: ""
   })
-
+  const { lang } = useSelector(s => s.global)
   const location = useLocation()
   const { gradeId, gradeName, unitId, unitName, lessonId, lessonName, partId } = location.state
 
@@ -42,7 +42,7 @@ export default function CreateLecture() {
       disabled: true
     }, {
       name: "gradeName",
-      label: "grade Name",
+      label: lang.form.gradeName,
       value: gradeName || "",
       disabled: gradeName ? true : false
     }, {
@@ -53,7 +53,7 @@ export default function CreateLecture() {
       disabled: true
     }, {
       name: "unitName",
-      label: "unit Name",
+      label: lang.form.unitName,
       value: unitName || "",
       disabled: unitName ? true : false
     }, {
@@ -64,21 +64,21 @@ export default function CreateLecture() {
       disabled: true
     }, {
       name: "lessonName",
-      label: "lesson Name",
+      label: lang.form.lessonName,
       value: lessonName || "",
       disabled: lessonName ? true : false
     }, {
       name: "partName",
-      label: "part Name",
+      label: lang.form.partName,
     }, {
       name: "description",
-      label: "description",
+      label: lang.form.description,
       validation: Yup.string().required("it is required")
     }, {
       name: "thumbnail",
-      label: "thumbnail",
+      label: lang.form.thumbnail,
       type: "file",
-      validation: Yup.mixed().required("you have to drop image")
+      validation: Yup.mixed().required(lang.errors.requireImg)
         .test({
           message: 'Please provide a supported image typed(jpg or png)',
           test: (file, context) => {
@@ -88,7 +88,7 @@ export default function CreateLecture() {
           }
         })
         .test({
-          message: `image too big, can't exceed ${15} mb`,
+          message: lang.errors.less15mg,
           test: (file) => {
             const isValid = file?.size < 15 * 1000000;
             return isValid;
@@ -96,9 +96,9 @@ export default function CreateLecture() {
         })
     }, {
       name: "video",
-      label: "video",
+      label: lang.form.video,
       type: "file",
-      validation: Yup.mixed().required("you have to drop video")
+      validation: Yup.mixed().required(lang.errors.requireVid)
         .test({
           message: 'Please provide a supported video typed(mp4)',
           test: (file, context) => {
@@ -108,7 +108,7 @@ export default function CreateLecture() {
           }
         })
         .test({
-          message: `video too big, can't exceed ${15} mb`,
+          message: lang.errors.less15mg,
           test: (file) => {
             const isValid = file?.size < 15 * 1000000;
             return isValid;
@@ -131,8 +131,8 @@ export default function CreateLecture() {
 
 
   return (
-    <Box>
-      <Header title={"create Lecture"} description={`${gradeName && gradeName} > ${lessonName ? lessonName : "new lesson"}`} />
+    <Box sx={{ direction: lang.direction }}>
+      <Header title={lang.form.addLecture} description={`${gradeName && gradeName} > ${lessonName ? lessonName : "new lesson"}`} />
       <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={trigger} />
     </Box>
   )

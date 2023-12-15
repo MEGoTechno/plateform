@@ -226,7 +226,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
             </Drawer >
 
             <ModalControlled
-                title={"r u sure to logout ?"}
+                title={lang.modal.logOut}
                 description={"dsd"}
                 action={userLogout}
                 isShowModal={isShowModal}

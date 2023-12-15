@@ -13,13 +13,12 @@ import { buttonStyle } from '../../components/styles/buttonsStyles'
 import { useNavigate } from 'react-router-dom'
 
 export default function ContentPage() {
-  const { user } = useSelector(s => s.global)
+  const { user, lang } = useSelector(s => s.global)
   const [getGrades, grades] = useGetGrades()
 
   const { lectures } = useSelector(s => s.content)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  console.log(grades)
   const [getData, { isLoading, error }] = useLazyGetLecturesQuery()
   const [getLectures] = useLazyGetData(getData)
 
@@ -46,7 +45,7 @@ export default function ContentPage() {
 
   if (grades?.length === 0) {
     return <Box sx={{ direction: 'rtl' }}>
-      <Header title={"content"} />
+      <Header title={lang.links.content} />
       <Alert severity='error'>add grade plz</Alert>
       <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
     </Box>
@@ -54,7 +53,7 @@ export default function ContentPage() {
 
   if (user.isAdmin && lectures) {
     return (
-      <Stack mt="20px" >
+      <Stack mt="20px">
         <AllContent lectures={lectures} grades={grades} />
       </Stack>
     )
