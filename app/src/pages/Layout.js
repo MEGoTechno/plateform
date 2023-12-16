@@ -9,7 +9,6 @@ import GlobalMsg from '../components/tools/GlobalMsg'
 import useAuth from '../middleware/useAuth'
 import LoginPage from './client/LoginPage'
 import NotFound from '../components/tools/NotFound'
-import useGetGrades from '../hooks/useGetGrades'
 
 export default function Layout() {
     const [authorize, isAccessed] = useAuth()
@@ -17,13 +16,9 @@ export default function Layout() {
     const [isOpenedSideBar, setSideBar] = useState(false)
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const { user } = useSelector(s => s.global)
-    const [getGrades, grades] = useGetGrades()
     useEffect(() => {
         isNonMobile ? setSideBar(true) : setSideBar(false)
         authorize()
-        if (!grades && user?.isAdmin) {
-            getGrades()
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isNonMobile, navigate, user])
 
