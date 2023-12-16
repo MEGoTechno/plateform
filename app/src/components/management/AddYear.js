@@ -2,7 +2,7 @@ import FormControlled from '../tools/FormControlled'
 import { usePostSettingsMutation } from '../../toolkit/apiSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setGrades } from '../../toolkit/globalSlice'
+import { addGrade, setGrades } from '../../toolkit/globalSlice'
 
 export default function AddYear({ setAlert }) {
   const [loading, setLoading] = useState(false)
@@ -37,7 +37,7 @@ export default function AddYear({ setAlert }) {
           state: "success",
           message: res.data.message
         })
-        dispatch(setGrades(data))
+        dispatch(addGrade(data))
         props.resetForm()
       } else {
         // not sent

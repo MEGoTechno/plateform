@@ -22,7 +22,7 @@ export default function ExamPage() {
       getData()
     }
     if (data) {
-      console.log(data)
+      
       const units = getUnique(data, "unitId")
       setUnits(units)
     }

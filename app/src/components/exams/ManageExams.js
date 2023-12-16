@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Alert, Box, Button } from '@mui/material';
 import TabsControlled, { CustomTabPanel } from '../tools/TabsControlled';
@@ -19,41 +19,43 @@ export default function ManageExams() {
     const dispatch = useDispatch()
     const [getGrades, grades] = useGetGrades()
     const { createdExams } = useSelector(s => s.exam)
+    const { user, lang } = useSelector(s => s.global)
     const [value, setValue] = React.useState(0);
-    let exams = createdExams
+    const [exams, setExams] = useState(createdExams)
+    // let exams = createdExams
     const [trigger, { data: EXAMSDB, isSuccess, isLoading, isError, error }] = useLazyGetExamsQuery()
 
 
     const handleGetData = async () => {
         try {
-            if (!grades) {
+            if (!grades && user.isAdmin) {
                 await getGrades()
             }
             const result = await trigger()
-            if (result.data) {
-                dispatch(getCreatedExams(result.data))
-            }
-
+            dispatch(getCreatedExams(result.data))
+            setExams(result.data)
         } catch (err) {
             console.log(err.message)
         }
     }
-    // console.log(EXAMSDB)
+
     useEffect(() => {
         if (!exams || !grades) {
             handleGetData()
+        }else {
+            setExams(createdExams)
         }
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [exams, grades])
 
-    if (!exams || !grades) {
+    if (isLoading || !grades) {
         return <LoaderSkeleton />
     }
 
     if (grades?.length === 0) {
         return <Box>
-            <Header title={"Manage Exams"} />
-            <Alert severity='error'>add grade plz</Alert>
-            <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+            <Header title={lang.links.manageExams} />
+            <Alert severity='error'>اضف مجموعه اولا</Alert>
         </Box>
     }
 
@@ -62,7 +64,7 @@ export default function ManageExams() {
 
     let getUnits = []
     let units = []
-    if (exams) {
+    if (exams && grades) {
         exams.forEach(({ unitId, unitName, gradeId, gradeName, lessonId, lessonName, partId, partName }) => {
             if (gradeId === grades[value].gradeId) {
                 getUnits.push({ unitId, unitName, gradeId, gradeName, lessonId, lessonName, partId, partName })
@@ -73,7 +75,7 @@ export default function ManageExams() {
 
     return (
         <Box>
-            {!grades ? "add grade first" : (
+            {grades && exams && (
                 <Box sx={{ display: 'flex', justifyContent: "center", flexDirection: "column", mt: 5 }}>
                     <TabsControlled value={value} setValue={setValue} items={grades} by="gradeName" />
                     {grades && grades.map((grade, i) => {

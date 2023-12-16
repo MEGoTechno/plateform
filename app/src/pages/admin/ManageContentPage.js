@@ -27,10 +27,8 @@ export default function ManageContentPage() {
 
   const trigger = async () => {
     try {
-      console.log("here")
       if (!grades && user.isAdmin) {
-        const me = await getGrades()
-        console.log(me)
+        await getGrades()
       }
 
       const res = await getLectures()
@@ -43,7 +41,6 @@ export default function ManageContentPage() {
 
   useEffect(() => {
     if (!lectures || !grades) {
-      console.log("object")
       trigger()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

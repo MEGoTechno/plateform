@@ -48,12 +48,13 @@ const globalSlice = createSlice({
             return state
         },
         setGrades: (state, action) => {
-            const { grades } = state
-            if (grades) {
-                state.grades = [...grades, action.payload]
-            } else {
-                state.grades = action.payload
-            }
+            state.grades = [...action.payload]
+            setCookie("s", state.grades)
+            return state
+        },
+        addGrade: (state, action)=> {
+            const {grades} = state
+            state.grades = [...grades, action.payload]
             setCookie("s", state.grades)
             return state
         },
@@ -68,5 +69,5 @@ const globalSlice = createSlice({
     }
 })
 
-export const { setMode, setUser, logout, setGrades, setGlobalMsg } = globalSlice.actions
+export const { setMode, setUser, logout, setGrades, setGlobalMsg, addGrade } = globalSlice.actions
 export default globalSlice.reducer

@@ -16,7 +16,7 @@ export default function useGetGrades() {
         return new Promise(async (resolve, reject) => {
             try {
                 const grades = await getGrades()
-                setGradesState(grades)
+                // setGradesState(grades)
                 dispatch(setGrades(grades))
                 resolve(grades)
 

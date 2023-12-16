@@ -71,7 +71,7 @@ export default function CreateUnit({ grade, units, exams }) {
     if (!units || units?.length === 0) {
 
         return <>
-            <Alert severity='error'> لا يوجد اختبارات لهذه الوحده</Alert>
+            <Alert severity='error'> لا يوجد اختبارات لهذه السنه</Alert>
             {isManage && (
                 <Button sx={sendSuccess} onClick={() => {
                     handleAddExamUnit(units)
