@@ -54,7 +54,6 @@ export default function ManageExams() {
 
     if (grades?.length === 0) {
         return <Box>
-            <Header title={lang.links.manageExams} />
             <Alert severity='error'>اضف مجموعه اولا</Alert>
         </Box>
     }
