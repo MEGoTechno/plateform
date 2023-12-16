@@ -85,7 +85,7 @@ const examSlice = createSlice({
         },
         getCreatedExams: (state, action) => {
             state.createdExams = action.payload
-            setCookie("h", action.payload)
+            // setCookie("h", action.payload)
             return state
         },
         addExamToCreated: (state, action) => {

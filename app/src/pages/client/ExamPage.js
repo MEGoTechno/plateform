@@ -18,18 +18,21 @@ export default function ExamPage() {
   // const [trigger, exams] = useLazyGetData(getData)
 
   useEffect(() => {
-    getData()
+    if (!data) {
+      getData()
+    }
     if (data) {
+      console.log(data)
       const units = getUnique(data, "unitId")
       setUnits(units)
     }
-  }, [data, getData])
+  }, [data])
 
   if (isLoading) {
     return <LoaderSkeleton />
   }
 
-  if (user.isAdmin || user.role === "subAdmin") {
+  if (user.isAdmin) {
     return <ManageExams />
   }
 

@@ -21,7 +21,6 @@ export default function ManageExams() {
     const { createdExams } = useSelector(s => s.exam)
     const [value, setValue] = React.useState(0);
     let exams = createdExams
-
     const [trigger, { data: EXAMSDB, isSuccess, isLoading, isError, error }] = useLazyGetExamsQuery()
 
 
@@ -44,7 +43,7 @@ export default function ManageExams() {
         if (!exams || !grades) {
             handleGetData()
         }
-    }, [exams])
+    }, [])
 
     if (!exams || !grades) {
         return <LoaderSkeleton />

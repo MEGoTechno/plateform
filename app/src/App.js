@@ -56,7 +56,7 @@ function App() {
               <Route path='/test' element={<Test />} />
               {/* ++++++ */}
               <Route path='/management/years' element={<ManageYearsPage />} />
-              <Route path='/management/exams' element={<ManageExamsPage />} />
+              <Route path='/management/exams' element={<ExamPage />} />
 
               <Route path='/management/content/add-lecture' element={<CreateLecture />} />
               <Route path='/management/content/edit-lecture' element={<EditLecture />} />

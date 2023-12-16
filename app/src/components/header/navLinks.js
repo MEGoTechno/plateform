@@ -24,10 +24,10 @@ export const navLinks = [
     }, {
         name: lang.ar.links.management, icon: null, isSubAdmin: true
     }, {
-        name: lang.ar.links.manageExams, icon: <NewspaperSharpIcon />, to: "/management/exams", isSubAdmin: true
+        name: lang.ar.links.manageExams, icon: <NewspaperSharpIcon />, to: "/management/exams", isSubAdmin: true, isAdmin: true
     }, {
-        name: lang.ar.links.manageLectures, icon: <SourceIcon />, to: "/management/content", isSubAdmin: true
+        name: lang.ar.links.manageLectures, icon: <SourceIcon />, to: "/management/content", isSubAdmin: true, isAdmin: true
     }, {
-        name: lang.ar.links.grades, icon: <EditCalendarSharpIcon />, to: "/management/years", isSubAdmin: true
+        name: lang.ar.links.grades, icon: <EditCalendarSharpIcon />, to: "/management/years", isSubAdmin: true, isAdmin: true
     }
 ]

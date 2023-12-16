@@ -11,6 +11,7 @@ import useGetGrades from '../../hooks/useGetGrades'
 import Header from '../../components/tools/Header'
 import { buttonStyle } from '../../components/styles/buttonsStyles'
 import { useNavigate } from 'react-router-dom'
+import ManageUnits from '../../components/content/manage/ManageUnits'
 
 export default function ManageContentPage() {
   const navigate = useNavigate()
@@ -18,8 +19,7 @@ export default function ManageContentPage() {
   const dispatch = useDispatch()
   const [getGrades, grades] = useGetGrades()
   const { content: { lectures } } = useSelector(s => s)
-  const {lang} = useSelector(s => s.global)
-
+  const { lang, user } = useSelector(s => s.global)
   const [error, setError] = useState(null)
 
   const [getData, { isLoading, }] = useLazyGetLecturesQuery()
@@ -27,8 +27,10 @@ export default function ManageContentPage() {
 
   const trigger = async () => {
     try {
-      if (!grades) {
-        await getGrades()
+      console.log("here")
+      if (!grades && user.isAdmin) {
+        const me = await getGrades()
+        console.log(me)
       }
 
       const res = await getLectures()
@@ -41,18 +43,19 @@ export default function ManageContentPage() {
 
   useEffect(() => {
     if (!lectures || !grades) {
+      console.log("object")
       trigger()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!lectures || !grades) {
+  if (!lectures) {
     return <LoaderSkeleton />
   }
 
   if (grades?.length === 0) {
     return <Box>
-      <Header title={"content"} />
+      <Header title={lang.links.manageLectures} />
       <Alert severity='error'>{lang.errors.addGrade}</Alert>
       <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>{lang.errors.goGradePage}</Button>
     </Box>
@@ -63,9 +66,13 @@ export default function ManageContentPage() {
     return <Alert severity='error'>{lang.errors.connection}</Alert>
   }
 
+  if (user.role === "subAdmin") {
+    return <ManageUnits lectures={lectures} grade={user.grade} />
+  }
+
   return (
     <Box>
-      <Header title={lang.links.content} />
+      <Header title={lang.links.manageLectures} />
       <ManageContent grades={grades} lectures={lectures} />
     </Box>
   )

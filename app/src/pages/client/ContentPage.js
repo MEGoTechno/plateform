@@ -24,7 +24,7 @@ export default function ContentPage() {
 
   const trigger = async () => {
 
-    if (!grades && user.role !== 'student') {
+    if (!grades && user.isAdmin) {
       await getGrades()
     }
 
@@ -38,7 +38,7 @@ export default function ContentPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (isLoading) {
+  if (isLoading || !lectures) {
     return <LoaderSkeleton />
   }
 
@@ -46,22 +46,21 @@ export default function ContentPage() {
   if (grades?.length === 0) {
     return <Box sx={{ direction: 'rtl' }}>
       <Header title={lang.links.content} />
-      <Alert severity='error'>add grade plz</Alert>
-      <Button sx={buttonStyle} onClick={() => navigate("/management/years")}>go to grade page</Button>
+      <Alert severity='error'>اضف مجموعه</Alert>
     </Box>
   }
 
-  if (user.isAdmin && lectures) {
+  if (error) {
+    return <Alert severity='error'>{lang.errors.connection}</Alert>
+  }
+ 
+  if (user.isAdmin && lectures && grades) {
     return (
       <Stack mt="20px">
         <AllContent lectures={lectures} grades={grades} />
       </Stack>
     )
   }
-
-if(!lectures){
-  return <></>
-}
 
   return (
     <Stack>

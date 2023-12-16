@@ -22,7 +22,7 @@ export default function ShowUnits({ grade, lectures }) {
    }
 
    if (!lectures || lectures?.length === 0) {
-      return <Alert severity='error'> add lecture plz</Alert>
+      return <Alert severity='error'> لا يوجد محاضرات لهذه السنه</Alert>
 
    }
 
