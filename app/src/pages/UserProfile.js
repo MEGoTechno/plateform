@@ -18,7 +18,7 @@ export default function UserProfile({ user }) {
         return (
             <Box>
                 {location.pathname !== '/management/user' && (
-                    <Header title={lang.links.UserProfile} sx={{
+                    <Header title={lang.links.userProfile} sx={{
                         mt: 2
                     }} />
                 )}

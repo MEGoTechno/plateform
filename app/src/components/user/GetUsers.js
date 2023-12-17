@@ -47,7 +47,7 @@ export default function GetUsers({ users }) {
         headerName: lang.users.isActive,
         renderCell: (params) => {
             return (
-                <Typography sx={{ fontSize: "11px" }}>
+                <Typography sx={{ fontSize: "11px", color: params.row.isActive ? theme.palette.success.main : "error" }}>
                     {params.row.isActive ? lang.users.isActive : lang.users.notActive}
                 </Typography>
             )
