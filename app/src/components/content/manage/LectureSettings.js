@@ -20,7 +20,7 @@ import Loader from "../../tools/Loader"
 
 export default function LectureSettings({ lecture, editLecture }) {
     const theme = useTheme()
-    const {lang} = useSelector(s => s.global)
+    const { lang } = useSelector(s => s.global)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -43,13 +43,14 @@ export default function LectureSettings({ lecture, editLecture }) {
         dispatch(setLectures(null))
         navigate("/management/content")
     }
+    const thumbnail = lecture?.thumbnail?.url ? lecture?.thumbnail?.url : '/'
 
     return (
         <Card sx={{ bgcolor: theme.palette.background.alt }}>
             <CardMedia
                 component="img"
                 height={140}
-                image={`/images/download.jpg`}
+                image={thumbnail}
                 alt="no images"
             />
             <CardContent>

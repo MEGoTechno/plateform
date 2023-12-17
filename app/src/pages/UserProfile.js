@@ -42,8 +42,8 @@ export default function UserProfile({ user }) {
                             <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
                                 {user.name}
                             </Typography>
-                            <Typography color={user.isActive ? "blue" : "error"} ml={1}>
-                                {user.isActive ? "(active)" : "(not active)"}
+                            <Typography color={user.isActive ? theme.palette.success.main : "error"} ml={1}>
+                                {user.isActive ? lang.users.isActive : lang.users.notActive}
                             </Typography>
                         </Box>
                         <Box>

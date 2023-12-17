@@ -79,7 +79,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
     const user = req.body
 
     if (user.password) {
-        const hashedPassword = bcrypt.hashSync("258369", 10)
+        const hashedPassword = bcrypt.hashSync("369258", 10)
         user.password = hashedPassword
         const doc = await UserModel.findByIdAndUpdate(user._id, user)
         console.log(doc)

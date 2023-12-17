@@ -58,7 +58,7 @@ export default function TabsControlled({ value, setValue, items, by }) {
         width: `calc(100% / ${items.length})`, // take care of it
     }
     return (
-        <AppBar position="static" sx={{ bgcolor: theme.palette.background.alt, boxShadow: "none", width: "100%", direction: lang.direction }} >
+        <AppBar position="static" sx={{ bgcolor: theme.palette.background.alt, boxShadow: "none", width: "100%",  }} >
             <Tabs
                 value={value}
                 onChange={handleChange}

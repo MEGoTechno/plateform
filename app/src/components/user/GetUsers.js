@@ -18,7 +18,7 @@ export default function GetUsers({ users }) {
         headerName: "صوره",
         renderCell: (params) => {
             return (
-                <Avatar sx={{ bgcolor: theme.palette.secondary[500]}}>
+                <Avatar sx={{ bgcolor: theme.palette.secondary[500] }}>
                     {params.row.userName ? params.row.userName[0].toUpperCase() : false}
                 </Avatar>
             )
@@ -43,16 +43,12 @@ export default function GetUsers({ users }) {
         width: 150
 
     }, {
-        field: "isAdmin",
-        headerName: lang.users.role,
-
-    }, {
         field: "isActive",
         headerName: lang.users.isActive,
         renderCell: (params) => {
             return (
                 <Typography sx={{ fontSize: "11px" }}>
-                    {params.row.isActive ? lang.users.isActive : false}
+                    {params.row.isActive ? lang.users.isActive : lang.users.notActive}
                 </Typography>
             )
         }

@@ -46,7 +46,9 @@ export default function EditName() {
     const [sendName] = usePostData(sendData, formOptions, setFormOptions)
 
     const trigger = async () => {
-        console.log(formOptions.values)
+        setFormOptions({
+            ...formOptions, isShowModal:false, isLoading: true
+        })
         await sendName(formOptions.values)
         dispatch(setLectures(null))
         navigate("/management/content")
