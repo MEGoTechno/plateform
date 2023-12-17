@@ -14,13 +14,13 @@ export default function CreateExam({ exam, isManage }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [removeExamAction] = useRemoveExamMutation()
+    const { createdExams } = useSelector(s => s.exam)
     const { lang } = useSelector(s => s.global)
     const [settings, setSettings] = useState({
         isShowModal: false,
         title: "",
 
     })
-
     const [loading, setLoading] = useState(false)
     // alert if errors for add year
     const [alert, setAlert] = useState({
@@ -60,7 +60,11 @@ export default function CreateExam({ exam, isManage }) {
     }
 
     const removeExam = () => {
+        setSettings({
+            isShowModal: false
+        })
         setLoading(true)
+
         removeExamAction(exam).then((res) => {
             if (res.data) {
                 setLoading(false)
@@ -82,6 +86,7 @@ export default function CreateExam({ exam, isManage }) {
     }
 
     return (
+
         <Box
             sx={{
                 m: "30px 0",
@@ -136,5 +141,6 @@ export default function CreateExam({ exam, isManage }) {
                 isShowModal={settings.isShowModal}
                 close={() => setSettings(false)} />
         </Box>
+
     )
 }

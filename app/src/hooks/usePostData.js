@@ -12,18 +12,22 @@ export default function usePostData(sendData, formOptions, setFormOptions) {
       data = formOptions?.values
     }
 
-    for(let key in data){
-      if(typeof data[key] === "string"){
-        data[key] = data[key].trim()
+    Object.keys(data).forEach(key => {
+      if (!data[key] === "_id") {
+
+        if (typeof data[key] === "string") {
+          data[key] = data[key].trim()
+        }
+
       }
-    }
+    })
+
     let formData = data
 
     if (dataType) {
       formData = new FormData()
       Object.keys(data).forEach(key => formData.append(key, data[key]))
     }
-
     return new Promise((resolve, reject) => {
 
       sendData(formData).then(res => {

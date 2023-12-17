@@ -76,6 +76,7 @@ const examSlice = createSlice({
                     time: "",
                     questions: []
                 },
+                createdExams: null
             }
             return state
         },

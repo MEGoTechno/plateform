@@ -42,11 +42,11 @@ export default function ManageExams() {
     useEffect(() => {
         if (!exams || !grades) {
             handleGetData()
-        }else {
+        } else {
             setExams(createdExams)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exams, grades])
+    }, [exams, grades, createdExams])
 
     if (isLoading || !grades) {
         return <LoaderSkeleton />

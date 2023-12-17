@@ -113,7 +113,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
         throw new Error("sorry, you are admin")
     }
 
-    await UserModel.deleteOne({ _id: user._id })
+    await UserModel.deleteOne({ userName: user.userName })
     mongoose.disconnect()
     res.status(200).json({ message: "user deleted successfully" })
 })
