@@ -12,25 +12,37 @@ export default function MakeInput({ input, props }) {
 
     const { grades } = useSelector(s => s.global)
     if (input?.type === "radio") {
-        // console.log(input.name.{input.radioKeys[0]})
         return (
             <>
-                <FormLabel>{input.label}</FormLabel>
+                <FormLabel >{input.label}</FormLabel>
                 <Field as={RadioGroup}
                     name={input.name}
                 >
                     {/* {!input.radios && <>add grade first</>} */}
 
                     {grades && grades.map((grade, i) => (
-                        <FormControlLabel key={i} value={grade.gradeId} label={grade.gradeName} control={<Radio />} />
+                        <FormControlLabel key={i} value={grade.gradeId} label={grade.gradeName} control={<Radio sx={{
+                            " &.Mui-checked": {
+                                color: "green"
+                            }
+                        }} />}
+                        />
                     ))}
+
+                    {(grades?.length === 0 || !grades) && (
+                        <Alert dir='ltr' sx={{ mb: "5px" }} severity='error'>يجب اضافه سنه دراسيه</Alert>
+                    )}
+
+                    {props.errors[input.name] && props.touched[input.name] && (
+                        <Alert dir='ltr' sx={{ mb: "5px" }} severity='error'>يجب الاختيار</Alert>
+                    )}
                 </Field>
             </>
         )
     }
     if (input?.type === "file") {
-        const { existedFile } = input
 
+        const { value } = input
         return (
             <Box>
                 <input
@@ -40,20 +52,20 @@ export default function MakeInput({ input, props }) {
                     hidden
                     name={input.name}
                     onChange={(e) => {
-                        props.setFieldValue(input.name, e.target.files[0])
                         props.setFieldTouched(input.name, true)
+                        props.setFieldValue(input.name, e.target.files[0])
                     }}
                 />
                 <Button sx={buttonStyle} style={{ width: "auto" }} onClick={() => fileRef.current.click()}>{input.label} <AddCircleOutlineIcon /> </Button>
 
                 {props.errors[input.name] && props.touched[input.name] && (
-                    <Alert sx={{mb: "5px"}} severity='error'>{props.errors[input.name]}</Alert>
+                    <Alert sx={{ mb: "5px" }} severity='error'>{props.errors[input.name]}</Alert>
                 )}
 
                 {inputValue ? (
                     <ShowFileSettings file={inputValue} />
-                ) : existedFile && (
-                    <ShowFileSettings file={existedFile} />
+                ) : value && (
+                    <ShowFileSettings file={value} />
                 )}
             </Box>
         )

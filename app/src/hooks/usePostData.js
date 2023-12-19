@@ -13,8 +13,7 @@ export default function usePostData(sendData, formOptions, setFormOptions) {
     }
 
     Object.keys(data).forEach(key => {
-      if (!data[key] === "_id") {
-
+      if (data[key] !== "_id" && !data?._id) {
         if (typeof data[key] === "string") {
           data[key] = data[key].trim()
         }

@@ -7,9 +7,10 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../../../toolkit/usersSlice'
 import Header from '../../tools/Header'
+import { useNavigate } from 'react-router-dom'
 
 export default function Adduser() {
-
+    const navigate = useNavigate()
     const theme = useTheme()
     const {lang} = useSelector(s => s.global)
     const dispatch = useDispatch()
@@ -31,7 +32,7 @@ export default function Adduser() {
         })
         const res = await sendAdd()
         dispatch(addUser(res))
-        console.log(res)
+        navigate(-1)
     }
 
     const paperStyle = { padding: 20, width: "100%", margin: "20px auto", backgroundColor: theme.palette.background.alt }

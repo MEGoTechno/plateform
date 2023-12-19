@@ -53,7 +53,7 @@ export default function AddUserForm({ trigger, setFormOptions, formOptions }) {
 
             {/* ###### modal ###### */}
             {formOptions.isShowModal && <ModalControlled
-                title="confirm action" description="r u sure ?"
+                title={lang.modal.confirm} description="r u sure ?"
                 action={trigger}
                 isShowModal={formOptions?.isShowModal}
                 setFormOptions={setFormOptions}

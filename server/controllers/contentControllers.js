@@ -19,16 +19,16 @@ const createLecture = asyncHandler(async (req, res) => {
         mongoose.disconnect()
         throw new Error("there is lecture has same id")
     }
+
     const { files } = req
     let results = {}
 
     for (let file in files) {
-        console.log(files[file][0].path)
         const result = await addToCloud(files[file][0].path, {
             folder: "admin",
             resource_type: "auto"
         })
-        console.log(result)
+
         if (result) {
             const { original_filename, resource_type, secure_url, url, format, bytes } = result
             results[file] = { original_filename, resource_type, secure_url, url, format, size: bytes }
@@ -37,7 +37,6 @@ const createLecture = asyncHandler(async (req, res) => {
 
     //add results
     const modifiedLecture = { ...lecture, ...results }
-    console.log(modifiedLecture)
     const createdLecture = await ContentModel.create(modifiedLecture)
     await mongoose.disconnect()
     res.status(200).json({ message: 'lecture has been created successfully', values: createdLecture })
@@ -77,7 +76,24 @@ const updateLecture = asyncHandler(async (req, res) => {
     let updatedLecture
     await mongoose.connect(DB_URI)
     if (partId) {
-        updatedLecture = await ContentModel.updateOne({ partId: lecture.partId }, lecture)
+
+        const { files } = req
+        let results = {}
+        for (let file in files) {
+            const result = await addToCloud(files[file][0].path, {
+                folder: "admin",
+                resource_type: "auto"
+            })
+
+            if (result) {
+                const { original_filename, resource_type, secure_url, url, format, bytes } = result
+                results[file] = { original_filename, resource_type, secure_url, url, format, size: bytes }
+            }
+
+        }
+        //add results
+        const modifiedLecture = { ...lecture, ...results }
+        updatedLecture = await ContentModel.updateOne({ partId: lecture.partId }, modifiedLecture)
 
     } else if (lessonId) {
         updatedLecture = await ContentModel.updateMany({ lessonId: lecture.lessonId }, lecture)
@@ -85,7 +101,6 @@ const updateLecture = asyncHandler(async (req, res) => {
     } else if (unitId) {
         updatedLecture = await ContentModel.updateMany({ unitId: lecture.unitId }, lecture)
     }
-    console.log(updatedLecture)
     mongoose.disconnect()
     res.json({ message: "updated successfully", values: updatedLecture })
 })

@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player'
 
 export default function Video({ lecture }) {
     const [playState, setPlayState] = useState(false)
-    const src = lecture.video.url ? lecture.video.url : "/"
+    const src = lecture?.video?.url ? lecture?.video?.url : "/"
 
     return (
         <ReactPlayer

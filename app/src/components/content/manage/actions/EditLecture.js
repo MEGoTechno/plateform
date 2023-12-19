@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ContentForm from './ContentForm'
 import usePostData from '../../../../hooks/usePostData'
 import * as Yup from "yup"
 import { useUpdateLectureMutation } from '../../../../toolkit/apiSlice'
 import { Box } from '@mui/material'
 import Header from "../../../tools/Header"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLectures } from '../../../../toolkit/contentSlice'
 
 export default function EditLecture() {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const location = useLocation()
-    const {lang} = useSelector(s => s.global)
+    const { lang } = useSelector(s => s.global)
     const lecture = location.state
     const [sendData] = useUpdateLectureMutation()
 
@@ -83,12 +86,46 @@ export default function EditLecture() {
             name: "thumbnail",
             label: lang.form.thumbnail,
             type: "file",
-            existedFile: lecture.thumbnail
+            value: lecture.thumbnail,
+            validation: Yup.mixed().required(lang.errors.requireImg)
+                .test({
+                    message: 'Please provide a supported image typed(jpg or png)',
+                    test: (file, context) => {
+                        const isType = file?.type ? file?.type : `${file.resource_type}/${file.format}`
+                        const isValid = ['image/png', 'image/jpg', 'image/jpeg'].includes(isType);
+                        if (!isValid) context?.createError();
+                        return isValid;
+                    }
+                })
+                .test({
+                    message: lang.errors.less15mg,
+                    test: (file) => {
+                        const isValid = file?.size < 15 * 1000000;
+                        return isValid;
+                    }
+                })
         }, {
             name: "video",
             label: lang.form.video,
             type: "file",
-            existedFile: lecture.video
+            value: lecture.video,
+            validation: Yup.mixed().required(lang.errors.requireVid)
+                .test({
+                    message: 'Please provide a supported video typed(mp4)',
+                    test: (file, context) => {
+                        const isType = file?.type ? file?.type : `${file.resource_type}/${file.format}`
+                        const isValid = ['video/mp4'].includes(isType);
+                        if (!isValid) context?.createError();
+                        return isValid;
+                    }
+                })
+                .test({
+                    message: lang.errors.less15mg,
+                    test: (file) => {
+                        const isValid = file?.size < 15 * 1000000;
+                        return isValid;
+                    }
+                })
         }
     ]
 
@@ -98,14 +135,13 @@ export default function EditLecture() {
         setFormOptions({
             ...formOptions, isLoading: true, isShowModal: false
         })
-
-        const res = await trigger()
-        console.log(res)
-
+        await trigger(formOptions.values, "multi")
+        dispatch(setLectures(null))
+        navigate("/management/content")
     }
 
     return (
-        <Box sx={{direction: lang.direction}}>
+        <Box sx={{ direction: lang.direction }}>
             <Header title={lang.content.editLecture} description={`${lecture.gradeName} > ${lecture.lessonName} > ${lecture.partName}`} />
             <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={sumbitData} />
         </Box>

@@ -11,10 +11,12 @@ import { useNavigate } from 'react-router-dom'
 import { buttonStyle } from '../../components/styles/buttonsStyles'
 import MakeTitle from '../../components/tools/MakeTitle'
 import ManageGetUser from '../../components/user/ManageGetUser'
+import useGetGrades from '../../hooks/useGetGrades'
 
 export default function ManageGetUSerPage() {
     const { users } = useSelector(s => s.usersSettings)
-    const {lang} = useSelector(s => s.global)
+    const { lang, user } = useSelector(s => s.global)
+    const [getGrades, grades] = useGetGrades()
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -24,6 +26,9 @@ export default function ManageGetUSerPage() {
 
     const trigger = async () => {
         try {
+            if (!grades && user.isAdmin) {
+                await getGrades()
+            }
             const res = await getUsers()
             dispatch(setUsers(res))
         } catch (error) {
