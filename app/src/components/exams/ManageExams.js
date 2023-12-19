@@ -52,6 +52,7 @@ export default function ManageExams() {
         return <LoaderSkeleton />
     }
 
+
     if (grades?.length === 0) {
         return <Box>
             <Header />

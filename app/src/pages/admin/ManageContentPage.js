@@ -19,7 +19,7 @@ export default function ManageContentPage() {
   const dispatch = useDispatch()
   const [getGrades, grades] = useGetGrades()
   const { content: { lectures } } = useSelector(s => s)
-  const { lang, user } = useSelector(s => s.global)
+  const { lang, user, grades: test } = useSelector(s => s.global)
   const [error, setError] = useState(null)
 
   const [getData, { isLoading, }] = useLazyGetLecturesQuery()
@@ -44,10 +44,14 @@ export default function ManageContentPage() {
       trigger()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [lectures, grades])
 
-  if (!lectures) {
+  if (isLoading) {
     return <LoaderSkeleton />
+  }
+
+  if(!grades || !lectures){
+    return <></>
   }
 
   if (grades?.length === 0) {
