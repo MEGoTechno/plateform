@@ -284,7 +284,7 @@ export default function ExamForm({ exam }) {
 
             </Box>
             <hr />
-            <Button type='submit' disabled={exam.partName || loading || exam.unitName ? true : false} fullWidth sx={buttonStyle} onClick={() => submit()}>
+            <Button type='submit' disabled={exam.partName || loading ? true : false} fullWidth sx={buttonStyle} onClick={() => submit()}>
                 {loading ? <Loader /> : lang.send}
             </Button>
             {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}
