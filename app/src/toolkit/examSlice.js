@@ -32,7 +32,6 @@ const examSlice = createSlice({
             const { questions } = state.exam
             const { value, i } = action.payload
             questions[i].title = value
-            console.log(questions)
             return state
         },
         editOptionAction: (state, action) => {

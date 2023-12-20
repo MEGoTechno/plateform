@@ -26,6 +26,7 @@ export default function CreateUnit({ grade, units, exams }) {
             }
         }))
         const partId = lessonId + `p${i}`
+        dispatch(resetExamState())
         dispatch(editExamSettings({ gradeId, gradeName, unitId, unitName, lessonId, lessonName, partId }))
         navigate("/management/exams/add-exam")
     }

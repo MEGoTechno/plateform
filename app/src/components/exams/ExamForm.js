@@ -227,14 +227,14 @@ export default function ExamForm({ exam }) {
                                     required={question.required ? question.required : false}
                                     type={question.type ? question.type : "text"}
                                     disabled={question.disabled ? question.disabled : false}
-                                    value={question.value && question.value}
+                                    value={question.title && question.title}
                                     hidden={question.hidden && true}
                                     onChange={(e) => handleQuestions(e.target, q)}
                                 />
                                 {question.options.map((option, o) => {
                                     return (
 
-                                        <Box key={o} sx={{ position: "relative" }}>
+                                        <Box key={o} sx={{ position: "relative", direction: "ltr" }}>
                                             <TextField
                                                 color='warning'
                                                 id={option.id}
@@ -247,7 +247,7 @@ export default function ExamForm({ exam }) {
                                                 required={option.required ? option.required : false}
                                                 type={option.type ? option.type : "text"}
                                                 disabled={option.disabled ? option.disabled : false}
-                                                value={option.value && option.value}
+                                                value={option.title && option.title}
                                                 hidden={option.hidden && true}
                                                 onChange={(e) => handleOptions(e.target, q, o)}
                                                 sx={{
