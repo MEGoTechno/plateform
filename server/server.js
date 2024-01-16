@@ -81,7 +81,13 @@ app.use("/upload", upload.fields([{ name: "video" }, { name: "thumbnail" }]), as
 })
 
 
-
+app.get("/test", async (req, res)=> {
+    console.log("test")
+    await mongoose.connect(DB_URI)  
+    const users = await UserModel.find({})
+    console.log(users)
+    res.json({msg: users})
+})
 
 
 

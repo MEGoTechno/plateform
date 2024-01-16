@@ -141,11 +141,15 @@ export const apiSlice = createApi({
                 body: data
             }),
         }),
+        testUri: builder.query({
+            query: (id) => `/public/${id}`
+        })
     })
 })
 export const {
     useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useInActivateUserMutation, useUpdateUserMutation, useMakeAdminMutation,
     useLazyGetSettingsQuery, usePostSettingsMutation, useUpdateSettingsMutation, useDeleteSettingsMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation,
-    usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation
+    usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation,
+    useLazyTestUriQuery
 } = apiSlice
