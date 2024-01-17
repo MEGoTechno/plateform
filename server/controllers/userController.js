@@ -119,7 +119,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 })
 // login
 const login = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const { userName, password } = req.body
     const user = await UserModel.findOne({ userName })
 
@@ -135,14 +135,14 @@ const login = asyncHandler(async (req, res, next) => {
                 res.status(401)
                 throw new Error("sorry!, you are not active")
             }
-            mongoose.disconnect()
+            // mongoose.disconnect()
         } else {
             res.status(400)
-            mongoose.disconnect()
+            // mongoose.disconnect()
             throw new Error("incorrect password")
         }
     } else {
-        mongoose.disconnect()
+        // mongoose.disconnect()
         res.status(404)
         throw new Error("user not found")
     }

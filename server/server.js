@@ -26,6 +26,7 @@ const addToCloud = require("./middleware/cloudinary")
 
 // config
 dotenv.config()
+
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -109,6 +110,7 @@ app.use(errorrHandler)
 const port = process.env.PORT || 5001
 const DB_URI = process.env.MONGO_URI
 
+mongoose.connect(DB_URI).then(()=> console.log("connected"))
 
 
 
