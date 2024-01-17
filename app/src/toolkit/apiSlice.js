@@ -6,7 +6,7 @@ import { getCookie } from '../hooks/cookies'
 export const apiSlice = createApi({
     reducerPath: "api", //from state
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://192.168.1.13:5050",
+        baseUrl: "https://mradel-biology.onrender.com",
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers
