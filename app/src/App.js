@@ -23,7 +23,7 @@ import ManageContentPage from './pages/admin/ManageContentPage';
 import ContentPage from './pages/client/ContentPage';
 import ShowLessons from './components/content/ShowLessons';
 import VidPage from './components/content/vid/VidPage';
-import Test from './pages/Test';
+import Test from './test/Test';
 import EditName from './components/content/manage/actions/EditName';
 import ManageLessons from './components/content/manage/ManageLessons';
 import CreateLecture from './components/content/manage/actions/CreateLecture';
