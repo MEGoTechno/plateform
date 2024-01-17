@@ -18,9 +18,9 @@ const DB_URI = process.env.MONGO_URI
 
 // get users
 const getAllUsers = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const users = await UserModel.find({}).select("-password")
-    await mongoose.disconnect()
+    // await mongoose.disconnect()
     if (users) {
         res.json(users)
     } else {
@@ -30,21 +30,21 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 
 // get user
 const getUser = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const id = req.params.id
     const user = await UserModel.findOne({ userName: id }).select("-password")
-    await mongoose.disconnect()
+    // await mongoose.disconnect()
     if (user) {
         res.json(user)
     } else {
-        mongoose.disconnect()
+        // mongoose.disconnect()
         throw new Error("no user has this user name")
     }
 })
 
 // add user
 const addUser = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const user = req.body
     const grade = await SettingsModel.findOne({ gradeId: user.grade })
     user.grade = grade
@@ -54,12 +54,12 @@ const addUser = asyncHandler(async (req, res, next) => {
         // for exsiting user ----
         if (foundUser) {
             res.status(400)
-            mongoose.disconnect()
+            // mongoose.disconnect()
             throw new Error("there is a user has same userName")
         }
     } else {
         res.status(400)
-        mongoose.disconnect()
+        // mongoose.disconnect()
         throw new Error("user data is missed")
     }
 
@@ -70,20 +70,19 @@ const addUser = asyncHandler(async (req, res, next) => {
 
     
     res.json({ message: "users has been added successfully", values: newUser })
-    mongoose.disconnect()
+    // mongoose.disconnect()
 })
 
 // update user
 const updateUser = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const user = req.body
 
     if (user.password) {
         const hashedPassword = bcrypt.hashSync("369258", 10)
         user.password = hashedPassword
         const doc = await UserModel.findByIdAndUpdate(user._id, user)
-        console.log(doc)
-        mongoose.disconnect()
+        // mongoose.disconnect()
         res.json({ message: "user reset password successfully" })
         return;
     }
@@ -99,22 +98,22 @@ const updateUser = asyncHandler(async (req, res, next) => {
     }
 
     const doc = await UserModel.findByIdAndUpdate(user._id, user, { new: true }).select("-password")
-    mongoose.disconnect()
+    // mongoose.disconnect()
     res.status(200).json({ message: "user updated successfully", values: doc })
 
 })
 
 // delete user
 const deleteUser = asyncHandler(async (req, res, next) => {
-    await mongoose.connect(DB_URI)
+    // await mongoose.connect(DB_URI)
     const user = req.body
     if (user.isAdmin) {
-        mongoose.disconnect()
+        // mongoose.disconnect()
         throw new Error("sorry, you are admin")
     }
 
     await UserModel.deleteOne({ userName: user.userName })
-    mongoose.disconnect()
+    // mongoose.disconnect()
     res.status(200).json({ message: "user deleted successfully" })
 })
 // login

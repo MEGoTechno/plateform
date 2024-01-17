@@ -22,18 +22,22 @@ const ExamModel = require("./models/examModel")
 const SettingsModel = require("./models/SettingsModel")
 const router = require("./routes/userRoutes")
 const addToCloud = require("./middleware/cloudinary")
+const { isUser } = require("./middleware/auth")
 // const UploadRouter = require("./firebase/uploadFirebase")
 
 // config
 dotenv.config()
-
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static("public"))
 app.use(cors())
 app.use(morgan('tiny'))
 
+// for secure folders
+app.use("/public", isUser, (req, res, next) => {
+    next()
+})
+app.use("/public", express.static("public"))
 
 // app.post("/upload", upload.fields([{name: "image"}]), (req, res) => {
 //     const { file } = req
@@ -81,25 +85,13 @@ app.use("/upload", upload.fields([{ name: "video" }, { name: "thumbnail" }]), as
     }
 })
 
-
-app.get("/test", async (req, res)=> {
+app.get("/test", async (req, res) => {
     console.log("test")
-    await mongoose.connect(DB_URI)  
+    await mongoose.connect(DB_URI)
     const users = await UserModel.find({})
     console.log(users)
-    res.json({msg: users})
+    res.json({ msg: users })
 })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -110,11 +102,9 @@ app.use(errorrHandler)
 const port = process.env.PORT || 5001
 const DB_URI = process.env.MONGO_URI
 
-mongoose.connect(DB_URI).then(()=> console.log("connected"))
-
-
-
-
+mongoose.connect(DB_URI).then(() => {
+    console.log("connected")
+})
 app.listen(port, async () => {
     console.log(`the app is working on port: ${port}`)
 })
