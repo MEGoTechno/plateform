@@ -28,6 +28,8 @@ export default function GlobalMsg() {
         </React.Fragment>
     );
 
+    // if(!globalMsg) return <></>
+
     return (
         <Box>
             <Snackbar open={globalMsg && true}

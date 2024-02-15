@@ -5,14 +5,20 @@ import usePostData from "../../../../hooks/usePostData"
 import * as Yup from "yup"
 import ContentForm from "./ContentForm"
 import { useDispatch, useSelector } from "react-redux"
-import { setLectures } from "../../../../toolkit/contentSlice"
+import { setLectures } from "../../../../toolkit/lecturesSlice"
 import Header from "../../../tools/Header"
 import { Box } from "@mui/material"
 
+import { v4 as uuidv4 } from 'uuid';
 
 export default function CreateLecture() {
+  
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { lang } = useSelector(s => s.global)
+  const location = useLocation()
+
+
   const [formOptions, setFormOptions] = useState({
     isLoading: false,
     isError: false,
@@ -22,34 +28,27 @@ export default function CreateLecture() {
     values: null,
     res: ""
   })
-  const { lang } = useSelector(s => s.global)
-  const location = useLocation()
-  const { gradeId, gradeName, unitId, unitName, lessonId, lessonName, partId } = location.state
+
+  const { gradeId, unitId, unitName, lessonId, lessonName } = location.state
 
   // inputs fc form option
   const inputs = [
     {
       name: "partId",
       label: "partId",
-      value: partId,
+      value: uuidv4(),
       hidden: true,
       disabled: true
     }, {
-      name: "gradeId",
+      name: "grade",
       label: "gradeId",
       value: gradeId,
       hidden: true,
       disabled: true
     }, {
-      name: "gradeName",
-      label: lang.form.gradeName,
-      value: gradeName || "",
-      disabled: gradeName ? true : false,
-      validation: Yup.string().required("مطلوب")
-    }, {
       name: "unitId",
       label: "unitId",
-      value: unitId,
+      value: unitId || uuidv4(),
       hidden: true,
       disabled: true,
     }, {
@@ -62,7 +61,7 @@ export default function CreateLecture() {
     }, {
       name: "lessonId",
       label: "lessonId",
-      value: lessonId,
+      value: lessonId || uuidv4(),
       hidden: true,
       disabled: true
     }, {
@@ -135,13 +134,13 @@ export default function CreateLecture() {
     })
     await sendLecture(formOptions.values, "multi")
     dispatch(setLectures(null))
-    navigate("/management/content")
+    navigate("/management/lectures")
   }
 
 
   return (
     <Box sx={{ direction: lang.direction }}>
-      <Header title={lang.form.addLecture} description={`${gradeName && gradeName} > ${lessonName ? lessonName : "new lesson"}`} />
+      <Header title={lang.form.addLecture} description={` ${lessonName ? lessonName : "new lesson"}`} />
       <ContentForm inputs={inputs} formOptions={formOptions} setFormOptions={setFormOptions} trigger={trigger} />
     </Box>
   )

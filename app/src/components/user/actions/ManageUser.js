@@ -1,14 +1,14 @@
-import { Alert, Box, Button, Grid, IconButton, Stack, Tooltip, useTheme } from '@mui/material'
+import { Alert, Box, Button, Grid, IconButton, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import GetUser from '../GetUser'
 import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
-import UserProfile from '../../../pages/UserProfile';
+// import UserProfile from '../../../pages/UserProfile';
 import ModalControlled from '../../tools/ModalControlled';
 import usePostData from '../../../hooks/usePostData';
 import { useDeleteUserMutation, useUpdateUserMutation } from '../../../toolkit/apiSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { delteUser, updateUser } from '../../../toolkit/usersSlice';
+import { delteUser, updateUserState } from '../../../toolkit/usersSlice';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
 import Loader from '../../tools/Loader';
@@ -21,7 +21,7 @@ export default function ManageUser({ user, setUser }) {
     const dispatch = useDispatch()
     const theme = useTheme()
     const [isShow, setShow] = useState(true)
-    const {lang} = useSelector(s => s.global)
+    const { lang } = useSelector(s => s.global)
 
     const [settings, setSettings] = useState({
         isShowModal: false,
@@ -61,7 +61,7 @@ export default function ManageUser({ user, setUser }) {
             } else {
                 const res = await sendUpdate(settings.values)
                 setUser(res)
-                dispatch(updateUser(res))
+                dispatch(updateUserState(res))
             }
 
         } catch (error) {
@@ -72,8 +72,7 @@ export default function ManageUser({ user, setUser }) {
     }
 
     return (
-        <div>
-
+        <Box>
             <Grid container spacing={2}
                 sx={{
                     backgroundColor: theme.palette.background.alt, m: "5px 0", p: "5px 15px 10px 5px",
@@ -114,7 +113,7 @@ export default function ManageUser({ user, setUser }) {
                                     }
 
                                 }}
-                                onClick={() => showModal(null, { _id: user._id, userName: user.userName, password: true }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
+                                onClick={() => showModal(null, { _id: user._id, userName: user.userName, password: "reset" }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
                                 {lang.users.resetPassword} <RestartAltIcon />
                             </Button>
                         </Grid>
@@ -150,7 +149,7 @@ export default function ManageUser({ user, setUser }) {
                                         }
                                     }}
                                     onClick={() => showModal(null, { _id: user._id, userName: user.userName, role: user.role === "subAdmin" ? "student" : "subAdmin" }, lang.modal.confirm, "if you clicked ok, u will not be able to back")}>
-                                    {user.role === "student" ? lang.users.makeSubAdmin: lang.users.makeStudent}  <SupervisorAccountIcon />
+                                    {user.role === "student" ? lang.users.makeSubAdmin : lang.users.makeStudent}  <SupervisorAccountIcon />
                                 </Button>
                             )}
                         </Grid>
@@ -177,9 +176,9 @@ export default function ManageUser({ user, setUser }) {
                 )}
             </Grid>
 
-            <Box>
+            {/* <Box>
                 <UserProfile user={user} />
-            </Box>
+            </Box> */}
 
             <ModalControlled
                 title={settings.title}
@@ -192,6 +191,6 @@ export default function ManageUser({ user, setUser }) {
                 <Alert severity={settings.isError ? "error" : "success"}>{settings.doneMessage}</Alert>
             )}
 
-        </div>
+        </Box>
     )
 }

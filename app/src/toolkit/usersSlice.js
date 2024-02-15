@@ -17,11 +17,13 @@ const usersSlice = createSlice({
             state.users = newUsers
             return state
         },
-        updateUser: (state, action) => {
-            const { users } = state
-            const user = action.payload
-            const userIndex = users.findIndex(obj => obj.userName === user.userName)
-            users[userIndex] = user
+        updateUserState: (state, action) => {
+            if (state.users) {
+                const { users } = state
+                const user = action.payload
+                const userIndex = users.findIndex(obj => obj.userName === user.userName)
+                users[userIndex] = user
+            }
             return state
         },
         delteUser: (state, action) => {
@@ -34,5 +36,5 @@ const usersSlice = createSlice({
     }
 })
 
-export const { setUsers, addUser, updateUser, delteUser } = usersSlice.actions
+export const { setUsers, addUser, updateUserState, delteUser } = usersSlice.actions
 export default usersSlice.reducer

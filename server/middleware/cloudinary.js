@@ -18,7 +18,7 @@ const addToCloud = (path, settings) => {
                 resolve(result)
             }
         } catch (error) {
-            reject(result)
+            reject(error)
         }
     })
 }

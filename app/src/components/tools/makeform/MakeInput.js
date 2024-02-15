@@ -1,102 +1,112 @@
-import { Alert, Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
-import { ErrorMessage, Field, useFormik } from 'formik'
-import React, { useRef } from 'react'
-import { useSelector } from 'react-redux'
-import ShowFileSettings from './ShowFileSettings'
-import { buttonStyle } from '../../styles/buttonsStyles'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { ErrorMessage, FastField, Field } from 'formik'
+import React from 'react'
 
-export default function MakeInput({ input, props }) {
-    const fileRef = useRef(null)
-    const inputValue = props.values[input.name]
+import MakeFieldArray from './MakeFieldArray'
+import MakeRadio from './components/MakeRadio'
+import MakeFile from './components/MakeFile'
 
-    const { grades } = useSelector(s => s.global)
+import { getValues } from './constants/getValue'
+import { getInputName } from './constants/getInputName'
+import MakeTitle from './components/MakeTitle'
+import { hasError } from './constants/hasError'
+import MakeChunk from './MakeChunk'
+import MakeSelect from './components/MakeSelect'
+import MakeSelectRef from './components/MakeSelectRef'
+import MakeChoosed from './components/MakeChoosed'
+import MakeFullDate from './components/MakeFullDate'
+
+export default function MakeInput({ input, props, nestedInputName, style }) {
+    //nestedInputName in case used by field array
+
+    const inputName = getInputName(nestedInputName, input)
+    const value = getValues(inputName, props)
+
+    if (input.type === "chunk") {
+        return <MakeChunk inputName={inputName} input={input} props={props} values={value} />
+    }
+
+    if (input?.type === "header") {
+        return <Box>
+            <MakeTitle title={input.title} />
+        </Box>
+    }
+
+    if (input?.type === "array") {
+        return <MakeFieldArray inputName={inputName} input={input} props={props} values={value} />
+    }
+
     if (input?.type === "radio") {
         return (
-            <>
-                <FormLabel >{input.label}</FormLabel>
-                <Field as={RadioGroup}
-                    name={input.name}
-                >
-                    {/* {!input.radios && <>add grade first</>} */}
-
-                    {grades && grades.map((grade, i) => (
-                        <FormControlLabel key={i} value={grade.gradeId} label={grade.gradeName} control={<Radio sx={{
-                            " &.Mui-checked": {
-                                color: "green"
-                            }
-                        }} />}
-                        />
-                    ))}
-
-                    {(grades?.length === 0 || !grades) && (
-                        <Alert dir='ltr' sx={{ mb: "5px" }} severity='error'>يجب اضافه سنه دراسيه</Alert>
-                    )}
-
-                    {props.errors[input.name] && props.touched[input.name] && (
-                        <Alert dir='ltr' sx={{ mb: "5px" }} severity='error'>يجب الاختيار</Alert>
-                    )}
-                </Field>
-            </>
-        )
-    }
-    if (input?.type === "file") {
-
-        const { value } = input
-        return (
             <Box>
-                <input
-                    ref={fileRef}
-                    type="file"
-                    label="file"
-                    hidden
-                    name={input.name}
-                    onChange={(e) => {
-                        props.setFieldTouched(input.name, true)
-                        props.setFieldValue(input.name, e.target.files[0])
-                    }}
-                />
-                <Button sx={buttonStyle} style={{ width: "auto" }} onClick={() => fileRef.current.click()}>{input.label} <AddCircleOutlineIcon /> </Button>
-
-                {props.errors[input.name] && props.touched[input.name] && (
-                    <Alert sx={{ mb: "5px" }} severity='error'>{props.errors[input.name]}</Alert>
-                )}
-
-                {inputValue ? (
-                    <ShowFileSettings file={inputValue} />
-                ) : value && (
-                    <ShowFileSettings file={value} />
-                )}
+                <MakeRadio inputName={inputName} input={input} props={props} />
             </Box>
         )
     }
+
+    if (input?.type === "file") {
+        return (
+            <Box>
+                <MakeFile inputName={inputName} input={input} props={props} value={value} />
+            </Box>
+        )
+    }
+
+    if (input.type === 'fullDate') {
+        return <Box m={"10px 0"}>
+            <MakeFullDate inputName={inputName} props={props} value={value} input={input} />
+        </Box>
+    }
+
+    if (input.type === "select") {
+
+        return (
+            <MakeSelect props={props} inputName={inputName} input={input} value={value} />
+        )
+    }
+
+    if (input.type === "choosed") {
+
+        return (
+            <MakeChoosed props={props} inputName={inputName} input={input} value={value} />
+        )
+    }
+
+    if (input.type === "selectRef") {
+        return <MakeSelectRef inputName={inputName} input={input} props={props} value={value} />
+    }
+
     return (
-        <Field
+        <FastField
             as={TextField}
             sx={{
-                m: "8px"
+                m: "6px 0",
+                display: input.hidden && "none"
             }}
-            name={input.name}
+
+            style={style}
+
+            name={inputName}
             type={input.type ? input.type : "text"}
             label={input.label}
             placeholder={input.placeholder && input.placeholder}
-            color='warning'
             variant={input.variant ? input.variant : "outlined"}
-            error={props.errors[input.name] && props.touched[input.name] ? true : false}
-            helperText={< ErrorMessage name={input.name} />}
+
+            color='warning'
+            error={hasError(props, inputName) ? true : false}
+            helperText={< ErrorMessage name={inputName} />}
             fullWidth
-            hidden={input.hidden && true}
+
             disabled={input.disabled ? true : false}
+            hidden={input.hidden && true}
             defaultValue={input.defaultValue && input.defaultValue}
+
+            multiline={input.rows && true}
+            rows={
+                input.rows || undefined
+            }
+
+
         />
     )
 }
-
-
-
-// const inputsSchema = [{
-//     name: "firstname", ===> used as initialValue, validationSchema, input.name
-//     label: "first Name",
-//     type: "text",
-//     errorMessage: "there is error",
-// }]

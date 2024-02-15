@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import GetUSerSettings from './GetUSerSettings'
+import GetUSerSettings from './molecules/GetUSerSettings'
 import GetUser from './GetUser'
 import MakeTitle from '../tools/MakeTitle'
 import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
@@ -18,6 +18,7 @@ export default function ManageGetUser({ users }) {
                     <ManageAccountsSharpIcon />
                 </MakeTitle>
             </Box>
+
             <GetUser users={users} />
         </Box>
     )

@@ -12,51 +12,50 @@ const cloudinary = require("cloudinary").v2
 
 // get fc routes
 const userRouter = require("./routes/userRoutes")
+const messagesRoutes = require("./routes/messagesRoutes")
+
+const lecturesRoutes = require("./routes/lecturesRoutes")
 const examsRouter = require("./routes/examsRoutes")
-const contentRouter = require("./routes/contentRoutes")
-const settingsRouter = require("./routes/settingsRoutes")
-const { notFound, errorrHandler } = require("./middleware/errors")
+const attemptRoutes = require("./routes/attemptRoutes")
+
+const gradesRouter = require("./routes/gradesRoutes")
+const groupsRouter = require("./routes/groupsRoutes")
+
+const paymentRouter = require("./routes/paymentRoutes")
+
+const { notFound, errorrHandler } = require("./middleware/errorsHandler")
 const { default: mongoose } = require("mongoose")
 const UserModel = require("./models/UserModel")
 const ExamModel = require("./models/examModel")
-const SettingsModel = require("./models/SettingsModel")
-const router = require("./routes/userRoutes")
+const SettingsModel = require("./models/GradeModel")
 const addToCloud = require("./middleware/cloudinary")
-const { isUser } = require("./middleware/auth")
-// const UploadRouter = require("./firebase/uploadFirebase")
+const verifyToken = require("./middleware/verifyToken")
 
 // config
 dotenv.config()
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(morgan('tiny'))
 
 // for secure folders
-app.use("/public", isUser, (req, res, next) => {
+app.use("/secure", verifyToken, (req, res, next) => {
     next()
 })
-app.use("/public", express.static("public"))
-
-// app.post("/upload", upload.fields([{name: "image"}]), (req, res) => {
-//     const { file } = req
-//     res.json({ message: "done" })
-// })
+app.use("/secure", express.static("secure"))
 
 // routes
-app.use("/client", userRouter)
-app.use("/exams", examsRouter)
-app.use("/content", contentRouter)
-app.use("/settings", settingsRouter)
-// app.use("/fire", UploadRouter)
+app.use("/api/client", userRouter)
+app.use("/api/exams", examsRouter)
+app.use("/api/lectures", lecturesRoutes)
+app.use("/api/messages", messagesRoutes)
+app.use("/api/attempts", attemptRoutes)
 
+app.use("/api/grades", gradesRouter)
+app.use("/api/groups", groupsRouter)
 
-cloudinary.config({
-    cloud_name: "djbmm1kfz",
-    api_key: "213788292784721",
-    api_secret: "cz8gOSaBcpvHA1jd8NempmFKtF0"
-})
+app.use("/api/payments", paymentRouter)
 
 
 app.use("/upload", upload.fields([{ name: "video" }, { name: "thumbnail" }]), async (req, res, next) => {
@@ -90,10 +89,8 @@ app.get("/test", async (req, res) => {
     await mongoose.connect(DB_URI)
     const users = await UserModel.find({})
     console.log(users)
-    res.json({ msg: users })
+    res.json({ message: users })
 })
-
-
 
 // for errors 
 app.use(notFound)
@@ -105,6 +102,7 @@ const DB_URI = process.env.MONGO_URI
 mongoose.connect(DB_URI).then(() => {
     console.log("connected")
 })
+
 app.listen(port, async () => {
     console.log(`the app is working on port: ${port}`)
 })

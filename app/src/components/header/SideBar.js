@@ -16,8 +16,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../toolkit/globalSlice';
 import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { buttonStyle } from '../styles/buttonsStyles';
+import { buttonError, buttonStyle } from '../styles/buttonsStyles';
 import ModalControlled from '../tools/ModalControlled';
+import { user_roles } from '../constants/roles';
+
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, sideBarWidth }) {
 
@@ -49,6 +52,8 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
     return (
         <Box component="nav" sx={{ transition: ".3s all ease" }}>
 
+
+
             <Drawer
                 variant={isNonMobile ? 'persistent' : "temporary"}
                 anchor='left'
@@ -65,164 +70,110 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                     },
                 }}
             >
-                <Box width="100%">
-                    <Box m="1.5rem 2rem 2rem 3rem">
-                        <FlexInBetween color={theme.palette.secondary.main} sx={{ display: "flex", justifyContent: "space-between" }}>
-                            {/* <Box gap="0.5rem">
-                                <Typography variant="h4" fontWeight="bold">
-                                    DASHBOARD
-                                </Typography>
-                            </Box> */}
+                <Scrollbars style={{ height: "100vh", bgcolor: 'red' }}>
 
-                            <Box sx={{
-                                ml: "-20px",
-                                display: 'flex',
-                                justifyContent: "space-between"
-                            }}>
-                                <Avatar alt={user.name} src="/static/images/avatar/1.jpg" sx={{
-                                    mr: 2,
-                                    height: "60px",
-                                    width: "60px",
-                                    bgcolor: theme.palette.secondary[400]
-                                }} />
+                    <Box width="100%">
+                        <Box m="1.5rem 2rem 2rem 3rem">
+                            <FlexInBetween color={theme.palette.secondary.main} sx={{ display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{
+                                    ml: "-20px",
                                     display: 'flex',
-                                    justifyContent: 'center',
-                                    flexDirection: "column"
+                                    justifyContent: "space-between"
                                 }}>
-                                    <Box>
-                                        <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
-                                            {user.name}
-                                        </Typography>
-                                    </Box>
-                                    <Box>
-                                        <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
-                                            opacity: ".7"
-                                        }}>
-                                            {user.role}
-                                        </Typography>
+                                    <Avatar alt={user.name} src={user?.avatar?.url || "#"}
+                                        sx={{
+                                            objectFit: 'contain',
+                                            mr: 2,
+                                            height: "60px",
+                                            width: "60px",
+                                            bgcolor: theme.palette.secondary[400]
+                                        }} />
+                                    <Box sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        flexDirection: "column"
+                                    }}>
+                                        <Box>
+                                            <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
+                                                {user.name}
+                                            </Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
+                                                opacity: ".7"
+                                            }}>
+                                                {user.role}
+                                            </Typography>
+                                        </Box>
                                     </Box>
                                 </Box>
-                            </Box>
-                            {!isNonMobile && (
-                                <IconButton onClick={() => setSideBar(!isOpenedSideBar)}>
-                                    <ClearIcon />
-                                </IconButton>
-                            )}
-                        </FlexInBetween>
-                    </Box>
-                    <List>
-                        {navLinks.map((link, i) => {
-                            if(link.isAdmin && user.role === "subAdmin"){
-                                return false
-                            }
+                                {!isNonMobile && (
+                                    <IconButton onClick={() => setSideBar(!isOpenedSideBar)}>
+                                        <ClearIcon />
+                                    </IconButton>
+                                )}
+                            </FlexInBetween>
+                        </Box>
+                        <List>
+                            {navLinks.map((link, i) => {
 
-                            if (!link.icon && user.role !== "student") {
-                                return (
-                                    <Box key={i} sx={{ display: "flex", justifyContent: "center", }}>
-                                        <Typography variant='h6' sx={{ mt: "2.25rem", mb: "1rem", opacity: ".8" }}>
-                                            {link.name}
-                                        </Typography>
-                                    </Box>
-                                )
-                            }
+                                if (!link.icon && link.allowedTo.includes(user.role)) {
+                                    return (
+                                        <Box key={i} sx={{ display: "flex", justifyContent: "center", }}>
+                                            <Typography variant='h6' sx={{ mt: "2.25rem", mb: "1rem", opacity: ".8" }}>
+                                                {link.name}
+                                            </Typography>
+                                        </Box>
+                                    )
+                                }
 
-                            if (link.isSubAdmin && user.role !== "student") {
-                                return (
-                                    <ListItem key={i} sx={{ p: "0 10px" }}>
-                                        <ListItemButton onClick={() => {
-                                            navigate(link.to)
-                                            setActiveLink(link.to)
-                                        }}
-                                            sx={{
-                                                backgroundColor:
-                                                    activeLink === link.to
-                                                        ? theme.palette.secondary[400]
-                                                        : "transparent",
-                                                color:
-                                                    activeLink === link.to
-                                                        ? theme.palette.primary[500]
-                                                        : theme.palette.secondary[100],
-                                                "&:hover": {
-                                                    backgroundColor: theme.palette.secondary[500],
-                                                    color: theme.palette.primary[600],
-                                                }
+                                if (link?.allowedTo?.includes(user.role)) {
+                                    return (
+                                        <ListItem key={i} sx={{ p: "0 10px" }}>
+                                            <ListItemButton onClick={() => {
+                                                navigate(link.to)
+                                                setActiveLink(link.to)
                                             }}
-                                        >
-                                            <ListItemIcon sx={{
-                                                ml: "2rem",
-                                                color: "inherit"
-                                            }}>
-                                                {link.icon}
-                                            </ListItemIcon>
-                                            <ListItemText primary={link.name} />
-                                            <ChevronRightOutlinedIcon sx={{
-                                                ml: "auto",
-                                                display: activeLink === link.to ? "block" : "none",
-                                            }} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                )
-                            }
-
-                            if (!link.icon || link.isSubAdmin) {
-                                return (
-                                    <React.Fragment key={i}>
-                                    </React.Fragment>
-                                )
-                            }
-
-                            return (
-                                <ListItem key={i} sx={{ p: "0 10px" }}>
-                                    <ListItemButton onClick={() => {
-                                        navigate(link.to)
-                                        setActiveLink(link.to)
-                                    }}
-                                        sx={{
-                                            backgroundColor:
-                                                activeLink === link.to
-                                                    ? theme.palette.secondary[400]
-                                                    : "transparent",
-                                            color:
-                                                activeLink === link.to
-                                                    ? theme.palette.primary[500]
-                                                    : theme.palette.secondary[100],
-                                            "&:hover": {
-                                                backgroundColor: theme.palette.secondary[500],
-                                                color: theme.palette.primary[600],
-                                            }
-                                        }}
-                                    >
-                                        <ListItemIcon sx={{
-                                            ml: "2rem",
-                                            color: "inherit"
-                                        }}>
-                                            {link.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={link.name} />
-                                        <ChevronRightOutlinedIcon sx={{
-                                            ml: "auto",
-                                            display: activeLink === link.to ? "block" : "none",
-                                        }} />
-                                    </ListItemButton>
-                                </ListItem>
-                            )
-                        })}
-                    </List>
-                </Box>
-                <Box height="100%" display="flex" alignItems="end" >
-                    <Button sx={{
-                        width: '100%',
-                        m: '0 5px 15px 5px',
-                        color: theme.palette.text.primary,
-                        bgcolor: theme.palette.error.main,
-                        "&:hover": {
-                            bgcolor: theme.palette.error.light,
-                        }
-                    }} onClick={() => setShowModal(true)}>
-                        <LogoutIcon />    {lang.links.logOut}
-                    </Button>
-                </Box>
+                                                sx={{
+                                                    backgroundColor:
+                                                        activeLink === link.to
+                                                            ? theme.palette.secondary[400]
+                                                            : "transparent",
+                                                    color:
+                                                        activeLink === link.to
+                                                            ? theme.palette.primary[500]
+                                                            : theme.palette.secondary[100],
+                                                    "&:hover": {
+                                                        backgroundColor: theme.palette.secondary[500],
+                                                        color: theme.palette.primary[600],
+                                                    }
+                                                }}
+                                            >
+                                                <ListItemIcon sx={{
+                                                    ml: "2rem",
+                                                    color: "inherit"
+                                                }}>
+                                                    {link.icon}
+                                                </ListItemIcon>
+                                                <ListItemText primary={link.name} />
+                                                <ChevronRightOutlinedIcon sx={{
+                                                    ml: "auto",
+                                                    display: activeLink === link.to ? "block" : "none",
+                                                }} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    )
+                                }
+                                return false
+                            })}
+                        </List>
+                    </Box>
+                    <Box display="flex" alignItems="end" >
+                        <Button sx={buttonError} style={{ color: theme.palette.grey[100] }} onClick={() => setShowModal(true)}>
+                            <LogoutIcon />    {lang.links.logOut}
+                        </Button>
+                    </Box>
+                </Scrollbars>
             </Drawer >
 
             <ModalControlled

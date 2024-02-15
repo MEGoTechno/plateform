@@ -14,7 +14,7 @@ export default function useAuth() {
     const userPath = `${locations[1]}`
 
     const authorize = () => {
-        if (user && user?.isAdmin) {
+        if (user && user?.role === "admin") {
             setAccess(true)
         } else if (user && user?.role === "subAdmin") {
             path === 'management/users' ? setAccess(false) :

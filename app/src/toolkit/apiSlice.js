@@ -6,7 +6,7 @@ import { getCookie } from '../hooks/cookies'
 export const apiSlice = createApi({
     reducerPath: "api", //from state
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://mradel-biology.onrender.com",
+        baseUrl: "http://192.168.1.13:5050/api",
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers
@@ -15,50 +15,65 @@ export const apiSlice = createApi({
 
     endpoints: builder => ({ // client fcs #########
         getUsers: builder.query({
-            query: () => "client"
-        }),
-        getUser: builder.query({
-            query: (id) => `client/${id}`
+            query: (queries) => {
+                const { page, limit, gradeId, role } = queries
+                return `/client?page=${page}&limit=${limit}&gradeId=${gradeId}&role=${role}`
+            }
         }),
         addUser: builder.mutation({
             query: data => ({
-                url: '/client/add-user',
+                url: '/client',
                 method: 'POST',
                 body: data
             })
         }),
+        getOneUser: builder.query({
+            query: (userName) => `/client/${userName}`
+        }),
         updateUser: builder.mutation({
-            query: data => ({
-                url: '/client/update-user',
+            query: (data) => ({
+                url: `/client`,
+                method: 'PATCH',
+                body: data
+            })
+        }), updateUserProfile: builder.mutation({
+            query: (data) => ({
+                url: `/client`,
                 method: 'PUT',
                 body: data
             })
         }),
-        inActivateUser: builder.mutation({
-            query: data => ({
-                url: '/client/inactivate-user',
-                method: 'put',
-                body: data
-            })
-        }),
-        makeAdmin: builder.mutation({
-            query: data => ({
-                url: '/client/makeadmin',
-                method: 'put',
-                body: data
-            })
-        }),
-        sendFileTest: builder.mutation({
-            query: data => ({
-                url: '/upload',
-                method: 'post',
-                body: data
-            })
-        }),
         deleteUser: builder.mutation({
+            query: (data, id) => ({
+                url: `/client/${id}`,
+                method: 'DELETE',
+                body: data
+            })
+        }),
+        getPayments: builder.query({
+            query: () => `/payments`
+        }),
+        getPaymentsByGrade: builder.query({
+            query: (grade) => `/payments/${grade}`
+        }),
+        createPayment: builder.mutation({
             query: data => ({
-                url: '/client/delete-user',
-                method: 'delete',
+                url: '/payments',
+                method: 'POST',
+                body: data
+            })
+        }),
+        checkUsersPayment: builder.mutation({
+            query: (data) => ({
+                url: `/payments`,
+                method: 'PATCH',
+                body: data
+            })
+        }),
+        deletePayment: builder.mutation({
+            query: (data) => ({
+                url: `/payments`,
+                method: 'DELETE',
                 body: data
             })
         }),
@@ -68,88 +83,161 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: data
             }),
-        }), // fcs of settings #########  ====> grades and groupes
-        getSettings: builder.query({
-            query: () => "settings",
+        }), // fcs of grades #########  ====> grades and groupes
+        getGrades: builder.query({
+            query: () => "/grades",
         }),
-        updateSettings: builder.mutation({
+        createGrade: builder.mutation({
             query: data => ({
-                url: '/settings',
-                method: 'put',
-                body: data
-            }),
-        }),
-        postSettings: builder.mutation({
-            query: data => ({
-                url: '/settings',
+                url: '/grades',
                 method: 'POST',
                 body: data
             }),
         }),
-        deleteSettings: builder.mutation({
+        updateGrade: builder.mutation({
+            query: (data) => ({
+                url: '/grades',
+                method: 'PATCH',
+                body: data
+            }),
+        }),
+        deleteGrade: builder.mutation({
             query: data => ({
-                url: '/settings',
-                method: 'delete',
+                url: '/grades',
+                method: 'DELETE',
+                body: data
+            }),
+        }), // groups
+        getGroups: builder.query({ //
+            query: () => "/groups",
+        }),
+        createGroup: builder.mutation({
+            query: data => ({
+                url: '/groups',
+                method: 'POST',
+                body: data
+            }),
+        }),
+        updateGroup: builder.mutation({
+            query: (data) => ({
+                url: '/groups',
+                method: 'PATCH',
+                body: data
+            }),
+        }),
+        deleteGroup: builder.mutation({
+            query: data => ({
+                url: '/groups',
+                method: 'DELETE',
                 body: data
             }),
         }),// exams fcs ###############
         getExams: builder.query({
             query: () => "exams",
         }),
+        getOneExam: builder.query({
+            query: (id) => "exams/" + id,
+        }),
         postNewExam: builder.mutation({
             query: data => ({
-                url: '/exams/add-exam',
+                url: '/exams',
                 method: 'POST',
                 body: data
             }),
         }),
         updateExam: builder.mutation({
             query: data => ({
-                url: '/exams/update',
-                method: 'POST',
+                url: '/exams',
+                method: 'PATCH',
                 body: data
             }),
         }),
         removeExam: builder.mutation({
             query: data => ({
-                url: '/exams/delete',
+                url: '/exams',
                 method: 'DELETE',
                 body: data
             }),
-        }), // lectures fcs ###################
+        }),// attempts Fcs #######
+        addAttempt: builder.mutation({
+            query: data => ({
+                url: '/attempts',
+                method: 'POST',
+                body: data
+            }),
+        }),
+        getUserAttempts: builder.query({
+            query: ([id, examId]) => `/attempts/${id}?examId=${examId}`,
+        }),
+        // lectures fcs ###################
         getLectures: builder.query({
-            query: () => "content",
+            query: () => "lectures",
         }),
         postNewLecture: builder.mutation({
             query: data => ({
-                url: '/content/add-lecture',
+                url: '/lectures/add-lecture',
                 method: 'POST',
                 body: data
             }),
         }),
         UpdateLecture: builder.mutation({
             query: data => ({
-                url: '/content/update',
+                url: '/lectures/update',
                 method: 'PUT',
                 body: data
             }),
         }),
         removeLecture: builder.mutation({
             query: data => ({
-                url: '/content/delete',
+                url: '/lectures/delete',
+                method: 'DELETE',
+                body: data
+            }),
+        }),
+        getMessages: builder.query({
+            query: (userName) => `/messages?user=${userName}`,
+        }),
+        createMessage: builder.mutation({
+            query: data => ({
+                url: '/messages',
+                method: 'POST',
+                body: data
+            }),
+        }),
+        updateMessage: builder.mutation({
+            query: data => ({
+                url: '/messages',
+                method: 'PATCH',
+                body: data
+            }),
+        }),
+        deleteMessage: builder.mutation({
+            query: data => ({
+                url: '/messages',
                 method: 'DELETE',
                 body: data
             }),
         }),
         testUri: builder.query({
             query: () => `/public/vid.mp4`,
-        })
+        }),
+        sendFileTest: builder.mutation({
+            query: data => ({
+                url: '/upload',
+                method: 'post',
+                body: data
+            })
+        }),
     })
 })
 export const {
-    useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useInActivateUserMutation, useUpdateUserMutation, useMakeAdminMutation,
-    useLazyGetSettingsQuery, usePostSettingsMutation, useUpdateSettingsMutation, useDeleteSettingsMutation,
-    usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation,
+    useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useUpdateUserMutation, useLazyGetOneUserQuery, useUpdateUserProfileMutation,
+    useLazyGetGradesQuery, useCreateGradeMutation, useUpdateGradeMutation, useDeleteGradeMutation,
+    useLazyGetGroupsQuery, useCreateGroupMutation, useUpdateGroupMutation, useDeleteGroupMutation,
+    usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation, useLazyGetOneExamQuery,
+    useAddAttemptMutation, useLazyGetUserAttemptsQuery,
     usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation,
-    useLazyTestUriQuery
+    useLazyTestUriQuery,
+    useLazyGetMessagesQuery, useCreateMessageMutation, useUpdateMessageMutation, useDeleteMessageMutation,
+    useLazyGetPaymentsQuery, useLazyGetPaymentsByGradeQuery, useCreatePaymentMutation, useCheckUsersPaymentMutation, useDeletePaymentMutation
 } = apiSlice

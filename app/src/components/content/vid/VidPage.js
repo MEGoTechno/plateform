@@ -7,7 +7,7 @@ import VidCard from '../VidCard'
 import NotFound from '../../tools/NotFound'
 
 export default function VidPage() {
-    const theme = useTheme()
+    
     const { state } = useLocation()
     const { lecture, lessonLectures } = state
 
@@ -25,13 +25,16 @@ export default function VidPage() {
             </Box>
 
             <Grid container spacing={2} justifyContent={"center"}>
+
                 {lessonLectures && lessonLectures.map((lessonLecture, i) => (
                     lessonLecture.partId !== lecture.partId && (
+                        
                         <Grid key={i} item md={6} xs={12}>
                             <VidCard key={i} lecture={lessonLecture} lessonLectures={lessonLectures} />
                         </Grid>
                     )
                 ))}
+
             </Grid>
         </Box >
     )

@@ -1,72 +1,106 @@
-const mongoose = require("mongoose")
 const asyncHandler = require("express-async-handler")
 const ExamModel = require("../models/examModel")
-const dotenv = require("dotenv")
-
-// config
-dotenv.config()
-const DB_URI = process.env.MONGO_URI
-
+const statusTexts = require("../tools/statusTexts")
+const msgTexts = require("../tools/msgTexts")
+const createError = require("../tools/createError")
+const { user_roles } = require("../tools/rolesConstants")
 // fcs
 
-// get exams accroding to grade (g1)
-const getExams = asyncHandler(async (req, res) => {
+// @desc get exams
+// @route GET /exams
+// @access Public  grade_id
+const getExams = asyncHandler(async (req, res, next) => {
 
-    // await mongoose.connect(DB_URI)
-    const gradeId = req.user?.grade?.gradeId
+    const gradeId = req.user?.grade
     let exams
-    if (req.user.isAdmin) {
-        exams = await ExamModel.find({})
+
+    if (req?.user?.role !== user_roles.STUDENT) {
+        exams = await ExamModel.find({}).select("-__v") //-questions.rtOptionId
 
     } else if (gradeId) {
-        exams = await ExamModel.find({ gradeId: gradeId }) // by gradeId
+        exams = await ExamModel.find({ grade: gradeId }).select("-__v -questions.rtOptionId") // by gradeId
     } else {
-        // mongoose.disconnect()
-        res.status(401)
-        throw new Error("Not authed")
+        const error = createError(msgTexts.NOT_AUTHED, 401, statusTexts.FAILED)
+        return next(error)
     }
 
     if (exams) {
-        res.json(exams)
-        // mongoose.disconnect()
+        res.status(200).json({ status: statusTexts.SUCCESS, values: exams })
     } else {
-        // mongoose.disconnect()
-        res.status(404)
-        throw new Error("No exams found")
+        const error = createError(msgTexts.NO_EXAMS, 404, statusTexts.FAILED)
+        next(error)
     }
 })
 
-// create exam
-const createExam = asyncHandler(async (req, res) => {
-    // await mongoose.connect(DB_URI)
-    const exam = req.body
-    const foundExam = await ExamModel.find({ partId: exam.partId })
-    if (foundExam[0]) {
-        // mongoose.disconnect()
-        res.status(400)
-        throw new Error("there is exam has same id")
+// @desc get one exam
+// @route GET /exams/:id
+// @access Public  
+const getOneExam = asyncHandler(async (req, res, next) => {
+
+    const id = req.params.id
+
+    if (id) {
+
+        const exam = await ExamModel.findById(id).select("-__v -questions.rtOptionId")
+        return res.status(200).json({ status: statusTexts.SUCCESS, values: exam })
+
     } else {
-        const createdExam = await ExamModel.create(exam)
-        // await mongoose.disconnect()
-        res.status(200).json({ message: "exam has been created successfully", value: createdExam })
+        const error = createError("invalid data", 404, statusTexts.FAILED)
+        next(error)
     }
+
 })
 
-// update exam
-const updateExam = asyncHandler(async (req, res) => {
+// @desc create exam
+// @route POST /exams
+// @access Private 
+const createExam = asyncHandler(async (req, res, next) => {
+
     const exam = req.body
-    // await mongoose.connect(DB_URI)
-    await ExamModel.updateOne({ partId: exam.id }, exam)
-    // mongoose.disconnect()
-    res.json({ message: "done" })
+    const { grade, unitId, unitName, lessonId, lessonName, partId, partName, description, time, questions,
+        isActive, attemptNums, dateStart, dateEnd, isShowAnswers } = exam //total
+
+    const timeInSec = time * 60
+
+    const createdExam = await ExamModel.create({
+        time: timeInSec, grade, unitId, unitName, lessonId, lessonName, partId, partName, description, questions,
+        isActive, attemptNums, dateStart, dateEnd, isShowAnswers
+    })
+    res.status(201).json({ status: statusTexts.SUCCESS, values: createdExam, message: msgTexts.CREATED_EXAM })
 })
 
-// delete exam 
+// @desc update exam
+// @route Patch /exams
+// @access Private 
+const updateExam = asyncHandler(async (req, res, next) => {
+    const exam = req.body
+
+    if (exam.time) {
+        exam.time = exam.time * 60
+    }
+
+    const { unitId, lessonId, partId } = exam
+
+    if (partId) { // for editing only exam
+        await ExamModel.updateOne({ partId }, exam)
+
+    } else if (lessonId) {
+        await ExamModel.updateMany({ lessonId }, exam)
+    } else if (unitId) {
+        await ExamModel.updateMany({ unitId }, exam)
+    }
+    res.status(200).json({ status: statusTexts.SUCCESS, values: null, message: msgTexts.UPDATED_EXAM })
+})
+
+// @desc delete exam
+// @route DELETE /exams
+// @access Private 
 const deleteExam = asyncHandler(async (req, res) => {
     const exam = req.body
-    // await mongoose.connect(DB_URI)
+
     await ExamModel.deleteOne({ partId: exam.partId })
-    // mongoose.disconnect()
-    res.status(200).json({ message: "exam has been deleted" })
+
+    res.status(200).json({ status: statusTexts.SUCCESS, values: null, message: msgTexts.DELETED_EXAM })
 })
-module.exports = { getExams, createExam, updateExam, deleteExam }
+
+module.exports = { getExams, getOneExam, createExam, updateExam, deleteExam }

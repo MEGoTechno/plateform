@@ -5,7 +5,7 @@ import ContentForm from './ContentForm'
 import usePostData from '../../../../hooks/usePostData'
 import * as Yup from "yup"
 import { useDispatch } from 'react-redux'
-import { setLectures } from '../../../../toolkit/contentSlice'
+import { setLectures } from '../../../../toolkit/lecturesSlice'
 import { Box } from '@mui/material'
 
 export default function EditName() {
@@ -51,7 +51,7 @@ export default function EditName() {
         })
         await sendName(formOptions.values)
         dispatch(setLectures(null))
-        navigate("/management/content")
+        navigate("/management/lectures")
     }
 
     return (

@@ -16,6 +16,8 @@ export default function Layout() {
     const [isOpenedSideBar, setSideBar] = useState(false)
     const isNonMobile = useMediaQuery('(min-width:600px)');
     const { user } = useSelector(s => s.global)
+
+
     useEffect(() => {
         isNonMobile ? setSideBar(true) : setSideBar(false)
         authorize()
@@ -40,7 +42,7 @@ export default function Layout() {
                         }}>
                         <Navbar setSideBar={setSideBar} isOpenedSideBar={isOpenedSideBar} />
                         <Box sx={{ p: "0 32px" }}>
-                            {isAccessed ? <Outlet /> : <NotFound />}
+                            {isAccessed ? <Outlet context={[isNonMobile]} /> : <NotFound />}
                         </Box>
                     </Box>
                 </>

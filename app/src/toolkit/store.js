@@ -3,15 +3,22 @@ import globalSlice from "./globalSlice"
 import { apiSlice } from "./apiSlice"
 import examSlice from "./examSlice"
 import usersSlice from "./usersSlice"
-import contentSlice from "./contentSlice"
+import lecturesSlice from "./lecturesSlice"
+import messagesSlice from "./messagesSlice"
+import groupsSlice from "./groupsSlice"
+import paymentSlice from "./paymentSlice"
 // import productsSlice from "./productsSlice"
 
 export const store = configureStore({
     reducer: {
         global: globalSlice,
-        exam: examSlice,
         usersSettings: usersSlice,
-        content: contentSlice,
+        examsState: examSlice,
+        lecturesState: lecturesSlice,
+        messagesState: messagesSlice,
+        groupsState: groupsSlice,
+        paymentState: paymentSlice,
+        
         [apiSlice.reducerPath]: apiSlice.reducer
     },
     middleware: getDefaultMiddleware =>

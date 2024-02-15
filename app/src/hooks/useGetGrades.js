@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLazyGetSettingsQuery } from '../toolkit/apiSlice'
+import { useLazyGetGradesQuery } from '../toolkit/apiSlice'
 import useLazyGetData from './useLazyGetData'
-import { setGlobalMsg, setGrades } from '../toolkit/globalSlice'
+import { setGlobalMsg } from '../toolkit/globalSlice'
+import { setGrades } from '../toolkit/groupsSlice'
 
 export default function useGetGrades() {
     let { grades: found } = useSelector(s => s.global)
+
     const [grades, setGradesState] = useState(found)
     const dispatch = useDispatch()
 
-    const [getData] = useLazyGetSettingsQuery()
+    const [getData] = useLazyGetGradesQuery()
     const [getGrades] = useLazyGetData(getData)
 
     const setGradesFc = async () => {

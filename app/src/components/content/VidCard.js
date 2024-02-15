@@ -17,8 +17,11 @@ export default function VidCard({ lecture, lessonLectures }) {
     const theme = useTheme()
     // `http://localhost:5050/${lecture.thumbnail}`
     const goVid = () => {
-        navigate(`/content/g1u1/${lecture.lessonId}/${lecture.partId}`, { replace: true, state: { lecture, lessonLectures } })
+        const partId = lecture.partId
+        const lessonId = `l` + partId.split("l")[1]
+        navigate(`/lectures/g1u1/${lessonId}`, { replace: true, state: { lecture, lessonLectures } })
     }
+
     const thumbnail = lecture?.thumbnail?.url ? lecture?.thumbnail?.url : '/'
 
     return (

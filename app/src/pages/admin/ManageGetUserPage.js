@@ -14,50 +14,37 @@ import ManageGetUser from '../../components/user/ManageGetUser'
 import useGetGrades from '../../hooks/useGetGrades'
 
 export default function ManageGetUSerPage() {
-    const { users } = useSelector(s => s.usersSettings)
-    const { lang, user } = useSelector(s => s.global)
+
+    const { lang } = useSelector(s => s.global)
     const [getGrades, grades] = useGetGrades()
-
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    const [getData, { isLoading }] = useLazyGetUsersQuery()
-    const [getUsers] = useLazyGetData(getData)
+    console.log(grades)
 
     const trigger = async () => {
         try {
-            if (!grades && user.isAdmin) {
-                await getGrades()
-            }
-            const res = await getUsers()
-            dispatch(setUsers(res))
+            await getGrades()
+
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(() => {
-        if (!users) {
+        if (!grades) {
             trigger()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [grades])
 
 
-    if (isLoading && !users) {
+    if (!grades) {
         return <LoaderSkeleton />
     }
 
-    if (!users || users?.length === 0) {
-        return <>add user</>
-    }
 
     return (
         <Box>
             <Header title={lang.links.manageUsers} />
-            {users?.length !== 0 && (
-                <ManageGetUser users={users} />
-            )}
+            <ManageGetUser />
         </Box>
     )
 }

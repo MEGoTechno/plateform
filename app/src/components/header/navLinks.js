@@ -9,25 +9,28 @@ import AssignmentTurnedInSharpIcon from '@mui/icons-material/AssignmentTurnedInS
 import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp';
 import NewspaperSharpIcon from '@mui/icons-material/NewspaperSharp';
 import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
-
+import { user_roles } from '../constants/roles';
+import PaidIcon from '@mui/icons-material/Paid';
 export const navLinks = [
     {
-        name: lang.ar.links.exams, icon: <ListAltOutlinedIcon />, to: "/exams"
+        name: lang.ar.links.exams, icon: <ListAltOutlinedIcon />, to: "/exams", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
-        name: lang.ar.links.lectures, icon: <SchoolOutlinedIcon />, to: "/content"
+        name: lang.ar.links.lectures, icon: <SchoolOutlinedIcon />, to: "/lectures", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
-        name: lang.ar.links.usersInfo, icon: null, isAdmin: true
+        name: lang.ar.links.usersInfo, icon: null, allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
-        name: lang.ar.links.users, icon: <PersonOutlineOutlinedIcon />, to: "/management/users", isSubAdmin: true, isAdmin: true
+        name: lang.ar.links.users, icon: <PersonOutlineOutlinedIcon />, to: "/management/users", allowedTo: [user_roles.ADMIN],
     }, {
-        name: lang.ar.links.manageUsers, icon: <PersonAddAltIcon />, to: "/management/user", isSubAdmin: true, isAdmin: true
+        name: lang.ar.links.manageUsers, icon: <PersonAddAltIcon />, to: "/management/user", allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN],
     }, {
-        name: lang.ar.links.management, icon: null, isSubAdmin: true
+        name: "اداره الدفع", icon: <PaidIcon />, to: "/management/payments", allowedTo: [ user_roles.ADMIN],
     }, {
-        name: lang.ar.links.manageExams, icon: <NewspaperSharpIcon />, to: "/management/exams", isSubAdmin: true, isAdmin: true
+        name: lang.ar.links.management, icon: null, allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
-        name: lang.ar.links.manageLectures, icon: <SourceIcon />, to: "/management/content", isSubAdmin: true, isAdmin: true
+        name: lang.ar.links.manageExams, icon: <NewspaperSharpIcon />, to: "/management/exams", allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN],
     }, {
-        name: lang.ar.links.grades, icon: <EditCalendarSharpIcon />, to: "/management/years", isSubAdmin: true, isAdmin: true
+        name: lang.ar.links.manageLectures, icon: <SourceIcon />, to: "/management/lectures", allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN],
+    }, {
+        name: lang.ar.links.grades, icon: <EditCalendarSharpIcon />, to: "/management/years", allowedTo: [user_roles.ADMIN],
     }
 ]

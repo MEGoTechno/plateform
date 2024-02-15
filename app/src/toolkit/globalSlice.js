@@ -22,7 +22,6 @@ const initialState = {
     mode: getMode(),
     user: getCookie("u") ? getCookie("u") : null,
     lang: lang.ar,
-    grades: getCookie("s") ? getCookie("s") : null,
     globalMsg: null
 }
 
@@ -39,23 +38,20 @@ const globalSlice = createSlice({
             state.user = action.payload
             return state
         },
+        updateUser: (state, action) => {
+            const token = state.user.token
+            const updated = { ...action.payload, token }
+            removeCookie("u")
+            setCookie("u", updated)
+            state.user = updated
+            return state
+        },
         logout: (state, action) => {
             removeCookie("u")
             removeCookie("h")
             removeCookie("s")
             state.user = null
             state.grades = null
-            return state
-        },
-        setGrades: (state, action) => {
-            state.grades = [...action.payload]
-            setCookie("s", state.grades)
-            return state
-        },
-        addGrade: (state, action)=> {
-            const {grades} = state
-            state.grades = [...grades, action.payload]
-            setCookie("s", state.grades)
             return state
         },
         setGlobalMsg: (state, action) => {
@@ -69,5 +65,5 @@ const globalSlice = createSlice({
     }
 })
 
-export const { setMode, setUser, logout, setGrades, setGlobalMsg, addGrade } = globalSlice.actions
+export const { setMode, setUser, logout, setGlobalMsg } = globalSlice.actions
 export default globalSlice.reducer

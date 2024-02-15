@@ -1,126 +1,214 @@
 const mongoose = require("mongoose")
-const dotenv = require("dotenv")
 const asyncHandler = require("express-async-handler")
 const UserModel = require("../models/UserModel.js")
 const bcrypt = require("bcryptjs")
 const { generateToken } = require("../middleware/generateToken.js");
-const SettingsModel = require("../models/SettingsModel.js")
+const SettingsModel = require("../models/GradeModel.js")
+const statusTexts = require("../tools/statusTexts.js");
+const createError = require("../tools/createError.js");
+const msgTexts = require("../tools/msgTexts.js")
 
-// config
-dotenv.config()
-const DB_URI = process.env.MONGO_URI
+const addToCloud = require("../middleware/cloudinary")
 
-// get all users 
-// add new user
-// delete user
-// ubpdate user profile and get specified user
-
-
-// get users
+// @desc get all user
+// @route GET /users
+// @access Private
 const getAllUsers = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
-    const users = await UserModel.find({}).select("-password")
-    // await mongoose.disconnect()
+
+    const query = req.query
+
+    const limit = query.limit || 200
+    const page = query.page || 1
+    const skip = (page - 1) * limit
+
+    const gradeId = query.gradeId || "All"
+    const role = query.role || "All"
+
+    let findQuery = {}
+
+    if (gradeId !== "All") {
+        findQuery.grade = gradeId
+    }
+
+    if (role !== "All") {
+        findQuery.role = role
+    }
+
+    const users = await UserModel.find(findQuery, { password: false, __v: false }).populate("group grade").limit(limit).skip(skip)
+    let usersLength = 0
+
+    if (findQuery) {
+
+        usersLength = await UserModel.countDocuments(findQuery)
+    } else {
+        usersLength = await UserModel.estimatedDocumentCount()
+    }
+    console.log(usersLength)
     if (users) {
-        res.json(users)
+        res.status(200).json({ status: statusTexts.SUCCESS, values: { users, count: usersLength } })
     } else {
-        throw new Error("something went wrong") // ("something went wrong", error) kant mktoba kda
+        const error = createError(msgTexts.NO_USERS, 404, statusTexts.FAILED)
+        next(error)
     }
 })
 
-// get user
+// @desc get one user
+// @route GET /users/:id
+// @access Private
 const getUser = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
-    const id = req.params.id
-    const user = await UserModel.findOne({ userName: id }).select("-password")
-    // await mongoose.disconnect()
-    if (user) {
-        res.json(user)
+
+    const userName = req.params.userName
+
+    if (userName) {
+
+        const user = await UserModel.find({ userName }, { password: false, __v: false })
+        res.status(200).json({ status: statusTexts.SUCCESS, values: user })
+
     } else {
-        // mongoose.disconnect()
-        throw new Error("no user has this user name")
+        const error = createError(msgTexts.NOTFOUND_USERNAME, 404, statusTexts.FAILED)
+        next(error)
     }
+
 })
 
-// add user
-const addUser = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
+// @desc create user
+// @route POST /users
+// @access Private
+const createUser = asyncHandler(async (req, res, next) => {
+
     const user = req.body
-    const grade = await SettingsModel.findOne({ gradeId: user.grade })
-    user.grade = grade
+    const { grade, group, name, userName, password, email, phone, familyPhone } = user
 
     if (user.userName) {
         const foundUser = await UserModel.findOne({ userName: user.userName })
         // for exsiting user ----
         if (foundUser) {
-            res.status(400)
-            // mongoose.disconnect()
-            throw new Error("there is a user has same userName")
+            const error = createError(msgTexts.FOUND_USERNAME, 400, statusTexts.FAILED)
+            next(error)
         }
     } else {
-        res.status(400)
-        // mongoose.disconnect()
-        throw new Error("user data is missed")
+        const error = createError(msgTexts.BAD_DATA, 400, statusTexts.FAILED)
+        next(error)
     }
 
     // ------
-    const hashedPassword = bcrypt.hashSync(user.password, 10)
-    user.password = hashedPassword
-    const newUser = await UserModel.create(user)
+    const hashedPassword = bcrypt.hashSync(password, 10)
 
-    
-    res.json({ message: "users has been added successfully", values: newUser })
-    // mongoose.disconnect()
+    const createdUser = await UserModel.create({
+        grade, group, name, userName, password: hashedPassword, email, phone, familyPhone
+    })
+
+    res.status(201).json({ status: statusTexts.SUCCESS, values: createdUser, message: "user has been added successfully" })
 })
 
-// update user
+// @desc update user // user profile 
+// @route POST /users
+// @access Public   ==> admin/user/subAdmin
 const updateUser = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
-    const user = req.body
 
-    if (user.password) {
-        const hashedPassword = bcrypt.hashSync("369258", 10)
+    //avater
+    const { _id, name, email, password, phone, familyPhone, isActive, role, paymentId } = req.body
+    const user = await UserModel.findById(_id).select("-password -__v")
+
+    user.name = name || user.name
+    user.email = email || user.email
+    user.phone = phone || user.phone
+    user.familyPhone = familyPhone || user.familyPhone
+    user.isActive = typeof isActive === "boolean" ? isActive : user.isActive
+    user.role = role || user.role
+    console.log(user.payments.includes(paymentId))
+
+    user.payments.includes(paymentId) ?
+        user.payments = user.payments.filter(payment => paymentId !== payment) :
+        user.payments = [...user.payments, paymentId]
+
+    if (password === 'reset') {
+        const hashedPassword = bcrypt.hashSync(user.userName, 10)
         user.password = hashedPassword
-        const doc = await UserModel.findByIdAndUpdate(user._id, user)
-        // mongoose.disconnect()
-        res.json({ message: "user reset password successfully" })
-        return;
+
+    } else if (password) {
+        const hashedPassword = bcrypt.hashSync(password, 10)
+        user.password = hashedPassword
     }
 
-    if (user.message) {
-        const message = user.message
-        delete user.message
-        const doc = await UserModel.findByIdAndUpdate(user._id, user)
-        mongoose.disconnect()
-        console.log("with message")
-        res.status(200).json({ message, values: doc })
-        return;
-    }
+    await user.save()
 
-    const doc = await UserModel.findByIdAndUpdate(user._id, user, { new: true }).select("-password")
-    // mongoose.disconnect()
-    res.status(200).json({ message: "user updated successfully", values: doc })
+
+    return res.status(200).json({ status: statusTexts.SUCCESS, values: user, message: "User edited successfully" })
 
 })
 
-// delete user
+// @desc update user // user profile 
+// @route PUT /users
+// @access Public   ==> admin/user/subAdmin
+const updateUserProfile = asyncHandler(async (req, res, next) => {
+
+    const { _id, userName, name, email, password, phone, familyPhone } = req.body
+    const user = await UserModel.findById(_id).populate("grade", "-__v").populate("group", "-__v").select("-password -__v")
+
+
+    const { file } = req
+    let avatar = {}
+    console.log(file)
+
+    if (file) {
+        const result = await addToCloud(file.path, {
+            folder: userName,
+            resource_type: "auto"
+        })
+
+        if (result) {
+            const { original_filename, resource_type, secure_url, url, format, bytes } = result
+            avatar = { original_filename, resource_type, secure_url, url, format, size: bytes }
+        }
+    }
+
+    //avater
+
+    user.name = name || user.name
+    user.email = email || user.email
+    user.phone = phone || user.phone
+    user.familyPhone = familyPhone || user.familyPhone
+
+    if (password) {
+        const hashedPassword = bcrypt.hashSync(password, 10)
+        user.password = hashedPassword
+    }
+
+    if (file && avatar) {
+        user.avatar = avatar || user.avatar
+    }
+
+    await user.save()
+
+
+    return res.status(200).json({ status: statusTexts.SUCCESS, values: user, message: "User edited successfully" })
+
+})
+
+// @desc update user // user profile 
+// @route POST /users
+// @access Private   ==> admin
 const deleteUser = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
+
     const user = req.body
+
     if (user.isAdmin) {
-        // mongoose.disconnect()
-        throw new Error("sorry, you are admin")
+        const error = createError("admin can`t be deleted", 400, statusTexts.FAILED)
+        next(error)
     }
 
-    await UserModel.deleteOne({ userName: user.userName })
-    // mongoose.disconnect()
-    res.status(200).json({ message: "user deleted successfully" })
+    await UserModel.findByIdAndDelete(user._id)
+    res.status(200).json({ status: statusTexts.SUCCESS, message: "User delete successfuly" })
 })
-// login
+
+
+// @desc user login
+// @route POST /login
+// @access Public   
 const login = asyncHandler(async (req, res, next) => {
-    // await mongoose.connect(DB_URI)
     const { userName, password } = req.body
-    const user = await UserModel.findOne({ userName })
+    const user = await UserModel.findOne({ userName }).populate("grade", "-__v").populate("group", "-__v").select("-__v")
 
     if (user) {
         const isTruePass = await bcrypt.compare(password, user.password)
@@ -128,22 +216,22 @@ const login = asyncHandler(async (req, res, next) => {
             const userDoc = user._doc
             const token = generateToken({ id: userDoc._id })
             delete userDoc.password
+
             if (userDoc.isActive) {
-                res.status(200).json({ message: "logged in successfully", values: { ...userDoc, token } })
+                res.status(200).json({ status: statusTexts.SUCCESS, values: { ...userDoc, token }, message: "logged in successfully" })
             } else {
-                res.status(401)
-                throw new Error("sorry!, you are not active")
+                const error = createError("sorry, you are not active ", 401, statusTexts.FAILED)
+                next(error)
             }
-            // mongoose.disconnect()
         } else {
-            res.status(400)
-            // mongoose.disconnect()
-            throw new Error("incorrect password")
+            const error = createError("incorrect password ", 400, statusTexts.FAILED)
+            next(error)
         }
+
     } else {
-        // mongoose.disconnect()
-        res.status(404)
-        throw new Error("user not found")
+        const error = createError("user not found ", 404, statusTexts.FAILED)
+        next(error)
     }
 })
-module.exports = { getAllUsers, addUser, login, getUser, updateUser, deleteUser }
+
+module.exports = { getAllUsers, createUser, updateUserProfile, login, getUser, updateUser, deleteUser }

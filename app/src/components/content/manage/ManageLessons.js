@@ -4,10 +4,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../../tools/commonFC'
 import Header from '../../tools/Header'
 import { buttonStyle } from '../../styles/buttonsStyles'
-import LessonSettings from './LessonSettings'
-import LectureSettings from './LectureSettings'
+import LessonSettings from '../../molecules/LessonSettings'
+import LectureSettings from './actions/LectureSettings'
 import MakeTitle from "../../tools/MakeTitle"
 import { useSelector } from 'react-redux'
+import ChipHeader from '../../molecules/ChipHeader'
 
 export default function ManageLessons() {
 
@@ -15,7 +16,7 @@ export default function ManageLessons() {
     const navigate = useNavigate()
     const [value, setValue] = useState(0)
     const [lessonLectures, setLessonLectures] = useState([])
-    const {lang} = useSelector(s => s.global)
+    const { lang } = useSelector(s => s.global)
     const { lectures, lessons, grade } = location.state
 
     const handleLessonLectures = (lesson, i) => {
@@ -34,70 +35,52 @@ export default function ManageLessons() {
 
 
     const createLesson = () => {
-        let i = lessons.length + 1
-        const gradeId = grade.gradeId
+
+        const gradeId = grade._id
         const gradeName = grade.gradeName
+
         const unitId = lessonLectures[0].unitId
         const unitName = lessonLectures[0].unitName
-        const lessonId = unitId + `l${i}`
-        const partId = lessonId + `p1`
-        console.log({ gradeId, gradeName, unitId, unitName, lessonId, partId })
-        navigate("/management/content/add-lecture", {
+
+        navigate("/management/lectures/add", {
             state: {
-                gradeId, gradeName, unitId, unitName, lessonId, partId
+                gradeId, gradeName, unitId, unitName
             }
         })
     }
 
     const editLesson = (lesson) => {
-        navigate("/management/content/edit", { state: { changeKey: "lessonName", by: "lessonId", value: lesson.lessonName, id: lesson.lessonId } })
+        navigate("/management/lectures/edit-name", { state: { changeKey: "lessonName", by: "lessonId", value: lesson.lessonName, id: lesson.lessonId } })
     }
 
     const createLecture = () => {
-        let i = lessonLectures.length + 1
-        const gradeId = grade.gradeId
-        const gradeName = grade.gradeName
+
+        const gradeId = grade._id
+        // const gradeName = grade.gradeName
 
         const unitId = lessonLectures[0].unitId
         const unitName = lessonLectures[0].unitName
 
         const lessonId = lessons[value].lessonId
         const lessonName = lessons[value].lessonName
-        const partId = lessonId + `p${i}`
 
-        navigate("/management/content/add-lecture", {
+
+        navigate("/management/lectures/add", {
             state: {
-                gradeId, gradeName, unitId, unitName, lessonId, lessonName, partId
+                gradeId, unitId, unitName, lessonId, lessonName
             }
         })
     }
 
     const editLecture = (lecture) => {
-        navigate("/management/content/edit-lecture", {
+        navigate("/management/lectures/edit", {
             state: lecture
         })
     }
 
     return (
         <Box sx={{ mt: "20px" }}>
-            <Divider>
-                <Grid container spacing={2}>
-                    {lessons && lessons.map((lesson, i) => (
-                        <Grid key={i} item md={4} sm={6} xs={6} width={{ md: 500, sm: 350, xs: 250 }}>
-                            <Chip
-                                key={i} sx={{ width: "100%" }}
-                                label={lesson.lessonName}
-                                variant={i === value ? "filled" : "outlined"}
-                                color='success'
-                                onClick={() => handleLessonLectures(lesson, i)} />
-                        </Grid>
-                    ))}
-                    <Grid item md={4} sm={6} xs={6} width={{ md: 500, sm: 350, xs: 250 }}>
-                        <Chip sx={{ width: "100%" }} label={lang.content.addLesson} variant="outlined" color='warning' onClick={createLesson} />
-                    </Grid>
-                </Grid>
-            </Divider>
-
+            <ChipHeader lessons={lessons} value={value} handleFc={handleLessonLectures} createLesson={createLesson} />
 
             <Box >
                 <Header title={lessons[value].lessonName} />

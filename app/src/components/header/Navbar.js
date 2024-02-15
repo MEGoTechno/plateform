@@ -9,9 +9,12 @@ import { setMode } from '../../toolkit/globalSlice';
 import NightsStayOutlinedIcon from '@mui/icons-material/NightsStayOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import { useNavigate } from 'react-router-dom';
+import { user_roles } from '../constants/roles';
 
 export default function Navbar({ setSideBar, isOpenedSideBar }) {
-    const { lang } = useSelector(s => s.global)
+
+
+    const { lang, user } = useSelector(s => s.global)
     const navigate = useNavigate()
     const theme = useTheme()
     const dispatch = useDispatch()
@@ -48,12 +51,6 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                     </Typography>
                 </FlexInBetween>
 
-                {/* center */}
-
-                {/* <IconButton>
-                    portofolio
-                </IconButton> */}
-                {/* right side  */}
                 <FlexInBetween gab="1.5rem">
                     <Tooltip title="السمه">
                         <IconButton onClick={() => dispatch(setMode())} sx={{ mr: 1 }}>
@@ -62,9 +59,9 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                                 <LightModeOutlinedIcon sx={{ fontSize: '25px' }} />)}
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="الاشعارات">
-                        <IconButton>
 
+                    <Tooltip title="الاشعارات">
+                        <IconButton onClick={() => user.role === user_roles.ADMIN ? navigate("/management/messages") : navigate("/messages")}>
                             <Badge color="secondary" variant="dot">
                                 <EmailIcon />
                             </Badge>
@@ -72,7 +69,7 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                     </Tooltip>
 
                     <Tooltip title="profile">
-                        <IconButton onClick={() => navigate("/")}>
+                        <IconButton onClick={() => navigate("/profile")}>
                             <AccountCircleIcon />
                         </IconButton>
                     </Tooltip>

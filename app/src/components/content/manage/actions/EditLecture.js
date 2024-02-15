@@ -7,7 +7,7 @@ import { useUpdateLectureMutation } from '../../../../toolkit/apiSlice'
 import { Box } from '@mui/material'
 import Header from "../../../tools/Header"
 import { useDispatch, useSelector } from 'react-redux'
-import { setLectures } from '../../../../toolkit/contentSlice'
+import { setLectures } from '../../../../toolkit/lecturesSlice'
 
 export default function EditLecture() {
     const navigate = useNavigate()
@@ -29,16 +29,10 @@ export default function EditLecture() {
 
     const inputs = [
         {
-            name: "gradeId",
+            name: "grade",
             label: "...",
-            value: lecture.gradeId,
+            value: lecture.grade,
             hidden: true,
-            disabled: true
-        }, {
-            name: "gradeName",
-            label: lang.form.gradeName,
-            value: lecture.gradeName,
-            validation: Yup.string().required("you should write the new one"),
             disabled: true
         }, {
             name: "unitId",
@@ -132,12 +126,13 @@ export default function EditLecture() {
     const [trigger] = usePostData(sendData, formOptions, setFormOptions)
 
     const sumbitData = async () => {
+        console.log(formOptions.values)
         setFormOptions({
             ...formOptions, isLoading: true, isShowModal: false
         })
         await trigger(formOptions.values, "multi")
         dispatch(setLectures(null))
-        navigate("/management/content")
+        navigate("/management/lectures")
     }
 
     return (
