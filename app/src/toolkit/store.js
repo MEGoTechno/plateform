@@ -7,7 +7,6 @@ import lecturesSlice from "./lecturesSlice"
 import messagesSlice from "./messagesSlice"
 import groupsSlice from "./groupsSlice"
 import paymentSlice from "./paymentSlice"
-// import productsSlice from "./productsSlice"
 
 export const store = configureStore({
     reducer: {

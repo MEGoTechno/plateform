@@ -46,8 +46,8 @@ export const apiSlice = createApi({
             })
         }),
         deleteUser: builder.mutation({
-            query: (data, id) => ({
-                url: `/client/${id}`,
+            query: (data) => ({
+                url: `/client`,
                 method: 'DELETE',
                 body: data
             })
