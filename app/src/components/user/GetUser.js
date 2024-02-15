@@ -30,9 +30,6 @@ export default function GetUser() {
 
     const getFiltered = async () => {
         const res = await getFilteredUser(userName)
-        console.log("res ", res[0].role)
-
-        console.log(res[0].role !== user_roles.STUDENT)
         if (res[0].role !== user_roles.STUDENT) {
             setUser(null)
             return

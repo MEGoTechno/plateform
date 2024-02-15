@@ -26,8 +26,9 @@ export default function Adduser({ groups, grades }) {
         getData: null
     })
     const modifiedGrades = useMemo(() => grades.map(grade => { return { value: grade?._id, label: grade.gradeName, gradeId: grade._id } }), [grades])
-    const modifiedGroups = useMemo(() => groups.map(group => { return { value: group?._id, label: group.groupName, grade: group.grade._id } }), [groups])
+    const modifiedGroups = useMemo(() => groups.map(group => { return { value: group?._id, label: group.groupName, grade: group.grade } }), [groups])
 
+    console.log(modifiedGroups)
     const [sendData] = useAddUserMutation()
     const [sendAdd] = usePostData(sendData, formOptions, setFormOptions)
 

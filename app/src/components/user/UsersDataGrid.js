@@ -147,12 +147,11 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
     }, {
         field: "group",
         headerName: "group",
-        type: 'singleSelect',
-        editable: true,
         renderCell: (params) => {
+            console.log(params.row)
             return (
                 <Typography sx={{ fontSize: "11px" }}>
-                    {params.row.isAdmin ? "admin" : params.row.group?.groupName ?  params.row.group?.groupName : 'لم يسجل'}
+                    {params.row.isAdmin ? "admin" : params.row.group?.groupName ? params.row.group?.groupName : 'لم يسجل'}
                 </Typography>
             )
         }
