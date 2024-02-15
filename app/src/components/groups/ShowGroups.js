@@ -89,7 +89,7 @@ function Row(props) {
                                     sx={buttonError}
                                     style={{ width: 'auto' }}
                                 >
-                                    {settings.isLoading ? <Loader /> : "Add"}
+                                    {settings.isLoading ? <Loader /> : "remove grade"}
                                 </Button>
 
 
