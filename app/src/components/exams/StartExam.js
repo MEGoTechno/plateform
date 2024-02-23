@@ -76,7 +76,7 @@ export default function StartExam() {
     // console.log("is extensoble", Object.isExtensible(searchParams))
 
 
-    if (!exam || isLoading) return <LoaderSkeleton />
+    if (!exam || isLoading || !attempts) return <LoaderSkeleton />
 
     if (isStart && attempts.length <= exam.attemptsNums && exam) return <QuizPage exam={exam} />
 
