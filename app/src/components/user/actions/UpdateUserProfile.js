@@ -61,26 +61,34 @@ export default function UpdateUserProfile() {
       name: "password",
       label: "new password",
       type: "password",
-      placeholder: ""
+      placeholder: "new password",
+      validation: Yup.string().min(6, "should be at least 6 characters"),
     }, {
       name: "avatar",
       label: "image",
       type: "file",
-      value: user.avatar,
-      validation: Yup.mixed().required(lang.errors.requireImg)
+      validation: Yup.mixed()
         .test({
           message: 'Please provide a supported image typed(jpg or png)',
           test: (file, context) => {
-            const isValid = ['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type);
-            if (!isValid) context?.createError();
-            return isValid;
+            if (file) {
+              const isValid = ['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type);
+              if (!isValid) context?.createError();
+              return isValid;
+            } else {
+              return true
+            }
           }
         })
         .test({
           message: lang.errors.less15mg,
           test: (file) => {
-            const isValid = file?.size < 15 * 1000000;
-            return isValid;
+            if (file) {
+              const isValid = file?.size < 15 * 1000000;
+              return isValid;
+            } else {
+              return true
+            }
           }
         })
     },]
@@ -89,14 +97,12 @@ export default function UpdateUserProfile() {
   const [updateUser] = usePostData(sendData, formOptions, setFormOptions)
 
   const trigger = async () => {
-
     setFormOptions({
       ...formOptions, isShowModal: false, isLoading: true
     })
     const res = await updateUser(formOptions.values, "multi")
     const updatedUser = { ...user, ...res, token: user.token }
     dispatch(setUser(updatedUser))
-    console.log(updatedUser)
   }
 
   return (

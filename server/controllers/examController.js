@@ -4,6 +4,7 @@ const statusTexts = require("../tools/statusTexts")
 const msgTexts = require("../tools/msgTexts")
 const createError = require("../tools/createError")
 const { user_roles } = require("../tools/rolesConstants")
+const AttemptModel = require("../models/AttemptModel")
 // fcs
 
 // @desc get exams
@@ -95,10 +96,16 @@ const updateExam = asyncHandler(async (req, res, next) => {
 // @desc delete exam
 // @route DELETE /exams
 // @access Private 
-const deleteExam = asyncHandler(async (req, res) => {
-    const exam = req.body
+const deleteExam = asyncHandler(async (req, res, next) => {
+    const examId = req.body.examId 
 
-    await ExamModel.deleteOne({ partId: exam.partId })
+    const isHaveAttempt = await AttemptModel.findOne({ exam: examId })
+    if (isHaveAttempt) {
+        const error = createError("there is user has answered it", 400, statusTexts.FAILED)
+        return next(error)
+    }
+
+    await ExamModel.findByIdAndDelete(examId)
 
     res.status(200).json({ status: statusTexts.SUCCESS, values: null, message: msgTexts.DELETED_EXAM })
 })

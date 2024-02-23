@@ -6,8 +6,7 @@ import { useOutletContext } from 'react-router-dom'
 export default function UserHeader(props) {
     const [isNonMobile] = useOutletContext()
 
-    const { children } = props
-    const { user } = useSelector(s => s.global)
+    const { children, user } = props
     const theme = useTheme()
     return (
         <Box sx={{

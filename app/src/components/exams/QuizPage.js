@@ -6,9 +6,13 @@ import { useAddAttemptMutation, useLazyGetRtOptionsQuery } from '../../toolkit/a
 import useLazyGetData from "../../hooks/useLazyGetData"
 import AnswersPage from './AnswersPage'
 import usePostData from '../../hooks/usePostData'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser } from '../../toolkit/globalSlice'
 
 export default function QuizPage({ exam }) {
 
+    const dispatch = useDispatch()
+    const { user } = useSelector(s => s.global)
     const [isLoading, setLoading] = useState(false)
     const [isSended, setSended] = useState(false)
 
@@ -22,6 +26,7 @@ export default function QuizPage({ exam }) {
     const submit = async (attempt) => {
         setLoading(true)
         const res = await addAttempt(attempt)
+
         if (res) {
             window.location.reload()
         }

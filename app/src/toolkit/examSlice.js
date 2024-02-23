@@ -10,11 +10,18 @@ const examSlice = createSlice({
         setExams: (state, action) => {
             state.exams = action.payload
             return state
+        },
+        removeExam: (state, action) => {
+            const exams = state.exams
+            console.log(exams)
+            const filtered = state.exams.filter(exam => exam._id !== action.payload)
+            state.exams = filtered
+            return state
         }
     }
 })
 
 export const {
-    setExams
+    setExams, removeExam
 } = examSlice.actions
 export default examSlice.reducer

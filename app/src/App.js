@@ -7,7 +7,7 @@ import { createTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { themeSettings } from './theme';
 
-import HomeProfile from './pages/client/HomeProfile';
+import HomePage from './pages/HomePage';
 import NotFound from './components/tools/NotFound';
 
 // lectures
@@ -55,6 +55,10 @@ import CreatePayment from './components/payment/actions/CreatePayment';
 import EditPayment from './components/payment/actions/EditPayment';
 import MessageAnswerPage from './components/messages/actions/AnswerPage';
 import UpdateMessage from './components/messages/actions/UpdateMessage';
+import ManageStatisticsPage from './pages/admin/ManageStatisticsPage';
+import UserStatistics from './components/statistics/UserStatistics';
+import UserAttempt from './components/statistics/UserAttempt';
+import ExamStatistics from './components/statistics/ExamStatistics';
 
 
 function App() {
@@ -68,7 +72,7 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route element={<Layout />}>
-              <Route path='/' element={<HomeProfile />} />
+              <Route path='/' element={<HomePage />} />
               <Route path='/login' element={<LoginPage />} />
               <Route path='/profile' element={<UserProfile />} />
               <Route path='/profile/update' element={<UpdateUserProfile />} />
@@ -118,6 +122,10 @@ function App() {
               <Route path='/management/lectures/edit-name' element={<EditName />} />
               <Route path='/management/lectures/:unitId' element={<ManageLessons />} />
 
+              <Route path='/management/statistics' element={<ManageStatisticsPage />} />
+              <Route path='/management/statistics/user' element={<UserStatistics />} />
+              <Route path='/management/statistics/user/attempt' element={<UserAttempt />} />
+              <Route path='/management/statistics/exam' element={<ExamStatistics />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

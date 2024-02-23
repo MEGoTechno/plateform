@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Paper, Stack, Typography, useTheme } from '@mui/material'
 import React from 'react'
 
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
@@ -11,7 +11,7 @@ function UserBody({ user }) {
     const theme = useTheme()
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: 'wrap', mt: "10px", p: '10px', borderRadius: 6, bgcolor: theme.palette.background.alt }}>
+        <Paper sx={{ display: "flex", justifyContent: "space-between", flexWrap: 'wrap', mt: "10px", p: '10px', borderRadius: 6, bgcolor: theme.palette.background.alt }}>
 
             <Stack alignItems={"center"}>
                 <Typography variant='h5' fontWeight={600}>grade <GroupWorkIcon sx={{ m: '0 2px' }} color='warning' /> </Typography>
@@ -28,7 +28,7 @@ function UserBody({ user }) {
                 <Typography variant='h6' sx={{ opacity: .8 }}>{user.userName}</Typography>
             </Stack>
 
-        </Box>
+        </Paper>
     )
 }
 

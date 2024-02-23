@@ -41,18 +41,18 @@ export default function StartExam() {
         const exam = await getExam(examId)
 
         if (exam) {
-            const attempts = await getAttempts([user._id, exam._id])
-            if (attempts) {
-                setAttempts(attempts)
+            const res = await getAttempts({ userId: user._id, examId: exam._id })
+            if (res) {
+                setAttempts(res.attempt)
             }
             setExam(exam)
         }
     }
- 
+
     const triggerAttempts = async () => {
-        const attempts = await getAttempts([user._id, exam._id])
-        if (attempts) {
-            setAttempts(attempts)
+        const res = await getAttempts({ userId: user._id, examId: exam._id })
+        if (res) {
+            setAttempts(res.attempt)
         }
     }
 

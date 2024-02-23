@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         enum: [user_roles.ADMIN, user_roles.SUBADMIN, user_roles.STUDENT]
     },
     totalPoints: { type: Number, default: 0 },
-    payments: [{ type: String }]
+    payments: [{ type: String }],
 }, {
     timestamps: true
 })

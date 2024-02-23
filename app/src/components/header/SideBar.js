@@ -20,7 +20,7 @@ import { buttonError, buttonStyle } from '../styles/buttonsStyles';
 import ModalControlled from '../tools/ModalControlled';
 import { user_roles } from '../constants/roles';
 
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from "react-custom-scrollbars"
 
 export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, sideBarWidth }) {
 

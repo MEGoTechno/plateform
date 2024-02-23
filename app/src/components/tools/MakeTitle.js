@@ -6,14 +6,14 @@ export default function MakeTitle(props) {
     const theme = useTheme()
 
     return (
-        <Box mt={"10px"}>
+        <Box m={"10px 0"}>
             <Divider>
-                <Box sx={{ display: "flex", justifyContent: "center", }}>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
                     <Typography variant='h4' sx={{ opacity: ".7", fontWeight: 600, color: theme.palette.secondary[100] }}>
                         {title}
                     </Typography>
-                    <Box>
+                    <Box m={"8px 5px 0 5px"}>
                         {children}
                     </Box>
                 </Box>

@@ -6,7 +6,7 @@ export default function MakeTitle(props) {
     const theme = useTheme()
 
     return (
-        <Box mt={"10px"}>
+        <Box m={"10px 0"}>
             <Divider>
                 <Box sx={{ display: "flex", justifyContent: "center", }}>
 

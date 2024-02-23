@@ -82,7 +82,8 @@ function Row(props) {
                             <Box sx={{ margin: 1, textAlign: 'center' }}>
                                 No groups for this year
                             </Box>
-                            <Box sx={{ margin: 1, textAlign: 'center' }}>
+                            
+                            {/* <Box sx={{ margin: 1, textAlign: 'center' }}>
 
                                 <Button onClick={() => trigger(row)}
                                     disabled={settings.isLoading}
@@ -91,10 +92,8 @@ function Row(props) {
                                 >
                                     {settings.isLoading ? <Loader /> : "remove grade"}
                                 </Button>
+                            </Box> */}
 
-
-
-                            </Box>
                         </Collapse>
                     </TableCell>
                 </TableRow>

@@ -1,11 +1,11 @@
 const express = require("express")
-const { addAttempt, getUserAttempts } = require("../controllers/attemptsController")
+const { addAttempt, getUserAttempts, getExamAttempts } = require("../controllers/attemptsController")
 const verifyToken = require("../middleware/verifyToken")
 const router = express.Router()
 
 
 router.route("/")
-    .get(verifyToken)
+    .get(verifyToken, getExamAttempts)
     .post(verifyToken, addAttempt)
 
 router.route("/:userId")

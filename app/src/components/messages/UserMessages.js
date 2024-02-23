@@ -3,9 +3,13 @@ import React from 'react'
 import ShowMessages from './ShowMessages'
 import { useNavigate } from 'react-router-dom'
 import { sendSuccess } from '../styles/buttonsStyles'
+import LoaderSkeleton from '../tools/LoaderSkeleton'
 
 export default function Messages({ messages }) {
     const navigate = useNavigate()
+
+    if (!messages) return <LoaderSkeleton />
+    
     return (
         <Box>
             <ShowMessages messages={messages} />

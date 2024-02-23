@@ -59,10 +59,6 @@ export default function ManageLecturesPage() {
     </Box>
   }
 
-  if (user.role === "subAdmin") {
-    return <ManageUnits lectures={lectures} grade={user.grade} />
-  }
-
   return (
     <Box>
       <Header title={lang.links.manageLectures} />

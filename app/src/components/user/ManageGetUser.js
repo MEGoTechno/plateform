@@ -6,20 +6,20 @@ import MakeTitle from '../tools/MakeTitle'
 import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 import { useSelector } from 'react-redux'
 
-export default function ManageGetUser({ users }) {
+export default function ManageGetUser() {
     const { lang } = useSelector(s => s.global)
 
     return (
         <Box>
-            <GetUSerSettings users={users} />
+            <GetUSerSettings />
 
             <Box m={"10px 0"}>
                 <MakeTitle title={lang.users.manage}>
-                    <ManageAccountsSharpIcon />
+                    <ManageAccountsSharpIcon sx={{opacity: .8}} />
                 </MakeTitle>
             </Box>
 
-            <GetUser users={users} />
+            <GetUser />
         </Box>
     )
 }

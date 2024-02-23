@@ -17,7 +17,7 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 
     const query = req.query
 
-    const limit = query.limit || 200
+    const limit = query.limit || 10000
     const page = query.page || 1
     const skip = (page - 1) * limit
 
@@ -61,7 +61,7 @@ const getUser = asyncHandler(async (req, res, next) => {
 
     if (userName) {
 
-        const user = await UserModel.find({ userName }, { password: false, __v: false })
+        const user = await UserModel.find({ userName }, { password: false, __v: false }).populate("group")
         res.status(200).json({ status: statusTexts.SUCCESS, values: user })
 
     } else {
@@ -108,7 +108,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
 
     //avater
     const { _id, name, email, password, phone, familyPhone, isActive, role, paymentId } = req.body
-    const user = await UserModel.findById(_id).select("-password -__v")
+    const user = await UserModel.findById(_id).select("-password -__v").populate("group")
 
     user.name = name || user.name
     user.email = email || user.email
@@ -116,7 +116,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
     user.familyPhone = familyPhone || user.familyPhone
     user.isActive = typeof isActive === "boolean" ? isActive : user.isActive
     user.role = role || user.role
-    console.log(user.payments.includes(paymentId))
+    
 
     user.payments.includes(paymentId) ?
         user.payments = user.payments.filter(payment => paymentId !== payment) :
@@ -149,7 +149,6 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
 
     const { file } = req
     let avatar = {}
-    console.log(file)
 
     if (file) {
         const result = await addToCloud(file.path, {
@@ -208,7 +207,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 // @access Public   
 const login = asyncHandler(async (req, res, next) => {
     const { userName, password } = req.body
-    const user = await UserModel.findOne({ userName }).populate("grade", "-__v").populate("group", "-__v").select("-__v")
+    const user = await UserModel.findOne({ userName }).populate("grade", "-__v").populate("group", "-__v").select("-__v ")
 
     if (user) {
         const isTruePass = await bcrypt.compare(password, user.password)

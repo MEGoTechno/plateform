@@ -39,8 +39,9 @@ const globalSlice = createSlice({
             return state
         },
         updateUser: (state, action) => {
-            const token = state.user.token
-            const updated = { ...action.payload, token }
+            const user = state.user
+            const updated = { ...user, ...action.payload }
+
             removeCookie("u")
             setCookie("u", updated)
             state.user = updated
@@ -65,5 +66,5 @@ const globalSlice = createSlice({
     }
 })
 
-export const { setMode, setUser, logout, setGlobalMsg } = globalSlice.actions
+export const { setMode, setUser, updateUser, logout, setGlobalMsg } = globalSlice.actions
 export default globalSlice.reducer

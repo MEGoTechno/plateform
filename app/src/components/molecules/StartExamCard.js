@@ -24,7 +24,6 @@ export default function StartExamCard({ exam, setStart, getBack, attempts, setSe
     const [isActive, setActive] = useState(false)
     const [isShowAnswers, setShowAnswers] = useState(false)
 
-
     useEffect(() => {
         if (attempts?.length > 0 && exam.isShowAnswers) {
             setShowAnswers(true)

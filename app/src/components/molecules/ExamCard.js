@@ -1,19 +1,33 @@
 import styled from '@emotion/styled'
-import { Alert, Box, Button, Divider, Typography, useTheme } from '@mui/material'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { Box, Button, Chip, Divider, Typography, useTheme } from '@mui/material'
+import React, { useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { FlexInBetween } from '../tools/FlexInBetween'
-import { buttonStyle } from '../styles/buttonsStyles'
+import { buttonError, buttonStyle } from '../styles/buttonsStyles'
 import ModalControlled from '../tools/ModalControlled'
+import { useRemoveExamMutation } from '../../toolkit/apiSlice'
+import usePostData from '../../hooks/usePostData'
+
+import Loader from "../tools/Loader"
+import { removeExam, setExams } from '../../toolkit/examSlice'
+import { useNavigate } from 'react-router-dom'
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import { user_roles } from '../constants/roles'
 
 export default function ExamCard({ exam, isManage, editExam, startExam }) {
+
+    const navigate = useNavigate()
     const theme = useTheme()
-    const { lang } = useSelector(s => s.global)
+    const dispatch = useDispatch()
 
+    const { lang, user } = useSelector(s => s.global)
 
-    const total = exam.questions.reduce((acc, question)=> {
-        return acc += question.point
-    }, 0)
+    const total = useMemo(() =>
+        exam.questions.reduce((acc, question) => {
+            return acc += question.points
+        }, 0), [exam])
 
     const ExamTypoKey = styled(Typography)({
         p: 1, fontSize: "14px", fontWeight: "600"
@@ -23,7 +37,23 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
         m: 2, p: 1, fontsize: "12px"
     })
 
-    // console.log(theme.palette)
+    const [formOptions, setFormOptions] = useState({
+        isLoading: false,
+        isShowModal: false
+    })
+
+    const [sendData] = useRemoveExamMutation()
+    const [deleteExam] = usePostData(sendData, formOptions, setFormOptions)
+
+
+    const trigger = async () => {
+        setFormOptions({
+            ...formOptions, isLoading: true, isShowModal: false
+        })
+        await deleteExam({ examId: exam._id })
+        dispatch(setExams(null))
+        navigate("/management/exams")
+    }
 
     return (
         <Box
@@ -41,9 +71,16 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
 
                 <Divider color={theme.palette.primary[300]} />
 
+                {isManage && <FlexInBetween sx={{ m: "5px 0" }}>
+                    <ExamTypoKey>status:</ExamTypoKey>
+                    <Chip label={exam.isActive ? "active" : "not active"} color={exam.isActive ? "success" : "error"} size='small' />
+                </FlexInBetween>}
+
+
+
                 <FlexInBetween sx={{ m: "5px 0" }}>
                     <ExamTypoKey>{lang.exams.time}:</ExamTypoKey>
-                    <ExamTypoValue>{(exam.time / 60 )|| "--"} min</ExamTypoValue>
+                    <ExamTypoValue>{(exam.time / 60) || "--"} min</ExamTypoValue>
                 </FlexInBetween>
 
                 <FlexInBetween sx={{ m: "5px 0" }}>
@@ -53,8 +90,17 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
 
                 <FlexInBetween sx={{ m: "5px 0" }}>
                     <ExamTypoKey>{lang.exams.degree}:</ExamTypoKey>
-                    <ExamTypoValue>{exam.total || exam.questions.length * 5}</ExamTypoValue>
+                    <ExamTypoValue>{total || exam.questions.length * 5}</ExamTypoValue>
                 </FlexInBetween>
+
+                {(isManage && user.role === user_roles.ADMIN) && <FlexInBetween sx={{ m: "5px 0" }}>
+                    <ExamTypoKey>statistics:</ExamTypoKey>
+                    <Chip
+                        variant='outlined'
+                        label={<BarChartRoundedIcon />}
+                        color={"success"} size='small' sx={{ fontWeight: 600 }}
+                        onClick={() => navigate("/management/statistics/exam", {state: exam})} />
+                </FlexInBetween>}
 
             </Box>
 
@@ -64,13 +110,17 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
                 <Box sx={{
                     display: 'flex',
                     flexDirection: "row",
-                    gap: 2
+                    gap: 2,
                 }}>
-                    <Button onClick={() => editExam(exam)} sx={buttonStyle}>{lang.exams.editExam}</Button>
-                    {/* <Button onClick={shoModal}
-                        sx={buttonStyle}
-                        disabled={loading ? true : false}
-                    >{loading ? <Loader /> : lang.exams.removeExam}</Button> */}
+                    <Button
+                        disabled={formOptions.isLoading ? true : false}
+                        onClick={() => editExam(exam)} sx={buttonStyle}>{lang.exams.editExam} <EditRoundedIcon /></Button>
+
+                    <Button
+                        onClick={() => setFormOptions({ ...formOptions, isShowModal: true })}
+                        sx={buttonError}
+                        disabled={formOptions.isLoading ? true : false}
+                    >{formOptions.isLoading ? <Loader /> : lang.exams.removeExam} <DeleteForeverRoundedIcon /></Button>
                 </Box>
 
             ) : (
@@ -82,13 +132,12 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
                     <Button onClick={() => startExam(exam)} sx={buttonStyle}  >{lang.exams.start}</Button>
                 </Box>
             )}
-            {alert.state && <Alert severity={alert.state}>{alert.message}</Alert>}
 
-            {/* <ModalControlled
-                title={settings.title}
-                action={removeExam}
-                isShowModal={settings.isShowModal}
-                close={() => setSettings(false)} /> */}
+            <ModalControlled
+                title={"r u sure to remove exam"}
+                action={trigger}
+                isShowModal={formOptions.isShowModal}
+                close={() => setFormOptions({ ...formOptions, isShowModal: false })} />
         </Box>
     )
 }

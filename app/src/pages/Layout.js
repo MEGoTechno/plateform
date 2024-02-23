@@ -26,8 +26,6 @@ export default function Layout() {
 
     const sideBarWidth = "250px"
 
-
-
     return (
         <Box width="100%" height="100%">
 

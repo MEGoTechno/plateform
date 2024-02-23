@@ -6,9 +6,9 @@ import PersonAddSharpIcon from '@mui/icons-material/PersonAddSharp';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export default function GetUSerSettings({ users }) {
+export default function GetUSerSettings() {
     const theme = useTheme()
-    const {lang} = useSelector(s => s.global)
+    const { lang } = useSelector(s => s.global)
     const navigate = useNavigate()
 
     return (
@@ -18,11 +18,11 @@ export default function GetUSerSettings({ users }) {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     {lang.users.settings}
                 </Typography>
-                <Box>
+                {/* <Box>
                     <Typography variant="body2">
-                        {lang.users.totalUsers} : 
+                        {lang.users.totalUsers} :
                     </Typography>
-                </Box>
+                </Box> */}
             </CardContent>
             <CardActions>
                 <Button sx={buttonStyle} onClick={() => { navigate('/management/user/add') }} size="small">

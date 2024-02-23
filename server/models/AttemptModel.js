@@ -5,7 +5,7 @@ const ExamModel = require("./examModel")
 const attemptSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: UserModel },
     exam: { type: mongoose.Schema.Types.ObjectId, ref: ExamModel },
-    mark: { type: String },
+    mark: { type: Number },
     tokenTime: { type: Number },
     chosenOptions: [{
         questionId: { type: String }, // grade + unit + lesson + part + question

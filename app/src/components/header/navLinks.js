@@ -11,11 +11,22 @@ import NewspaperSharpIcon from '@mui/icons-material/NewspaperSharp';
 import EditCalendarSharpIcon from '@mui/icons-material/EditCalendarSharp';
 import { user_roles } from '../constants/roles';
 import PaidIcon from '@mui/icons-material/Paid';
+import HomeIcon from '@mui/icons-material/Home';
+import MessageIcon from '@mui/icons-material/Message';
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
 export const navLinks = [
     {
+        name: "الرئيسيه", icon: <HomeIcon />, to: "/", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN]
+    }, {
+        name: "البروفايل", icon: <AccountBoxIcon />, to: "/profile", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN]
+    }, {
         name: lang.ar.links.exams, icon: <ListAltOutlinedIcon />, to: "/exams", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
         name: lang.ar.links.lectures, icon: <SchoolOutlinedIcon />, to: "/lectures", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN, user_roles.ADMIN]
+    }, {
+        name: "الرسائل", icon: <MessageIcon />, to: "/messages", allowedTo: [user_roles.STUDENT, user_roles.SUBADMIN]
     }, {
         name: lang.ar.links.usersInfo, icon: null, allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN]
     }, {
@@ -23,9 +34,11 @@ export const navLinks = [
     }, {
         name: lang.ar.links.manageUsers, icon: <PersonAddAltIcon />, to: "/management/user", allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN],
     }, {
-        name: "اداره الدفع", icon: <PaidIcon />, to: "/management/payments", allowedTo: [ user_roles.ADMIN],
+        name: "اداره الدفع", icon: <PaidIcon />, to: "/management/payments", allowedTo: [user_roles.ADMIN],
     }, {
         name: lang.ar.links.management, icon: null, allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN]
+    }, {
+        name: " الاحصائيات", icon: <BarChartRoundedIcon />, to: "/management/statistics", allowedTo: [user_roles.ADMIN],
     }, {
         name: lang.ar.links.manageExams, icon: <NewspaperSharpIcon />, to: "/management/exams", allowedTo: [user_roles.SUBADMIN, user_roles.ADMIN],
     }, {

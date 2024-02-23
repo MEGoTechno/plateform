@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import React from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function AccordionControlled({ exam }) {
+export default function AccordionControlled({ label }) {
     return (
         <Accordion sx={{
             mb: 5, mt: 1,
@@ -12,7 +12,7 @@ export default function AccordionControlled({ exam }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography variant='h4' fontWeight="600"> unit name</Typography>
+                <Typography variant='h4' fontWeight="600"> {label}</Typography>
             </AccordionSummary>
             {/* the content */}
             <AccordionDetails>

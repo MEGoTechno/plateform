@@ -52,10 +52,8 @@ export default function ManageExamsPage() {
 
   return (
     <Box>
-
       <Header title={lang.links.manageExams} />
       <ManageGrades grades={grades} exams={exams} />
-
     </Box>
   )
 }

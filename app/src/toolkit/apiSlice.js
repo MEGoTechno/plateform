@@ -161,6 +161,17 @@ export const apiSlice = createApi({
                 body: data
             }),
         }),// attempts Fcs #######
+        getExamAttempts: builder.query({
+            query: (queries) => {
+                const examId = queries.examId || "All"
+
+                const page = queries.page || 1
+                const limit = queries.limit || 10000
+
+
+                return `/attempts?examId=${examId}&page=${page}&limit=${limit}`
+            },
+        }),
         addAttempt: builder.mutation({
             query: data => ({
                 url: '/attempts',
@@ -169,7 +180,16 @@ export const apiSlice = createApi({
             }),
         }),
         getUserAttempts: builder.query({
-            query: ([id, examId]) => `/attempts/${id}?examId=${examId}`,
+            query: (queries) => {
+                const userId = queries.userId
+                const examId = queries.examId || "All"
+
+                const page = queries.page || 1
+                const limit = queries.limit || 10000
+
+
+                return `/attempts/${userId}?examId=${examId}&page=${page}&limit=${limit}`
+            },
         }),
         // lectures fcs ###################
         getLectures: builder.query({
@@ -220,6 +240,24 @@ export const apiSlice = createApi({
                 body: data
             }),
         }),
+        getUsersStatistics: builder.query({
+            query: (grade) => `/statistics/users?grade=${grade}`,
+        }),
+        getExamStatistics: builder.query({
+            query: (queries) => {
+
+                const examId = queries.examId
+                const grade = queries.grade
+                const filterGt = queries.filterGt || 0
+
+                return `/statistics/exam?examId=${examId}&grade=${grade}&filterGt=${filterGt}`
+            },
+        }),
+        getHomeStatistics: builder.query({
+            query: () => {
+                return `/statistics/home`
+            },
+        }),
         testUri: builder.query({
             query: () => `/public/vid.mp4`,
         }),
@@ -233,13 +271,14 @@ export const apiSlice = createApi({
     })
 })
 export const {
-    useGetUsersQuery, useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useUpdateUserMutation, useLazyGetOneUserQuery, useUpdateUserProfileMutation,
+    useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useUpdateUserMutation, useLazyGetOneUserQuery, useUpdateUserProfileMutation,
     useLazyGetGradesQuery, useCreateGradeMutation, useUpdateGradeMutation, useDeleteGradeMutation,
     useLazyGetGroupsQuery, useCreateGroupMutation, useUpdateGroupMutation, useDeleteGroupMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation, useLazyGetOneExamQuery,
-    useAddAttemptMutation, useLazyGetUserAttemptsQuery,
+    useAddAttemptMutation, useLazyGetUserAttemptsQuery, useLazyGetExamAttemptsQuery,
     usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation,
     useLazyTestUriQuery,
     useLazyGetMessagesQuery, useCreateMessageMutation, useUpdateMessageMutation, useDeleteMessageMutation,
-    useLazyGetPaymentsQuery, useLazyGetPaymentsByGradeQuery, useCreatePaymentMutation, useCheckUsersPaymentMutation, useDeletePaymentMutation
+    useLazyGetPaymentsQuery, useLazyGetPaymentsByGradeQuery, useCreatePaymentMutation, useCheckUsersPaymentMutation, useDeletePaymentMutation,
+    useLazyGetUsersStatisticsQuery, useLazyGetExamStatisticsQuery, useLazyGetHomeStatisticsQuery
 } = apiSlice

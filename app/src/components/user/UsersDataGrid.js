@@ -79,9 +79,12 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
         disableExport: true,
         renderCell: (params) => {
             return (
-                <Avatar sx={{ bgcolor: theme.palette.secondary[500] }}>
-                    {params.row.userName ? params.row.userName[0].toUpperCase() : false}
-                </Avatar>
+                <Avatar alt={params.row.name.toUpperCase()} src={params.row?.avatar?.url || "#"}
+                    sx={{
+                        objectFit: 'contain',
+                        bgcolor: theme.palette.secondary[400],
+                        fontWeight: 600
+                    }} />
             )
         }
     }, {
@@ -148,7 +151,6 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
         field: "group",
         headerName: "group",
         renderCell: (params) => {
-            console.log(params.row)
             return (
                 <Typography sx={{ fontSize: "11px" }}>
                     {params.row.isAdmin ? "admin" : params.row.group?.groupName ? params.row.group?.groupName : 'لم يسجل'}
@@ -239,6 +241,15 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
         );
     }
 
+
+    const onFilterChange = React.useCallback((filterModel) => {
+        // Here you save the data you need from the filter model
+        // setQueryOptions({ filterModel: { ...filterModel } });
+        console.log(filterModel)
+    }, []);
+
+
+
     return (
         <Box
             sx={{ height: "70vh", width: '100%', bgcolor: theme.palette.background.alt }}
@@ -256,6 +267,7 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
                 paginationMode="server"
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel} // controls ==> currntPage, pageSize
+                onFilterModelChange={onFilterChange}
 
                 //for edit
                 rowModesModel={rowModesModel}

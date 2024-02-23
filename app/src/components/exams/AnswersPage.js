@@ -8,7 +8,7 @@ import AttemptHeader from '../molecules/answers/AttemptHeader'
 const modifyAndGetScore = (exam, chosenOptions) => {
 
   // chosenOptionId = rtOptionId ==> + score, right
-  const score = exam.questions.reduce((acc = 0, question, i,) => {
+  const score = exam.questions.reduce((acc, question, i,) => {
 
     const AnsweredQuestion = chosenOptions.filter(({ questionId }) => questionId === question._id)[0]
 

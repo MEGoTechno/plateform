@@ -22,6 +22,8 @@ const gradesRouter = require("./routes/gradesRoutes")
 const groupsRouter = require("./routes/groupsRoutes")
 
 const paymentRouter = require("./routes/paymentRoutes")
+const statisticsRouter = require("./routes/statisticsRoutes")
+
 
 const { notFound, errorrHandler } = require("./middleware/errorsHandler")
 const { default: mongoose } = require("mongoose")
@@ -56,6 +58,7 @@ app.use("/api/grades", gradesRouter)
 app.use("/api/groups", groupsRouter)
 
 app.use("/api/payments", paymentRouter)
+app.use("/api/statistics", statisticsRouter)
 
 
 app.use("/upload", upload.fields([{ name: "video" }, { name: "thumbnail" }]), async (req, res, next) => {
