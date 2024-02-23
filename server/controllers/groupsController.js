@@ -65,7 +65,7 @@ const deleteGroup = asyncHandler(async (req, res, next) => {
     const foundUser = await UserModel.findOne({ group: group._id, role: user_roles.STUDENT })
 
     if (foundUser) {
-        next(new Error("there is user in this group"))
+        return next(new Error("there is user in this group"))
     }
 
     await GroupModel.findByIdAndDelete(group._id)
