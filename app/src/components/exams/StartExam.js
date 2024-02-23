@@ -30,7 +30,7 @@ export default function StartExam() {
     const [getData, { isLoading }] = useLazyGetOneExamQuery()
     const [getExam] = useLazyGetData(getData)
 
-    const [getDataAttempts] = useLazyGetUserAttemptsQuery()
+    const [getDataAttempts, { isLoading: attemptLoading }] = useLazyGetUserAttemptsQuery()
     const [getAttempts] = useLazyGetData(getDataAttempts)
 
     const getBack = () => {
@@ -76,7 +76,7 @@ export default function StartExam() {
     // console.log("is extensoble", Object.isExtensible(searchParams))
 
 
-    if (!exam || isLoading || !attempts) return <LoaderSkeleton />
+    if (!exam || isLoading || attemptLoading) return <LoaderSkeleton />
 
     if (isStart && attempts.length <= exam.attemptsNums && exam) return <QuizPage exam={exam} />
 
