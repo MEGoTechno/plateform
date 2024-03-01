@@ -188,7 +188,8 @@ export default function EditExam() {
                 }, {
                     name: "image",
                     label: "insert image",
-                    type: "file"
+                    type: "file",
+                    disabled: true
                 }, {
                     name: "points",
                     label: "poitns",

@@ -20,7 +20,10 @@ function MakeFile({ inputName, input, props, value }) {
                     props.setFieldValue(inputName, e.target.files[0])
                 }}
             />
-            <Button sx={buttonStyle} style={{ width: "auto" }} onClick={() => fileRef.current.click()}>{input.label} <AddCircleOutlineIcon /> </Button>
+            <Button 
+            sx={buttonStyle} 
+            disabled={input.disabled ||false}
+            style={{ width: "auto" }} onClick={() => fileRef.current.click()}>{input.label} <AddCircleOutlineIcon /> </Button>
 
             {props.errors[inputName] && props.touched[inputName] && (
                 <Alert sx={{ mb: "5px" }} severity='error'>{props.errors[inputName]}</Alert>

@@ -183,7 +183,8 @@ export default function CreateExam() {
                 }, {
                     name: "image",
                     label: "insert image",
-                    type: "file"
+                    type: "file",
+                    disabled: true
                 }, {
                     name: "points",
                     label: "poitns",
