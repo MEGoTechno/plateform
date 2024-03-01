@@ -4,7 +4,7 @@ import { buttonStyle } from '../../styles/buttonsStyles'
 import QuizPagination from '../quiz/QuizPagination'
 import ShowAnsweredQuestion from './ShowAnsweredQuestion'
 
-export default function AttemptCard({ exam }) {
+export default function AttemptCard({ exam, isAnsweres }) {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
@@ -29,7 +29,7 @@ export default function AttemptCard({ exam }) {
             </CardActions>
 
             <Box >
-                <QuizPagination examQuestions={exam.questions} count={exam.questions.length} index={currentQuestionIndex} setIndex={setCurrentQuestionIndex} />
+                <QuizPagination isAnsweres={isAnsweres} examQuestions={exam.questions} count={exam.questions.length} index={currentQuestionIndex} setIndex={setCurrentQuestionIndex} />
             </Box>
         </Card>
     )

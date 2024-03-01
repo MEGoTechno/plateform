@@ -1,13 +1,11 @@
 import { Box, Pagination, PaginationItem, useTheme } from '@mui/material'
 import React, { memo, useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
-function QuizPagination({ count, index, setIndex, isLoading, examQuestions }) {
+function QuizPagination({ count, index, setIndex, isLoading, examQuestions, isAnsweres }) {
 
     const theme = useTheme()
 
     const [questions, setQuestions] = useState([])
-    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         setQuestions(examQuestions)
@@ -31,7 +29,7 @@ function QuizPagination({ count, index, setIndex, isLoading, examQuestions }) {
                         questions[item.page - 1].chosenOptionId !==
                         questions[item.page - 1].rtOptionId &&
                         questions[item.page - 1].rtOptionId &&
-                        searchParams.get("attempt")
+                        isAnsweres
 
                     // not answered - ritht - wrong - lsa
                     return (

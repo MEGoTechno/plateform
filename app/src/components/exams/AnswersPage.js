@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Header from '../tools/Header'
 import AttemptCard from '../molecules/answers/AttemptCard'
 import AttemptHeader from '../molecules/answers/AttemptHeader'
+import { useSearchParams } from 'react-router-dom'
 
 const modifyAndGetScore = (exam, chosenOptions) => {
 
@@ -58,7 +59,7 @@ const totalDegree = (exam) => {
 export default function AnswersPage({ attempt }) {
 
   const exam = useMemo(() => JSON.parse(JSON.stringify(attempt.exam)), [attempt])
- 
+
   totalDegree(exam)
   modifyAndGetScore(exam, attempt.chosenOptions)
 
@@ -67,13 +68,12 @@ export default function AnswersPage({ attempt }) {
   // score header
   // answers
 
-
   return (
     <Box>
       <Header title={"attempt"} />
       <Box>
         <AttemptHeader exam={exam} />
-        <AttemptCard exam={exam} />
+        <AttemptCard isAnsweres={true} exam={exam} />
       </Box>
     </Box>
   )
