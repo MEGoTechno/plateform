@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCookie } from '../hooks/cookies'
 // https://mradel-biology.onrender.com
-// "http://192.168.1.13:5050"
+// "http://192.168.1.13:5050/api"
 // git push -u origin main   
 
 

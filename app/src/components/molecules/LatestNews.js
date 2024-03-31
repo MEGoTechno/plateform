@@ -16,7 +16,7 @@ export default function LatestNews() {
                     <ImageListItem cols={12} rows={12} >
                         <img
                             style={{ objectFit: 'contain' }}
-                            src={`./images/img1.jpg`}
+                            src={`./images/download1.jpg`}
                             alt={"photoo"}
                         />
                         <ImageListItemBar
@@ -38,7 +38,7 @@ export default function LatestNews() {
                     <ImageListItem cols={12} rows={12}>
                         <img
                             style={{ objectFit: 'contain' }}
-                            src={`./images/img2.jpg`}
+                            src={`./images/download2.jpg`}
                             alt={"photoo"}
                         />
                         <ImageListItemBar

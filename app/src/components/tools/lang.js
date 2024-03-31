@@ -4,7 +4,7 @@ export const lang = {
         userName: "userName",
         password: "password",
         send: "submit",
-        logo: "MR/Adel Biology",
+        logo: "MR/your name",
         errors: {
             addGrade: "add grade please !",
             goGradePage: "go to grade page...",
@@ -123,7 +123,7 @@ export const lang = {
         password: "كلمة السر",
         send: "ارسال",
         search: "بحث",
-        logo: "أ/ عادل الغريب فى الاحياء",
+        logo: "أ/ اسم المنصه",
         errors: {
             addGrade: "add grade please !",
             goGradePage: "go to grade page...",
