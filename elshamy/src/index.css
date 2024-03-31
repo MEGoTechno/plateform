@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Markazi+Text:wght@600&family=Nunito:wght@600&family=Open+Sans:ital,wght@0,300;0,700;1,400&family=Rubik:wght@300&family=Work+Sans:ital@1&display=swap');
+
+html, body, #root, .App {
+  font-family: "inter", sans-serif;
+  width: 100%;
+  height: 100%;
+}

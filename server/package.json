@@ -9,6 +9,7 @@
     "server": "nodemon server",
     "client": "npm start --prefix ../app",
     "myapp": "concurrently \"npm run server\" \"npm run client\"",
+    "platform": "concurrently \"npm run server\" \"npm start --prefix ../elshamy\"",
     "seed:import": "node backend/model/seed",
     "seed:delte": "node backend/model/seed -d"
   },
