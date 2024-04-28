@@ -8,7 +8,8 @@ const statusTexts = require("../tools/statusTexts.js");
 const createError = require("../tools/createError.js");
 const msgTexts = require("../tools/msgTexts.js")
 
-const addToCloud = require("../middleware/cloudinary")
+const addToCloud = require("../middleware/cloudinary");
+const { makeMatch } = require("../tools/makeMatch.js");
 
 // @desc get all user
 // @route GET /users
@@ -17,39 +18,35 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 
     const query = req.query
 
+    //pagination
     const limit = query.limit || 10000
     const page = query.page || 1
     const skip = (page - 1) * limit
 
-    const gradeId = query.gradeId || "All"
-    const role = query.role || "All"
+    // search && filter
+    const match = {}
+    const params = [
+        { key: "role", value: query.role },
+        { key: "name", value: query.name },
+        { key: "userName", value: query.userName },
+        { key: "email", value: query.email },
+        { key: "phone", value: query.phone },
+        { key: "familyPhone", value: query.familyPhone },
+        { key: "isActive", value: query.isActive, type: "boolean" },
+        { key: "grade", value: query.grade, operator: "equal" },
+        { key: "group", value: query.group, operator: "equal" },
+    ]
+    makeMatch(match, params)
 
-    let findQuery = {}
 
-    if (gradeId !== "All") {
-        findQuery.grade = gradeId
-    }
+    //sort 
+    const sort = {}
+    query.sortkey ? sort[query.sortkey] = query.sortvalue : null
 
-    if (role !== "All") {
-        findQuery.role = role
-    }
+    const users = await UserModel.find(match, { password: false, __v: false }).populate("group grade").limit(limit).skip(skip).sort(sort)
+    const usersLength = await UserModel.countDocuments(match)
 
-    const users = await UserModel.find(findQuery, { password: false, __v: false }).populate("group grade").limit(limit).skip(skip)
-    let usersLength = 0
-
-    if (findQuery) {
-
-        usersLength = await UserModel.countDocuments(findQuery)
-    } else {
-        usersLength = await UserModel.estimatedDocumentCount()
-    }
-    console.log(usersLength)
-    if (users) {
-        res.status(200).json({ status: statusTexts.SUCCESS, values: { users, count: usersLength } })
-    } else {
-        const error = createError(msgTexts.NO_USERS, 404, statusTexts.FAILED)
-        next(error)
-    }
+    res.status(200).json({ status: statusTexts.SUCCESS, values: { users, count: usersLength } })
 })
 
 // @desc get one user
@@ -116,7 +113,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
     user.familyPhone = familyPhone || user.familyPhone
     user.isActive = typeof isActive === "boolean" ? isActive : user.isActive
     user.role = role || user.role
-    
+
 
     user.payments.includes(paymentId) ?
         user.payments = user.payments.filter(payment => paymentId !== payment) :
@@ -161,7 +158,6 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
             avatar = { original_filename, resource_type, secure_url, url, format, size: bytes }
         }
     }
-
     //avater
 
     user.name = name || user.name
