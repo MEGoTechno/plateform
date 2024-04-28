@@ -41,9 +41,9 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontWeight: 700,
+                            fontWeight: 600,
                             letterSpacing: '.01rem',
-                            color: 'inherit',
+                            color: theme.palette.neutral[0],
                             textDecoration: 'none',
                         }}
                     >

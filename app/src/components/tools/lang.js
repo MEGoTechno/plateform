@@ -123,7 +123,7 @@ export const lang = {
         password: "كلمة السر",
         send: "ارسال",
         search: "بحث",
-        logo: "منصه ا/عادل الغريب",
+        logo: "منصة أ/عادل الغريب",
         errors: {
             addGrade: "add grade please !",
             goGradePage: "go to grade page...",
