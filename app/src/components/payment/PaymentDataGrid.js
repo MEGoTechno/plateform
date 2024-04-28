@@ -10,13 +10,13 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import { user_roles } from '../constants/roles';
-import { buttonStyle, sendSuccess } from '../styles/buttonsStyles';
+import { buttonStyle, sendSuccess } from '../../styles/buttonsStyles';
 
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import GppBadIcon from '@mui/icons-material/GppBad';
-import { useUpdateUserMutation } from '../../toolkit/apiSlice';
 import usePostData from '../../hooks/usePostData';
 import { updateUserState } from '../../toolkit/usersSlice';
+import { useUpdateUserMutation } from '../../toolkit/apis/UsersApi';
 
 export default function PaymentDataGrid({ payment, users, paginationModel, setPaginationModel, pageState }) {
 
@@ -106,6 +106,7 @@ export default function PaymentDataGrid({ payment, users, paginationModel, setPa
     }, {
         field: "group",
         headerName: "group",
+        filterable: false,
         type: 'singleSelect',
         renderCell: (params) => {
             return (

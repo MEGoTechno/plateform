@@ -31,12 +31,12 @@ export default function GradeUsers({ grade }) {
         pageSize: 5,
     });
 
-    const [getUsers] = useGetUsers(setPageState, paginationModel)
+    const [getUsers] = useGetUsers()
 
 
 
     const trigger = async () => {
-        const res = await getUsers(grade._id, user_roles.STUDENT)
+        const res = await getUsers(setPageState, paginationModel, null, { grade: grade._id, role: user_roles.STUDENT })
         setUsers(res)
     }
 
@@ -78,6 +78,7 @@ export default function GradeUsers({ grade }) {
         field: "group",
         headerName: "group",
         type: 'singleSelect',
+        filterable: false,
         renderCell: (params) => {
             return (
                 <Typography sx={{ fontSize: "11px" }}>
@@ -108,7 +109,7 @@ export default function GradeUsers({ grade }) {
                 sx={{
                     color: theme.palette.warning.main,
                 }}
-                onClick={()=> navigate("/management/statistics/user", {state: params.row})}
+                onClick={() => navigate("/management/statistics/user", { state: params.row })}
             />]
         },
     },

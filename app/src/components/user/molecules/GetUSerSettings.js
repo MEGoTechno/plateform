@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react'
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material'
 import React from 'react'
-import { buttonStyle } from '../../styles/buttonsStyles'
+import { buttonStyle } from '../../../styles/buttonsStyles'
 import PersonAddSharpIcon from '@mui/icons-material/PersonAddSharp';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';

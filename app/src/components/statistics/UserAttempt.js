@@ -9,7 +9,6 @@ export default function UserAttempt() {
     const attempt = location.state
 
     if (!attempt) return <NotFound />
-    console.log(attempt)
     return (
         <Box>
             <AnswersPage attempt={attempt} />

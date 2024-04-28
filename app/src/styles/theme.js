@@ -1,4 +1,7 @@
 // color design tokens export
+
+const greeen = {}
+
 export const tokensDark = {
     grey: {
         0: "#ffffff", // manually adjusted
@@ -69,33 +72,44 @@ export const themeSettings = (mode) => {
                     // palette values for dark mode
                     primary: {
                         ...tokensDark.primary,
-                        main: tokensDark.primary[400],
+                        main: tokensDark.primary[100],
                         light: tokensDark.primary[400],
                     },
                     secondary: {
                         ...tokensDark.secondary,
-                        main: tokensDark.secondary[300],
+                        main: tokensDark.secondary[400],
+                        btnBg: tokensDark.secondary[400]
                     },
                     neutral: {
                         ...tokensDark.grey,
                         main: tokensDark.grey[500],
                     },
                     background: {
-                        default: tokensDark.primary[600],
-                        alt: tokensDark.primary[500],
+                        default: tokensDark.primary[600], //tokensDark.primary[600]  "rgb(22, 28, 36)"
+                        alt: tokensDark.primary[500],//tokensDark.primary[500]    "rgb(33, 43, 54)"
+                        paper: tokensDark.primary[700]
                     },
-                }
-                : {
+                    text: {
+                        primary: tokensDark.secondary[100], //yellow
+                        secondary: tokensDark.grey[300],
+                        title: tokensDark.secondary[400],
+                        hover: tokensDark.primary[600],//blue
+                        active: tokensDark.primary[500],
+                        btn: tokensDark.primary[500],
+                    },
+                    grey: tokensDark.grey
+                } : {
                     // palette values for light mode
                     primary: {
                         ...tokensLight.primary,
-                        main: tokensDark.grey[50],
+                        main: "#2e7d32",//green
                         light: tokensDark.grey[100],
                     },
                     secondary: {
                         ...tokensLight.secondary,
-                        main: tokensDark.secondary[600],
-                        light: tokensDark.secondary[700],
+                        main: tokensLight.secondary[400],//yellow
+                        btnBg: tokensLight.secondary[400],
+                        hover: ""
                     },
                     neutral: {
                         ...tokensLight.grey,
@@ -103,8 +117,18 @@ export const themeSettings = (mode) => {
                     },
                     background: {
                         default: tokensDark.grey[0],
-                        alt: tokensDark.grey[50],
+                        alt: "rgb(244, 246, 248)",
+                        paper: "rgb(244, 246, 248)"
                     },
+                    text: {
+                        primary: tokensLight.primary[100],
+                        secondary: tokensLight.grey[300],
+                        title: tokensLight.secondary[300],
+                        hover: tokensLight.primary[600],
+                        active: tokensLight.primary[500],
+                        btn: tokensLight.primary[500],
+                    },
+                    grey: tokensDark.grey
                 }),
         },
         typography: {

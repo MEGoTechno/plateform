@@ -5,7 +5,7 @@ import { getSameValue, getUnique } from '../tools/commonFC';
 import { json, useNavigate } from 'react-router-dom';
 import ShowMessages from './ShowMessages';
 import ShowMessage from '../molecules/ShowMessage';
-import { sendSuccess } from '../styles/buttonsStyles';
+import { sendSuccess } from '../../styles/buttonsStyles';
 
 export default function ManageMessages({ messages }) {
 

@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../toolkit/globalSlice';
 import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { buttonError, buttonStyle } from '../styles/buttonsStyles';
+import { ErrorBtn, buttonError, buttonStyle } from '../../styles/buttonsStyles';
 import ModalControlled from '../tools/ModalControlled';
 import { user_roles } from '../constants/roles';
 
@@ -62,7 +62,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                 sx={{
                     width: sideBarWidth,
                     "& .MuiDrawer-paper": {
-                        color: theme.palette.secondary[200],
+                        color: theme.palette.text.primary,
                         backgroundColor: theme.palette.background.alt,
                         boxSixing: "border-box",
                         borderWidth: isNonMobile ? 0 : "2px",
@@ -74,7 +74,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
 
                     <Box width="100%">
                         <Box m="1.5rem 2rem 2rem 3rem">
-                            <FlexInBetween color={theme.palette.secondary.main} sx={{ display: "flex", justifyContent: "space-between" }}>
+                            <FlexInBetween sx={{ display: "flex", justifyContent: "space-between" }}>
                                 <Box sx={{
                                     ml: "-20px",
                                     display: 'flex',
@@ -86,7 +86,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                             mr: 2,
                                             height: "60px",
                                             width: "60px",
-                                            bgcolor: theme.palette.secondary[400]
+                                            bgcolor: theme.palette.secondary.main
                                         }} />
                                     <Box sx={{
                                         display: 'flex',
@@ -94,12 +94,12 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                         flexDirection: "column"
                                     }}>
                                         <Box>
-                                            <Typography variant='h4' fontWeight="600" color={theme.palette.primary[100]}>
+                                            <Typography variant='h4' fontWeight="600" color={theme.palette.text.primary}>
                                                 {user.name}
                                             </Typography>
                                         </Box>
                                         <Box>
-                                            <Typography variant='h6' fontWeight="600" color={theme.palette.neutral.main} sx={{
+                                            <Typography variant='h6' fontWeight="600" color={theme.palette.text.secondary} sx={{
                                                 opacity: ".7"
                                             }}>
                                                 {user.role}
@@ -114,6 +114,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                 )}
                             </FlexInBetween>
                         </Box>
+                        
                         <List>
                             {navLinks.map((link, i) => {
 
@@ -137,15 +138,15 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                                 sx={{
                                                     backgroundColor:
                                                         activeLink === link.to
-                                                            ? theme.palette.secondary[400]
+                                                            ? theme.palette.secondary.main
                                                             : "transparent",
                                                     color:
                                                         activeLink === link.to
-                                                            ? theme.palette.primary[500]
-                                                            : theme.palette.secondary[100],
+                                                            ? theme.palette.text.active
+                                                            : theme.palette.text.primary,
                                                     "&:hover": {
                                                         backgroundColor: theme.palette.secondary[500],
-                                                        color: theme.palette.primary[600],
+                                                        color: theme.palette.text.hover,
                                                     }
                                                 }}
                                             >
@@ -155,7 +156,9 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                                                 }}>
                                                     {link.icon}
                                                 </ListItemIcon>
+
                                                 <ListItemText primary={link.name} />
+
                                                 <ChevronRightOutlinedIcon sx={{
                                                     ml: "auto",
                                                     display: activeLink === link.to ? "block" : "none",
@@ -169,9 +172,11 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                         </List>
                     </Box>
                     <Box display="flex" alignItems="end" >
-                        <Button sx={buttonError} style={{ color: theme.palette.grey[100] }} onClick={() => setShowModal(true)}>
+
+                        <ErrorBtn sx={{ mx: "10px" }} onClick={() => setShowModal(true)}>
                             <LogoutIcon />    {lang.links.logOut}
-                        </Button>
+                        </ErrorBtn>
+
                     </Box>
                 </Scrollbars>
             </Drawer >

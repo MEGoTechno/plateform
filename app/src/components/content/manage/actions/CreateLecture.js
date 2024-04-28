@@ -128,7 +128,7 @@ export default function CreateLecture() {
   const [sendData] = usePostNewLectureMutation()
   const [sendLecture] = usePostData(sendData, formOptions, setFormOptions)
 
-  const trigger = async () => {
+  const trigger = async (val) => {
     setFormOptions({
       ...formOptions, isLoading: true, isShowModal: false
     })

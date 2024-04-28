@@ -5,7 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import { DAYES } from '../constants/dateConstants';
-import { buttonError, buttonStyle, sendSuccess } from '../styles/buttonsStyles';
+import { buttonError, buttonStyle, sendSuccess } from '../../styles/buttonsStyles';
 import GroupRow from './GroupRow';
 import { useNavigate } from 'react-router-dom';
 import { useDeleteGradeMutation } from '../../toolkit/apiSlice';

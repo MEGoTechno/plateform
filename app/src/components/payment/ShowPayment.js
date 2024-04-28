@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import { buttonError, buttonStyle } from '../styles/buttonsStyles'
+import { buttonError, buttonStyle } from '../../styles/buttonsStyles'
 import useGetUsers from '../../hooks/useGetUsers'
 import { useSelector } from 'react-redux'
 import LoaderSkeleton from '../tools/LoaderSkeleton'
@@ -40,11 +40,11 @@ function ShowPayment({ payment }) {
         pageSize: 5,
     });
 
-    const [getUsers] = useGetUsers(setPageState, paginationModel)
+    const [getUsers] = useGetUsers()
 
 
     const trigger = async () => {
-        const res = await getUsers(payment.grade, user_roles.STUDENT)
+        const res = await getUsers(setPageState, paginationModel, null, { grade: payment.grade, role: user_roles.STUDENT })
         setUsers(res)
     }
 

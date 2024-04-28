@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import UserForm from './UserForm'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useUpdateUserMutation, useUpdateUserProfileMutation } from '../../../toolkit/apiSlice'
 import usePostData from '../../../hooks/usePostData'
 import Header from '../../tools/Header'
 import * as Yup from "yup"
 import { setUser } from '../../../toolkit/globalSlice'
 import { getCookie } from '../../../hooks/cookies'
+import { useUpdateUserProfileMutation } from '../../../toolkit/apis/UsersApi'
 
 
 export default function UpdateUserProfile() {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../tools/commonFC'
 import { useSelector } from 'react-redux'
 import { Alert, Box, Button } from '@mui/material'
-import { buttonStyle } from '../styles/buttonsStyles'
+import { buttonStyle } from '../../styles/buttonsStyles'
 
 export default function UnitExams({ exams, grade }) {
 

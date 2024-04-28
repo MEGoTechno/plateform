@@ -9,7 +9,7 @@ export default function Header({ title, description }) {
     return (
         <Box display="flex" flexDirection="column" m="10px 0" sx={{ direction: lang.direction }} >
             <Typography variant="h2" fontWeight="bold" sx={{
-                color: theme.palette.secondary.main, mb: 2,
+                color: theme.palette.text.title, mb: 2,
             }}>
                 {title}
             </Typography>

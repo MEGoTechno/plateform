@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../../tools/commonFC'
 import Header from '../../tools/Header'
-import { buttonStyle } from '../../styles/buttonsStyles'
+import { buttonStyle } from '../../../styles/buttonsStyles'
 import LessonSettings from '../../molecules/LessonSettings'
 import LectureSettings from './actions/LectureSettings'
 import MakeTitle from "../../tools/MakeTitle"

@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Card, CardActions, CardContent, Grid, Typography, useTheme } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { buttonError, buttonStyle, sendSuccess } from '../styles/buttonsStyles'
+import { buttonError, buttonStyle, sendSuccess } from '../../styles/buttonsStyles'
 import { useSearchParams } from 'react-router-dom'
 
 import Dayjs from "dayjs"

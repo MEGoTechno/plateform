@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddUserPage from '../user/actions/AddUserPage';
 import { useTheme } from '@mui/material';
-import { buttonError } from '../styles/buttonsStyles';
+import { buttonError } from '../../styles/buttonsStyles';
 
 export default function DialogControllled({ isOpen, setOpen, children, title, description }) {
     const theme = useTheme()

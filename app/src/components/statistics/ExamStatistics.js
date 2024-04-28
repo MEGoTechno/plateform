@@ -229,6 +229,7 @@ export default function ExamStatistics() {
     }, {
         field: "group",
         headerName: "group",
+        filterable: false,
         renderCell: (params) => {
             return (
                 <Typography sx={{ fontSize: "11px" }}>

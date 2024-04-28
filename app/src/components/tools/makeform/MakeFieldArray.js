@@ -4,7 +4,7 @@ import React from 'react'
 
 import MakeInput from './MakeInput'
 import { hasError } from './constants/hasError'
-import { buttonError, buttonStyle } from '../../styles/buttonsStyles'
+import { buttonError, buttonStyle } from '../../../styles/buttonsStyles'
 import NestedInput from './NestedInput'
 
 export default function MakeFieldArray({ props, input, inputName, values }) {

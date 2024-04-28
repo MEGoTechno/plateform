@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCookie } from '../hooks/cookies'
-// https://mradel-biology.onrender.com
+// https://mradel-biology.onrender.com/api
 // "http://192.168.1.13:5050/api"
+// "http://localhost:5050/api"
 // git push -u origin main   
 
 
 export const apiSlice = createApi({
     reducerPath: "api", //from state
+    tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://mradel-biology.onrender.com/api",
         prepareHeaders: (headers) => {
@@ -16,42 +18,6 @@ export const apiSlice = createApi({
     }),
 
     endpoints: builder => ({ // client fcs #########
-        getUsers: builder.query({
-            query: (queries) => {
-                const { page, limit, gradeId, role } = queries
-                return `/client?page=${page}&limit=${limit}&gradeId=${gradeId}&role=${role}`
-            }
-        }),
-        addUser: builder.mutation({
-            query: data => ({
-                url: '/client',
-                method: 'POST',
-                body: data
-            })
-        }),
-        getOneUser: builder.query({
-            query: (userName) => `/client/${userName}`
-        }),
-        updateUser: builder.mutation({
-            query: (data) => ({
-                url: `/client`,
-                method: 'PATCH',
-                body: data
-            })
-        }), updateUserProfile: builder.mutation({
-            query: (data) => ({
-                url: `/client`,
-                method: 'PUT',
-                body: data
-            })
-        }),
-        deleteUser: builder.mutation({
-            query: (data) => ({
-                url: `/client`,
-                method: 'DELETE',
-                body: data
-            })
-        }),
         getPayments: builder.query({
             query: () => `/payments`
         }),
@@ -270,8 +236,10 @@ export const apiSlice = createApi({
         }),
     })
 })
+
+
 export const {
-    useLazyGetUsersQuery, useAddUserMutation, useLoginMutation, useDeleteUserMutation, useUpdateUserMutation, useLazyGetOneUserQuery, useUpdateUserProfileMutation,
+    useLoginMutation,
     useLazyGetGradesQuery, useCreateGradeMutation, useUpdateGradeMutation, useDeleteGradeMutation,
     useLazyGetGroupsQuery, useCreateGroupMutation, useUpdateGroupMutation, useDeleteGroupMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation, useLazyGetOneExamQuery,

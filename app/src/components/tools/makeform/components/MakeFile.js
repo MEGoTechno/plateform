@@ -1,6 +1,6 @@
 import { Alert, Box, Button } from '@mui/material'
 import React, { useRef } from 'react'
-import { buttonStyle } from '../../../styles/buttonsStyles'
+import { buttonStyle } from '../../../../styles/buttonsStyles'
 import ShowFileSettings from './ShowFileSettings'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 

@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActions, CardContent, Container, useTheme } from
 import { useEffect, useState } from "react";
 import ShowQuestion from "./ShowQuestion";
 import QuizPagination from "./QuizPagination";
-import { buttonStyle, sendSuccess } from "../../styles/buttonsStyles";
+import { buttonStyle, sendSuccess } from "../../../styles/buttonsStyles";
 import ModalControlled from "../../tools/ModalControlled";
 import { useSelector } from "react-redux";
 import Loader from "../../tools/Loader"

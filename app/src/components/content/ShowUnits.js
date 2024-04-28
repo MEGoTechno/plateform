@@ -2,7 +2,7 @@ import { Alert, Box, Button, useTheme } from '@mui/material'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../tools/commonFC'
-import { buttonStyle } from "../styles/buttonsStyles"
+import { buttonStyle } from "../../styles/buttonsStyles"
 import ShowLectures from './LessonLectures'
 import Header from '../tools/Header'
 import { useSelector } from 'react-redux'

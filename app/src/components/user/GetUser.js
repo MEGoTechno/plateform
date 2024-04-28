@@ -3,7 +3,6 @@ import { Alert, Box, Button, Divider, Stack, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 import ManageUser from './actions/ManageUser'
 import { useSelector } from 'react-redux'
-import { useLazyGetOneUserQuery, } from '../../toolkit/apiSlice'
 import useLazyGetData from '../../hooks/useLazyGetData'
 import UserPayments from '../molecules/UserPayments'
 import { user_roles } from '../constants/roles'
@@ -11,6 +10,7 @@ import Loader from '../tools/Loader'
 import UserHeader from '../molecules/UserHeader'
 import UserGroup from '../molecules/UserGroup'
 import MakeTitle from '../tools/MakeTitle'
+import { useLazyGetOneUserQuery } from '../../toolkit/apis/UsersApi'
 
 
 export default function GetUser() {
@@ -43,7 +43,7 @@ export default function GetUser() {
     }
 
     useEffect(() => {
-        if(userName){
+        if (userName) {
             getFiltered()
         }
     }, [userName])

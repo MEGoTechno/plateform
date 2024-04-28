@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Typography, useTheme } from '@mui/material'
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -11,9 +11,9 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import { addUser, updateUserState } from '../../toolkit/usersSlice';
 import { user_roles } from '../constants/roles';
-import { useUpdateUserMutation } from '../../toolkit/apiSlice';
 import usePostData from '../../hooks/usePostData';
-import { buttonStyle, sendSuccess } from '../styles/buttonsStyles';
+import { buttonStyle, sendSuccess } from '../../styles/buttonsStyles';
+import { useUpdateUserMutation } from '../../toolkit/apis/UsersApi';
 
 export default function UsersDataGrid({ users, paginationModel, setPaginationModel, pageState }) {
 
@@ -37,8 +37,6 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
     const handleRowModesModelChange = (newRowModesModel) => {
         setRowModesModel(newRowModesModel);
     };
-
-
 
     const handleEditClick = (id) => () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
@@ -82,7 +80,7 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
                 <Avatar alt={params.row.name.toUpperCase()} src={params.row?.avatar?.url || "#"}
                     sx={{
                         objectFit: 'contain',
-                        bgcolor: theme.palette.secondary[400],
+                        bgcolor: theme.palette.success.main,
                         fontWeight: 600
                     }} />
             )
@@ -150,6 +148,7 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
     }, {
         field: "group",
         headerName: "group",
+        filterable: false,
         renderCell: (params) => {
             return (
                 <Typography sx={{ fontSize: "11px" }}>
@@ -248,14 +247,20 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
         console.log(filterModel)
     }, []);
 
+    const hide = ['_id']
 
+    const hideColumn = useMemo(() => {
+        const inVisibleModels = {}
+        hide.map(ele => inVisibleModels[ele] = false)
+        return inVisibleModels
+    }, [])
 
     return (
         <Box
             sx={{ height: "70vh", width: '100%', bgcolor: theme.palette.background.alt }}
         >
             <DataGrid
-                sx={{ bgcolor: theme.palette.background.alt }}
+                // sx={{ bgcolor: theme.palette.background.alt }}
 
                 columns={columns}
                 rows={rows || []}
@@ -280,10 +285,8 @@ export default function UsersDataGrid({ users, paginationModel, setPaginationMod
                     toolbar: CustomToolbar
                 }}
 
-                columnVisibilityModel={{
-                    // Hide columns status and traderName, the other columns will remain visible
-                    _id: false,
-                }}
+                // Hide columns status and traderName, the other columns will remain visible
+                columnVisibilityModel={hideColumn}
             />
         </Box>
     )

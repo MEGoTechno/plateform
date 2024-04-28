@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { sendSuccess } from '../styles/buttonsStyles'
+import { sendSuccess } from '../../styles/buttonsStyles'
 import SelectControlled from '../tools/SelectControlled'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import ShowPayment from './ShowPayment'

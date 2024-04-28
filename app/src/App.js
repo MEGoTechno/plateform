@@ -5,7 +5,7 @@ import Layout from './pages/Layout';
 import { ThemeProvider, CssBaseline } from "@mui/material"
 import { createTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
-import { themeSettings } from './theme';
+import { themeSettings } from './styles/theme';
 
 import HomePage from './pages/HomePage';
 import NotFound from './components/tools/NotFound';

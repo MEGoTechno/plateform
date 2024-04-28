@@ -6,7 +6,7 @@ import ManageStatistics from '../../components/statistics/ManageStatistics'
 import { useNavigate } from 'react-router-dom'
 import useGetGrades from '../../hooks/useGetGrades'
 import LoaderSkeleton from '../../components/tools/LoaderSkeleton'
-import { buttonStyle } from '../../components/styles/buttonsStyles'
+import { buttonStyle } from '../../styles/buttonsStyles'
 
 
 export default function ManageStatisticsPage() {

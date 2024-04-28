@@ -5,7 +5,7 @@ export default function usePostData(sendData, formOptions, setFormOptions) {
   const dispatch = useDispatch()
   let data
 
-  const trigger = (values, dataType, linkVar) => {
+  const trigger = (values, dataType, params) => {
     if (values) {
       data = values
     } else {
@@ -28,7 +28,7 @@ export default function usePostData(sendData, formOptions, setFormOptions) {
 
     return new Promise((resolve, reject) => {
 
-      sendData(formData, linkVar).then(res => {
+      sendData(formData, params).then(res => {
         // console.log(res)
 
         if (res.error) {

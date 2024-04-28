@@ -11,7 +11,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import { addUser, updateUserState } from '../../toolkit/usersSlice';
 import { user_roles } from '../constants/roles';
-import { useUpdateUserMutation } from '../../toolkit/apiSlice';
 import usePostData from '../../hooks/usePostData';
 import { buttonStyle, sendSuccess } from '../styles/buttonsStyles';
 

@@ -3,7 +3,7 @@ import { FieldArray } from 'formik'
 import React, { useEffect, useState } from 'react'
 
 import { hasError } from './constants/hasError'
-import { buttonError, buttonStyle } from '../../styles/buttonsStyles'
+import { buttonError, buttonStyle } from '../../../styles/buttonsStyles'
 import MakePagination from "./components/MakePagination"
 // import QuizPagination from "./quiz/QuizPagination";
 import NestedInput from './NestedInput'

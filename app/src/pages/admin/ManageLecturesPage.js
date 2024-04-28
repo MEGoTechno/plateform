@@ -8,7 +8,7 @@ import { setLectures } from '../../toolkit/lecturesSlice'
 import { Alert, Box, Button } from '@mui/material'
 import useGetGrades from '../../hooks/useGetGrades'
 import Header from '../../components/tools/Header'
-import { buttonStyle } from '../../components/styles/buttonsStyles'
+import { buttonStyle } from '../../styles/buttonsStyles'
 import { useNavigate } from 'react-router-dom'
 import ManageUnits from '../../components/content/manage/ManageUnits'
 

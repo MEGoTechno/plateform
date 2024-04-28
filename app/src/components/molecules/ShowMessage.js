@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, Typography, useTheme } from '@mui/material'
 import React, { useState } from 'react'
-import { buttonError, sendSuccess } from '../styles/buttonsStyles'
+import { buttonError, sendSuccess } from '../../styles/buttonsStyles'
 import { useDeleteMessageMutation } from '../../toolkit/apiSlice'
 import usePostData from '../../hooks/usePostData'
 import ModalControlled from '../tools/ModalControlled'

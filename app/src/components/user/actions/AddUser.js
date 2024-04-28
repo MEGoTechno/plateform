@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useAddUserMutation } from '../../../toolkit/apiSlice'
 import usePostData from '../../../hooks/usePostData'
 import { Avatar, Box, Grid, Paper, useTheme } from '@mui/material'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
@@ -10,6 +9,7 @@ import UserForm from './UserForm'
 import * as Yup from "yup"
 import useGetGrades from '../../../hooks/useGetGrades';
 import LoaderSkeleton from '../../tools/LoaderSkeleton';
+import { useAddUserMutation } from '../../../toolkit/apis/UsersApi';
 
 export default function Adduser({ groups, grades }) {
     const navigate = useNavigate()

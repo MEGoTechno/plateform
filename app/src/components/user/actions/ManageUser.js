@@ -6,7 +6,6 @@ import ManageAccountsSharpIcon from '@mui/icons-material/ManageAccountsSharp';
 // import UserProfile from '../../../pages/UserProfile';
 import ModalControlled from '../../tools/ModalControlled';
 import usePostData from '../../../hooks/usePostData';
-import { useDeleteUserMutation, useUpdateUserMutation } from '../../../toolkit/apiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { delteUser, updateUserState } from '../../../toolkit/usersSlice';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
@@ -15,6 +14,8 @@ import Loader from '../../tools/Loader';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useDeleteUserMutation, useUpdateUserMutation } from '../../../toolkit/apis/UsersApi';
+
 
 export default function ManageUser({ user, setUser }) {
     const navigate = useNavigate()
@@ -109,7 +110,7 @@ export default function ManageUser({ user, setUser }) {
                                     sx={{
                                         width: "100%",
                                         bgcolor: theme.palette.warning.main,
-                                        color: theme.palette.grey[200],
+                                        color: theme.palette.grey[0],
                                         fontWeight: 500,
                                         "&:hover": {
                                             bgcolor: theme.palette.warning.dark
@@ -127,7 +128,7 @@ export default function ManageUser({ user, setUser }) {
                                         sx={{
                                             width: "100%",
                                             bgcolor: theme.palette.error.main,
-                                            color: theme.palette.grey[200],
+                                            color: theme.palette.grey[0],
                                             fontWeight: 500,
                                             "&:hover": {
                                                 bgcolor: theme.palette.error.dark
@@ -145,7 +146,7 @@ export default function ManageUser({ user, setUser }) {
                                         sx={{
                                             width: "100%",
                                             bgcolor: theme.palette.success.main,
-                                            color: theme.palette.grey[200],
+                                            color: theme.palette.grey[0],
                                             fontWeight: 500,
                                             "&:hover": {
                                                 bgcolor: theme.palette.success.dark
@@ -163,7 +164,7 @@ export default function ManageUser({ user, setUser }) {
                                         sx={{
                                             width: "100%",
                                             bgcolor: theme.palette.error.light,
-                                            color: theme.palette.grey[200],
+                                            color: theme.palette.grey[0],
                                             fontWeight: 500,
                                             "&:hover": {
                                                 bgcolor: theme.palette.error.dark

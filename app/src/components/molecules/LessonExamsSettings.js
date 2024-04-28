@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { buttonStyle } from '../styles/buttonsStyles'
+import { buttonStyle } from '../../styles/buttonsStyles'
 
 export default function LessonExamsSettings({ lesson, exams, createExam, editLesson }) {
     const { lang } = useSelector(s => s.global)

@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActions, useTheme } from '@mui/material'
 import React, { useState } from 'react'
-import { buttonStyle } from '../../styles/buttonsStyles'
+import { buttonStyle } from '../../../styles/buttonsStyles'
 import QuizPagination from '../quiz/QuizPagination'
 import ShowAnsweredQuestion from './ShowAnsweredQuestion'
 

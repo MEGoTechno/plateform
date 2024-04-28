@@ -11,13 +11,14 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
 
-import { buttonStyle, sendSuccess } from '../styles/buttonsStyles';
+import { buttonStyle, sendSuccess } from '../../styles/buttonsStyles';
 
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import GppBadIcon from '@mui/icons-material/GppBad';
-import { useLazyGetPaymentsByGradeQuery, useUpdateUserMutation } from '../../toolkit/apiSlice';
+import { useLazyGetPaymentsByGradeQuery } from '../../toolkit/apiSlice';
 import usePostData from '../../hooks/usePostData';
 import useLazyGetData from '../../hooks/useLazyGetData';
+import { useUpdateUserMutation } from '../../toolkit/apis/UsersApi';
 
 export default function UserPayments({ user, isManage }) {
 

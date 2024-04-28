@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, Stack, Typography, useTheme } from '@mui/material'
 import React from 'react'
-import { buttonStyle } from '../styles/buttonsStyles'
+import { buttonStyle } from '../../styles/buttonsStyles'
 import { useSelector } from 'react-redux'
 
 export default function LessonSettings({ lesson, lectures, editLesson, createLecture }) {

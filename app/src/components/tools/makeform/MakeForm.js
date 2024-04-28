@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import { Alert, Box, Button } from '@mui/material'
 import Loader from "../../tools/Loader"
-import { sendSuccess } from '../../styles/buttonsStyles'
+import { sendSuccess } from '../../../styles/buttonsStyles'
 import { useSelector } from 'react-redux'
 
 export default function MakeForm({ inputs, onSubmit, formOptions }) {

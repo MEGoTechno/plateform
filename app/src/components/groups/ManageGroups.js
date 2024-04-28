@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import React, { useMemo } from 'react'
 import ShowGroups from './ShowGroups'
-import { sendSuccess } from '../styles/buttonsStyles'
+import { sendSuccess } from '../../styles/buttonsStyles'
 import { useNavigate } from 'react-router-dom'
 
 export default function ManageGroups({ groups, grades }) {

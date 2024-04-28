@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { buttonStyle } from '../styles/buttonsStyles';
+import { buttonStyle } from '../../styles/buttonsStyles';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { useSelector } from 'react-redux';

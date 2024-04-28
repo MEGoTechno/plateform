@@ -1,7 +1,7 @@
 import { Box, Button, Collapse, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material'
 import React, { memo, useState } from 'react'
 import { DAYES } from '../constants/dateConstants'
-import { buttonError, buttonStyle } from '../styles/buttonsStyles'
+import { buttonError, buttonStyle } from '../../styles/buttonsStyles'
 import { useNavigate } from 'react-router-dom'
 import { useDeleteGroupMutation } from '../../toolkit/apiSlice'
 import usePostData from '../../hooks/usePostData'
@@ -21,7 +21,7 @@ function GroupRow({ row, open }) {
         dispatch(setGroups(null))
     }
 
-    
+
     return (
         <TableRow>
 
@@ -53,7 +53,7 @@ function GroupRow({ row, open }) {
                                     // make it global
                                     const classicTime = (time) => {
                                         const inNum = Number(time)
-                                        return (inNum) > 10 ? `${inNum}` : `0${inNum}`
+                                        return (inNum) > 10 ? `${inNum}` : `${inNum}`
                                     }
 
                                     const showDay = (day) => {
@@ -76,7 +76,7 @@ function GroupRow({ row, open }) {
                                             <TableCell component="th" scope="row" align='left'> {group.groupName}</TableCell>
 
                                             <TableCell align='left'>
-                                                {group.days && group.days.map(day => ` ${showDay(day)}`)} {groupStdNumbers} students
+                                                {group.days && group.days.map(day => ` ${showDay(day)}`)} <br /> {groupStdNumbers} students
                                             </TableCell>
 
                                             <TableCell sx={{ display: "flex", justifyContent: 'center', gap: 1 }}>
