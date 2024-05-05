@@ -5,15 +5,16 @@ const statusTexts = require('../tools/statusTexts')
 const { user_roles } = require("../tools/rolesConstants")
 
 
-// fcs
-
-// get lectures accroding to grade (g1)
+// @desc get all lectures
+// @route GET /lectures
+// @access public
 const getLectures = asyncHandler(async (req, res) => {
 
 
     const gradeId = req.user?.grade
 
     let lectures
+
     if (req?.user?.role !== user_roles.STUDENT) {
         lectures = await LectureModel.find({}) //populate ==> grade
 

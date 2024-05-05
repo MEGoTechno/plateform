@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     userName: { type: String, required: true, unique: true }, // as id
     email: { type: String, required: false },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     isAdmin: { type: Boolean, default: false },
     phone: { type: String },
     familyPhone: { type: String },
@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema({
     totalPoints: { type: Number, default: 0 },
     payments: [{ type: String }],
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
 
 

@@ -4,10 +4,10 @@ const GradeModel = require("./GradeModel")
 const examSchema = new mongoose.Schema({
     grade: { type: mongoose.Schema.Types.ObjectId, ref: GradeModel }, 
     unitId: { type: String }, 
-    unitName: { type: String },
-    lessonId: { type: String }, 
-    lessonName: { type: String },
-    partId: { type: String }, 
+    unitName: { type: String },//
+    lessonId: { type: String }, //
+    lessonName: { type: String },//
+    partId: { type: String }, //
     partName: { type: String }, // == exam name
     description: { type: String },
     total: { type: Number },

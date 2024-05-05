@@ -10,6 +10,7 @@ const msgTexts = require("../tools/msgTexts.js")
 
 const addToCloud = require("../middleware/cloudinary");
 const { makeMatch } = require("../tools/makeMatch.js");
+const { user_roles } = require("../tools/rolesConstants.js");
 
 // @desc get all user
 // @route GET /users
@@ -36,14 +37,17 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
         { key: "grade", value: query.grade, operator: "equal" },
         { key: "group", value: query.group, operator: "equal" },
     ]
-    makeMatch(match, params)
 
+    makeMatch(match, params)
 
     //sort 
     const sort = {}
     query.sortkey ? sort[query.sortkey] = query.sortvalue : null
 
-    const users = await UserModel.find(match, { password: false, __v: false }).populate("group grade").limit(limit).skip(skip).sort(sort)
+    //select
+    const select = query.select ? query.select : ""
+
+    const users = await UserModel.find(match).select(select).populate("group grade").limit(limit).skip(skip).sort(sort)
     const usersLength = await UserModel.countDocuments(match)
 
     res.status(200).json({ status: statusTexts.SUCCESS, values: { users, count: usersLength } })
@@ -54,11 +58,15 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
 // @access Private
 const getUser = asyncHandler(async (req, res, next) => {
 
+    const query = req.query
     const userName = req.params.userName
+
+    //select
+    const select = query.select ? query.select : ""
 
     if (userName) {
 
-        const user = await UserModel.find({ userName }, { password: false, __v: false }).populate("group")
+        const user = await UserModel.find({ userName }).select(select).populate("group")
         res.status(200).json({ status: statusTexts.SUCCESS, values: user })
 
     } else {
@@ -104,8 +112,13 @@ const createUser = asyncHandler(async (req, res, next) => {
 const updateUser = asyncHandler(async (req, res, next) => {
 
     //avater
+    const query = req.query
     const { _id, name, email, password, phone, familyPhone, isActive, role, paymentId } = req.body
-    const user = await UserModel.findById(_id).select("-password -__v").populate("group")
+
+    //select
+    const select = query.select ? query.select : ""
+
+    const user = await UserModel.findById(_id).select(select).populate("group")
 
     user.name = name || user.name
     user.email = email || user.email
@@ -140,8 +153,13 @@ const updateUser = asyncHandler(async (req, res, next) => {
 // @access Public   ==> admin/user/subAdmin
 const updateUserProfile = asyncHandler(async (req, res, next) => {
 
+    const query = req.query
     const { _id, userName, name, email, password, phone, familyPhone } = req.body
-    const user = await UserModel.findById(_id).populate("grade", "-__v").populate("group", "-__v").select("-password -__v")
+
+    //select
+    const select = query.select ? query.select : ""
+
+    const user = await UserModel.findById(_id).select(select).populate("grade group")
 
 
     const { file } = req
@@ -188,7 +206,7 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 
     const user = req.body
 
-    if (user.isAdmin) {
+    if (user.role === user_roles.ADMIN) {
         const error = createError("admin can`t be deleted", 400, statusTexts.FAILED)
         next(error)
     }
@@ -203,8 +221,10 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 // @access Public   
 const login = asyncHandler(async (req, res, next) => {
     const { userName, password } = req.body
-    const user = await UserModel.findOne({ userName }).populate("grade", "-__v").populate("group", "-__v").select("-__v ")
 
+    const select = 'userName name password avatar email isAdmin phone familyPhone isActive role totalPoints payments'
+    const user = await UserModel.findOne({ userName }).populate("grade group").select(select)
+   
     if (user) {
         const isTruePass = await bcrypt.compare(password, user.password)
         if (isTruePass) {

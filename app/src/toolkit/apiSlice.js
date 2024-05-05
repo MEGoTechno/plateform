@@ -10,7 +10,7 @@ export const apiSlice = createApi({
     reducerPath: "api", //from state
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://mradel-biology.onrender.com/api",
+        baseUrl: 'https://mradel-biology.onrender.com/api',
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers
@@ -157,31 +157,6 @@ export const apiSlice = createApi({
                 return `/attempts/${userId}?examId=${examId}&page=${page}&limit=${limit}`
             },
         }),
-        // lectures fcs ###################
-        getLectures: builder.query({
-            query: () => "lectures",
-        }),
-        postNewLecture: builder.mutation({
-            query: data => ({
-                url: '/lectures/add-lecture',
-                method: 'POST',
-                body: data
-            }),
-        }),
-        UpdateLecture: builder.mutation({
-            query: data => ({
-                url: '/lectures/update',
-                method: 'PUT',
-                body: data
-            }),
-        }),
-        removeLecture: builder.mutation({
-            query: data => ({
-                url: '/lectures/delete',
-                method: 'DELETE',
-                body: data
-            }),
-        }),
         getMessages: builder.query({
             query: (userName) => `/messages?user=${userName}`,
         }),
@@ -244,7 +219,7 @@ export const {
     useLazyGetGroupsQuery, useCreateGroupMutation, useUpdateGroupMutation, useDeleteGroupMutation,
     usePostNewExamMutation, useRemoveExamMutation, useLazyGetExamsQuery, useUpdateExamMutation, useLazyGetOneExamQuery,
     useAddAttemptMutation, useLazyGetUserAttemptsQuery, useLazyGetExamAttemptsQuery,
-    usePostNewLectureMutation, useUpdateLectureMutation, useRemoveLectureMutation, useLazyGetLecturesQuery, useSendFileTestMutation,
+    useSendFileTestMutation,
     useLazyTestUriQuery,
     useLazyGetMessagesQuery, useCreateMessageMutation, useUpdateMessageMutation, useDeleteMessageMutation,
     useLazyGetPaymentsQuery, useLazyGetPaymentsByGradeQuery, useCreatePaymentMutation, useCheckUsersPaymentMutation, useDeletePaymentMutation,
