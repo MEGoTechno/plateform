@@ -1,1 +1,0 @@
-export const  DAYES = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
