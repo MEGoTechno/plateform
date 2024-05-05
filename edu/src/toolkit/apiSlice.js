@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCookie } from '../hooks/cookies'
-// https://mradel-biology.onrender.com/api
+// https://plateformserver.onrender.com/api
 // "http://192.168.1.13:5050/api"
 // "http://localhost:5050/api"
 // git push -u origin main   
@@ -10,7 +10,7 @@ export const apiSlice = createApi({
     reducerPath: "api", //from state
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://mradel-biology.onrender.com/api',
+        baseUrl: 'https://plateformserver.onrender.com/api',
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers
