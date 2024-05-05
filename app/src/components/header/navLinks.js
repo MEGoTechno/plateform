@@ -4,7 +4,9 @@ import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import ManageSearchSharpIcon from '@mui/icons-material/ManageSearchSharp';
 import SourceIcon from '@mui/icons-material/Source';
-import { lang } from '../tools/lang';
+
+import { lang } from '../constants/lang';
+
 import AssignmentTurnedInSharpIcon from '@mui/icons-material/AssignmentTurnedInSharp';
 import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp';
 import NewspaperSharpIcon from '@mui/icons-material/NewspaperSharp';

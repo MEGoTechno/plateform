@@ -52,7 +52,7 @@ export default function GetUsers() {
     const columns = [{
         field: "_id",
         headerName: "id",
-        disableExport: true
+        disableExport: true,
     }, {
         field: "avatar",
         headerName: "صوره",
@@ -130,7 +130,7 @@ export default function GetUsers() {
         }
     }, {
         field: "group",
-        headerName: "group",
+        headerName: lang.groups.groups,
         filterable: false,
         renderCell: (params) => {
             return (
@@ -148,7 +148,7 @@ export default function GetUsers() {
                 sx={{ height: "70vh", width: '100%' }}
             >
                 <SuccessBtn onClick={() => setShowAddUser(true)} sx={{ width: "auto" }}>
-                    add user
+                    {lang.users.addUser}
                 </SuccessBtn>
 
                 <DialogControllled isOpen={isShowAddUser} setOpen={setShowAddUser} title={"Add user"}>

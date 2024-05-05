@@ -16,6 +16,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import { user_roles } from '../constants/roles'
 
+import ContentPasteGoTwoToneIcon from '@mui/icons-material/ContentPasteGoTwoTone';
+
 export default function ExamCard({ exam, isManage, editExam, startExam }) {
 
     const navigate = useNavigate()
@@ -72,20 +74,20 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
                 <Divider color={theme.palette.primary[300]} />
 
                 {isManage && <FlexInBetween sx={{ m: "5px 0" }}>
-                    <ExamTypoKey>status:</ExamTypoKey>
-                    <Chip label={exam.isActive ? "active" : "not active"} color={exam.isActive ? "success" : "error"} size='small' />
+                    <ExamTypoKey>{lang.status}:</ExamTypoKey>
+                    <Chip label={exam.isActive ? lang.users.isActive : lang.users.notActive} color={exam.isActive ? "success" : "error"} size='small' />
                 </FlexInBetween>}
 
 
 
                 <FlexInBetween sx={{ m: "5px 0" }}>
                     <ExamTypoKey>{lang.exams.time}:</ExamTypoKey>
-                    <ExamTypoValue>{(exam.time / 60) || "--"} min</ExamTypoValue>
+                    <ExamTypoValue>{(exam.time / 60) || "--"} {lang.time.min}</ExamTypoValue>
                 </FlexInBetween>
 
                 <FlexInBetween sx={{ m: "5px 0" }}>
                     <ExamTypoKey>{lang.exams.nums}:</ExamTypoKey>
-                    <ExamTypoValue>{exam.questions.length}</ExamTypoValue>
+                    <ExamTypoValue>{exam.questions.length} {lang.form.question}</ExamTypoValue>
                 </FlexInBetween >
 
                 <FlexInBetween sx={{ m: "5px 0" }}>
@@ -94,12 +96,12 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
                 </FlexInBetween>
 
                 {(isManage && user.role === user_roles.ADMIN) && <FlexInBetween sx={{ m: "5px 0" }}>
-                    <ExamTypoKey>statistics:</ExamTypoKey>
+                    <ExamTypoKey>{lang.statistics.statistics}:</ExamTypoKey>
                     <Chip
                         variant='outlined'
                         label={<BarChartRoundedIcon />}
                         color={"success"} size='small' sx={{ fontWeight: 600 }}
-                        onClick={() => navigate("/management/statistics/exam", {state: exam})} />
+                        onClick={() => navigate("/management/statistics/exam", { state: exam })} />
                 </FlexInBetween>}
 
             </Box>
@@ -129,7 +131,7 @@ export default function ExamCard({ exam, isManage, editExam, startExam }) {
                     flexDirection: "row",
                     gap: 2
                 }}>
-                    <Button onClick={() => startExam(exam)} sx={buttonStyle}  >{lang.exams.start}</Button>
+                    <Button startIcon={<ContentPasteGoTwoToneIcon />} onClick={() => startExam(exam)} sx={buttonStyle}  >{lang.exams.start}</Button>
                 </Box>
             )}
 

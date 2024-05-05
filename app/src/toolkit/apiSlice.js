@@ -10,7 +10,7 @@ export const apiSlice = createApi({
     reducerPath: "api", //from state
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://mradel-biology.onrender.com/api',
+        baseUrl: 'http://localhost:5050/api',
         prepareHeaders: (headers) => {
             headers.set('authorization', getCookie("u") ? getCookie("u").token : "")
             return headers

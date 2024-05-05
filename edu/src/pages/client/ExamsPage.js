@@ -50,7 +50,7 @@ export default function ExamsPage() {
     if (grades?.length === 0) {
         return <Box sx={{ direction: 'rtl' }}>
             <Header title={lang.links.content} />
-            <Alert severity='error'>اضف مجموعه</Alert>
+            <Alert severity='error'>{lang.groups.addgroup}</Alert>
         </Box>
     }
 
@@ -62,14 +62,14 @@ export default function ExamsPage() {
 
     if (user.role !== user_roles.STUDENT) {
         return <Box>
-            <Header title={"exams"} />
+            <Header title={lang.exams.exams} />
             <GradeExams exams={exams} grades={grades} />
         </Box>
     }
 
     return (
         <Box>
-            <Header title={"exams"} />
+            <Header title={lang.exams.exams} />
             <UnitExams exams={exams} />
         </Box>
     )

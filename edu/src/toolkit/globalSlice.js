@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getCookie, removeCookie, setCookie } from "../hooks/cookies";
-import { lang } from "../components/tools/lang";
+import { lang } from "../components/constants/lang";
 
 
 const getMode = () => {

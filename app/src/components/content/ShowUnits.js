@@ -2,16 +2,19 @@ import { Alert, Box, Button, useTheme } from '@mui/material'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getSameValue, getUnique } from '../tools/commonFC'
-import { buttonStyle } from "../../styles/buttonsStyles"
+import { StyledBtn, buttonStyle } from "../../styles/buttonsStyles"
 import ShowLectures from './LessonLectures'
 import Header from '../tools/Header'
 import { useSelector } from 'react-redux'
+import CastForEducationSharpIcon from '@mui/icons-material/CastForEducationSharp';
+
+
 
 export default function ShowUnits({ grade, lectures }) {
-   
+
    const navigate = useNavigate()
    const units = getUnique(lectures, "unitId") //units list
-   const {lang} = useSelector(s => s.global)
+   const { lang } = useSelector(s => s.global)
 
    const goUnit = (unitId) => {
 
@@ -34,10 +37,10 @@ export default function ShowUnits({ grade, lectures }) {
          }}>
 
             {units && units.map((unit, i) => (
-               <Box key={i} sx={{ width: "100%" }}>
-                  <Button sx={buttonStyle} varient="contained" onClick={() => { goUnit(unit.unitId) }}>
-                     {unit.unitName}
-                  </Button>
+               <Box key={i} sx={{ width: "100%", }}>
+                  <StyledBtn varient="contained" onClick={() => { goUnit(unit.unitId) }}>
+                     {unit.unitName}   <CastForEducationSharpIcon sx={{ml: 1}} />
+                  </StyledBtn>
                </Box>
             ))}
          </Box>

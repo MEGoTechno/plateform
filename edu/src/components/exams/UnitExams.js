@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Alert, Box, Button } from '@mui/material'
 import { buttonStyle } from '../../styles/buttonsStyles'
 
+import CastForEducationSharpIcon from '@mui/icons-material/CastForEducationSharp';
 export default function UnitExams({ exams, grade }) {
 
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ export default function UnitExams({ exams, grade }) {
           <Box key={i} sx={{ width: "100%" }}>
 
             <Button sx={buttonStyle} varient="contained" onClick={() => { goUnit(unit.unitId) }}>
-              {unit.unitName}
+              {unit.unitName} <CastForEducationSharpIcon sx={{ml: 1}}/>
             </Button>
 
           </Box>

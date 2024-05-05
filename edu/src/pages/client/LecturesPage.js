@@ -59,7 +59,7 @@ export default function LecturesPage() {
   if (user.role !== user_roles.STUDENT && lectures && grades) {
     return (
       <Stack >
-        <Header title="lectures" />
+        <Header title={lang.content.lectures} />
         <AllLectures lectures={lectures} grades={grades} />
       </Stack>
     )

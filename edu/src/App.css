@@ -8,21 +8,3 @@
         flex-direction: column;
     }
 }
-
-
-::-webkit-scrollbar {
-    width: 8px !important;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #141937;
-    border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    cursor: pointer;
-}

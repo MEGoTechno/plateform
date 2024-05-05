@@ -9,10 +9,12 @@ import Groups3Icon from '@mui/icons-material/Groups3';
 import QuizIcon from '@mui/icons-material/Quiz';
 
 import LatestNews from '../molecules/LatestNews'
+import { useSelector } from 'react-redux';
 
 export default function AdminHome() {
 
     const [homeStatistics, setStatistics] = useState(null)
+    const {lang} = useSelector(s => s.global)
     const theme = useTheme()
     const [getData] = useLazyGetHomeStatisticsQuery()
     const [getStatistics] = useLazyGetData(getData)
@@ -35,7 +37,7 @@ export default function AdminHome() {
 
                     <HomeStatisticsCard
                         icon={<PeopleAltTwoToneIcon color='success' />}
-                        label={"Users"}
+                        label={lang.users.users}
                         count={homeStatistics?.usersCount}
                         colorSchema={"nivo"}
                     />
@@ -44,7 +46,7 @@ export default function AdminHome() {
                 <Grid item sm={3.9}>
                     <HomeStatisticsCard
                         icon={<Groups3Icon color='warning' />}
-                        label={"Groups"}
+                        label={lang.groups.groups}
                         count={homeStatistics?.groupsCount}
                         colorSchema={"category10"}
                     />
@@ -53,7 +55,7 @@ export default function AdminHome() {
                 <Grid item sm={3.9}>
                     <HomeStatisticsCard
                         icon={<QuizIcon color='error' />}
-                        label={"Exams"}
+                        label={lang.exams.exams}
                         count={homeStatistics?.examsCount}
                         colorSchema={"dark2"}
                     />

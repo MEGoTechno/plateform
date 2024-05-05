@@ -5,6 +5,11 @@ export const lang = {
         password: "password",
         send: "submit",
         logo: "MR/your name",
+        status: "status",
+        time: {
+            min: "minutes",
+            seconds: "seconds"
+        },
         errors: {
             addGrade: "add grade please !",
             goGradePage: "go to grade page...",
@@ -29,7 +34,6 @@ export const lang = {
             thumbnail: "thumbnail",
             video: "video",
             addLecture: "add lecture"
-
         },
         modal: {
             delete: "are you sure to delete?",
@@ -53,6 +57,7 @@ export const lang = {
             addUser: "add user"
         },
         exams: {
+            exams: "Exams",
             unit: "unit",
             lesson: "lesson",
             subtitle: "information about here",
@@ -63,11 +68,11 @@ export const lang = {
             addExam: "add new exam",
             addUnitExam: "add unit exam",
             addLessonExam: "add lesson exam",
-            removeExam: "exam",
+            removeExam: "remove exam",
             editExam: "edit exam",
-
         },
         users: {
+            users: "Users",
             userName: "userName",
             password: "password",
             name: 'name',
@@ -112,9 +117,17 @@ export const lang = {
             addLecture: "add lecture",
             manageVids: "manage videos",
             editLecture: "edit lecture"
-        }, grades: {
+        },
+        grades: {
+            grades: "Grades",
             gradeName: "grade name",
             addGrade: "add grade"
+        },
+        groups: {
+            groups: "Groups",
+            addGroup: "add group"
+        },statistics :{
+            statistics: "statistics"
         }
     },
     ar: {
@@ -123,7 +136,12 @@ export const lang = {
         password: "كلمة السر",
         send: "ارسال",
         search: "بحث",
-        logo: " أ/اسم المنصه ",
+        logo: "منصة أ/الاسم ",
+        status: "الحاله",
+        time: {
+            min: "دقائق",
+            seconds: "ثوانى"
+        },
         errors: {
             addGrade: "add grade please !",
             goGradePage: "go to grade page...",
@@ -140,7 +158,7 @@ export const lang = {
             description: "الوصف",
             degree: "الدرجه",
             time: "الوقت",
-            question: "السؤال",
+            question: "اسئله",
             addQuestion: "اضافه سؤال",
             option: "اختيار",
             removeQuestion: "ازاله سؤال",
@@ -172,6 +190,7 @@ export const lang = {
             addUser: 'اضافه طالب'
         },
         exams: {
+            exams: "الاختبارات",
             unit: "الوحدة",
             lesson: "الدرس",
             subtitle: "معلومات توضيحيه",
@@ -186,6 +205,7 @@ export const lang = {
             editExam: "تعديل"
         },
         users: {
+            users: "المستخدمين",
             userName: "اسم المستخدم",
             name: 'الاسم',
             email: 'البريد الالكترونى',
@@ -234,8 +254,15 @@ export const lang = {
 
         },
         grades: {
+            grades: "السنوات",
             gradeName: "اسم السنه ",
             addGrade: "اضافه سنه"
+        },
+        groups: {
+            groups: "المجموعات",
+            addGroup: "اضف مجموعه"
+        },statistics :{
+            statistics: "الاحصائيات"
         }
     }
 }
