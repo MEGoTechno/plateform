@@ -20,7 +20,7 @@ import { ErrorBtn, buttonError, buttonStyle } from '../../styles/buttonsStyles';
 import ModalControlled from '../tools/ModalControlled';
 import { user_roles } from '../constants/roles';
 
-import { Scrollbars } from "react-custom-scrollbars"
+// import { Scrollbars } from "react-custom-scrollbars"
 
 export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, sideBarWidth }) {
 
@@ -70,7 +70,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                     },
                 }}
             >
-                <Scrollbars style={{ height: "100vh", bgcolor: 'red' }}>
+                {/* <Scrollbars style={{ height: "100vh", bgcolor: 'red' }}> */}
 
                     <Box width="100%">
                         <Box m="1.5rem 2rem 2rem 3rem">
@@ -178,7 +178,7 @@ export default function SideBar({ isOpenedSideBar, setSideBar, isNonMobile, side
                         </ErrorBtn>
 
                     </Box>
-                </Scrollbars>
+                {/* </Scrollbars> */}
             </Drawer >
 
             <ModalControlled
