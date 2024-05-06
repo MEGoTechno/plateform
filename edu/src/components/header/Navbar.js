@@ -29,7 +29,7 @@ export default function Navbar({ setSideBar, isOpenedSideBar }) {
                     <IconButton onClick={() => setSideBar(!isOpenedSideBar)} sx={{ mr: 1 }}>
                         <MenuIcon />
                     </IconButton>
-                    <Avatar src="/images/logo.jpg" sx={{
+                    <Avatar src="/images/logo.webp" sx={{
                         mr: 2,
                         height: "30px",
                         width: "30px",
