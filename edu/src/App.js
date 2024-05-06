@@ -61,6 +61,7 @@ import UserAttempt from './components/statistics/UserAttempt';
 import ExamStatistics from './components/statistics/ExamStatistics';
 import * as locales from '@mui/material/locale';
 import { arSD } from '@mui/x-data-grid/locales';
+
 function App() {
   const mode = useSelector(state => state.global.mode)
   const theme = useMemo(() => createTheme(themeSettings(mode), locales["arSD"], arSD), [mode]) // he used useMemo ???
