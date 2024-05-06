@@ -9,6 +9,10 @@
     }
 }
 
+.css-heg063-MuiTabs-flexContainer {
+    display: 'flex';
+    justify-content: "center";
+}
 
 ::-webkit-scrollbar {
     width: 8px !important;
